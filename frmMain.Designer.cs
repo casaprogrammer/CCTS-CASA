@@ -1822,7 +1822,7 @@ namespace Cane_Tracking
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold);
             this.button4.ForeColor = System.Drawing.Color.White;
-            this.button4.Location = new System.Drawing.Point(11, 54);
+            this.button4.Location = new System.Drawing.Point(11, 53);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(344, 56);
             this.button4.TabIndex = 29;
@@ -2352,6 +2352,7 @@ namespace Cane_Tracking
             // dateTimePicker1
             // 
             this.dateTimePicker1.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePicker1.Enabled = false;
             this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateTimePicker1.Location = new System.Drawing.Point(275, 10);
@@ -2402,7 +2403,7 @@ namespace Cane_Tracking
             this.rtSeriesNo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtSeriesNo.Enabled = false;
             this.rtSeriesNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtSeriesNo.Location = new System.Drawing.Point(1527, 52);
+            this.rtSeriesNo.Location = new System.Drawing.Point(1524, 50);
             this.rtSeriesNo.Name = "rtSeriesNo";
             this.rtSeriesNo.ReadOnly = true;
             this.rtSeriesNo.Size = new System.Drawing.Size(191, 43);
@@ -2415,7 +2416,7 @@ namespace Cane_Tracking
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(1551, 15);
+            this.label5.Location = new System.Drawing.Point(1544, 12);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(157, 32);
             this.label5.TabIndex = 44;
@@ -2752,6 +2753,7 @@ namespace Cane_Tracking
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Consolidated Cane Tracking System";
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.panel6.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel5.ResumeLayout(false);

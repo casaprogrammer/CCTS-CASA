@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
@@ -25,15 +26,21 @@ namespace Cane_Tracking
          */
 
 
+        string connection = File.ReadAllText(Path.GetFullPath("Configurations/DbConnection.txt"));
+
         System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip();
+        
         Timer nirTimer1;
         Timer nirTimer2;
+        Timer savingStateTimer;
+
         private static SerialPort serialPort;
 
         delegate void SetColorCallBack(RichTextBox rt, Color color);
         delegate void SetTextCallBack(RichTextBox rt, string text);
         delegate void GetTextCallBack(RichTextBox rt);
 
+        /*ALL DUMPED CANE ARE STORED IN LIST FOR TRACKING*/
         List<Tuple<RichTextBox, RichTextBox, string>> dumpCanesHistory = new List<Tuple<RichTextBox, RichTextBox, string>>();
         List<Tuple<RichTextBox, RichTextBox>> tipperOne = new List<Tuple<RichTextBox, RichTextBox>>();
         List<Tuple<RichTextBox, RichTextBox>> tipperTwo = new List<Tuple<RichTextBox, RichTextBox>>();
@@ -42,16 +49,22 @@ namespace Cane_Tracking
         List<Tuple<RichTextBox, RichTextBox>> mainCane = new List<Tuple<RichTextBox, RichTextBox>>();
         List<Tuple<RichTextBox, RichTextBox>> caneKnives = new List<Tuple<RichTextBox, RichTextBox>>();
         List<Tuple<RichTextBox, RichTextBox>> shreddedCane = new List<Tuple<RichTextBox, RichTextBox>>();
+
+        /*NIR TIMER*/
         List<Timer> nirTm1 = new List<Timer>();
         List<Timer> nirTm2 = new List<Timer>();
 
 
+        /*MAX PROXIMITY SENSOR COUNT*/
         int tipperOneMaxCount;
         int tipperTwoMaxCount;
         int dumpAndPileMaxCount;
         int mainCaneMaxCount;
         int knivesAndShredderMaxCount;
         int fossNirTime;
+
+        int seriesNo = 0;
+        int savingBatchNum = 0;
 
         int currentFoss = 0;
 
@@ -67,12 +80,13 @@ namespace Cane_Tracking
             TextAlignment();
             InitializeSerialConnections();
             DefaultValues();
+            ConnectToAppDb();
         }
 
 
         private void btnTipperOne_Click(object sender, EventArgs e)
         {
-            string type = "tipOne";
+            string type = "Tipper One";
 
             TipperOneValue();
 
@@ -168,12 +182,14 @@ namespace Cane_Tracking
                 LogOutput(logTextOutput);
 
                 rtTipperOneBn.Text = "";
+
+                IncrementSeriesNo();
             }
         }
 
         private void btnTipperTwo_Click(object sender, EventArgs e)
         {
-            string type = "tipTwo";
+            string type = "Tipper Two";
 
             TipperTwoValue();
 
@@ -269,12 +285,14 @@ namespace Cane_Tracking
                 LogOutput(logTextOutput);
 
                 rtTipperTwoBn.Text = "";
+
+                IncrementSeriesNo();
             }
         }
 
         private void btnDumpTruck_Click(object sender, EventArgs e)
         {
-            string type = "dumpTruck";
+            string type = "Dump Truck";
 
             DumpAndStockPileValue();
 
@@ -368,12 +386,14 @@ namespace Cane_Tracking
                 LogOutput(logTextOutput);
 
                 rtDumpTruckBn.Text = "";
+
+                IncrementSeriesNo();
             }
         }
 
         private void btnStockPile_Click(object sender, EventArgs e)
         {
-            string type = "stockPile";
+            string type = "Stock Pile";
 
             DumpAndStockPileValue();
 
@@ -467,6 +487,8 @@ namespace Cane_Tracking
                 LogOutput(logTextOutput);
 
                 rtStockPileBn.Text = "";
+
+                IncrementSeriesNo();
             }
         }
 
@@ -1258,55 +1280,71 @@ namespace Cane_Tracking
         private void btnUndoEntry_Click(object sender, EventArgs e)
         {
             int i;
-            DialogResult dialog = MessageBox.Show("Are you sure you want to undo last entry?", "Confirmation", MessageBoxButtons.YesNo);
 
-            if (dialog == DialogResult.Yes)
+            if (dumpCanesHistory.Count > 0)
             {
-                if (dumpCanesHistory[dumpCanesHistory.Count - 1].Item3.Equals("tipOne"))
-                {
-                    for (i = 0; i < tipperOne.Count; i++)
-                    {
-                        if (tipperOne[i].Item1 == dumpCanesHistory[dumpCanesHistory.Count - 1].Item1)
-                        {
-                            tipperOne.RemoveAt(i);
-                        }
-                    }
-                }
-                else if (dumpCanesHistory[dumpCanesHistory.Count - 1].Item3 == "tipTwo")
-                {
-                    for (i = 0; i < tipperTwo.Count; i++)
-                    {
-                        if (tipperTwo[i].Item1 == dumpCanesHistory[dumpCanesHistory.Count - 1].Item1)
-                        {
-                            tipperTwo.RemoveAt(i);
-                        }
-                    }
-                }
-                else if (dumpCanesHistory[dumpCanesHistory.Count - 1].Item3 == "dumpTruck")
-                {
-                    for (i = 0; i < dumpTruck.Count; i++)
-                    {
-                        if (dumpTruck[i].Item1 == dumpCanesHistory[dumpCanesHistory.Count - 1].Item1)
-                        {
-                            dumpTruck.RemoveAt(i);
-                        }
-                    }
-                }
-                else if (dumpCanesHistory[dumpCanesHistory.Count - 1].Item3 == "stockPile")
-                {
-                    for (i = 0; i < stockPile.Count; i++)
-                    {
-                        if (stockPile[i].Item1 == dumpCanesHistory[dumpCanesHistory.Count - 1].Item1)
-                        {
-                            stockPile.RemoveAt(i);
-                        }
-                    }
-                }
+                DialogResult dialog = MessageBox.Show("Are you sure you want to undo last entry?", "Confirmation", MessageBoxButtons.YesNo);
 
-                ChangeText(dumpCanesHistory[dumpCanesHistory.Count - 1].Item1, "");
-                ChangeText(dumpCanesHistory[dumpCanesHistory.Count - 1].Item2, "");
-                ChangeColorTextBox(dumpCanesHistory[dumpCanesHistory.Count - 1].Item2, Color.CornflowerBlue);
-                dumpCanesHistory.RemoveAt(dumpCanesHistory.Count - 1);
+                if (dialog == DialogResult.Yes)
+                {
+                    if (dumpCanesHistory[dumpCanesHistory.Count - 1].Item3.Equals("Tipper One"))
+                    {
+                        for (i = 0; i < tipperOne.Count; i++)
+                        {
+                            if (tipperOne[i].Item1 == dumpCanesHistory[dumpCanesHistory.Count - 1].Item1)
+                            {
+                                tipperOne.RemoveAt(i);
+                            }
+                        }
+                    }
+                    else if (dumpCanesHistory[dumpCanesHistory.Count - 1].Item3.Equals("Tipper Two"))
+                    {
+                        for (i = 0; i < tipperTwo.Count; i++)
+                        {
+                            if (tipperTwo[i].Item1 == dumpCanesHistory[dumpCanesHistory.Count - 1].Item1)
+                            {
+                                tipperTwo.RemoveAt(i);
+                            }
+                        }
+                    }
+                    else if (dumpCanesHistory[dumpCanesHistory.Count - 1].Item3.Equals("Dump Truck"))
+                    {
+                        for (i = 0; i < dumpTruck.Count; i++)
+                        {
+                            if (dumpTruck[i].Item1 == dumpCanesHistory[dumpCanesHistory.Count - 1].Item1)
+                            {
+                                dumpTruck.RemoveAt(i);
+                            }
+                        }
+                    }
+                    else if (dumpCanesHistory[dumpCanesHistory.Count - 1].Item3.Equals("Stock Pile"))
+                    {
+                        for (i = 0; i < stockPile.Count; i++)
+                        {
+                            if (stockPile[i].Item1 == dumpCanesHistory[dumpCanesHistory.Count - 1].Item1)
+                            {
+                                stockPile.RemoveAt(i);
+                            }
+                        }
+                    }
+
+
+                    string t = DateTime.Now.ToString() + " : " + "Removed Batch #" + dumpCanesHistory[dumpCanesHistory.Count - 1].Item1.Text
+                                                       + " at " + dumpCanesHistory[dumpCanesHistory.Count - 1].Item3;
+                    LogOutput(t);
+
+                    ChangeText(dumpCanesHistory[dumpCanesHistory.Count - 1].Item1, "");
+                    ChangeText(dumpCanesHistory[dumpCanesHistory.Count - 1].Item2, "");
+                    ChangeColorTextBox(dumpCanesHistory[dumpCanesHistory.Count - 1].Item2, Color.CornflowerBlue);
+
+                    dumpCanesHistory.RemoveAt(dumpCanesHistory.Count - 1);
+
+                    DecrementSeriesNo();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nothing to Undo", "Notification");
             }
         }
 
@@ -1327,6 +1365,7 @@ namespace Cane_Tracking
             }
 
             LogOutput(t);
+            PauseNirCount();
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -1435,6 +1474,7 @@ namespace Cane_Tracking
 
                     if (count > tipperOneMaxCount)
                     {
+                        dumpCanesHistory.Remove(new Tuple<RichTextBox, RichTextBox, string>(tipperOne[i].Item1, tipperOne[i].Item2, "Tipper One"));
                         bnSide = int.Parse(GetTextboxValue(tipperOne[i].Item1));
                         ChangeText(tipperOne[i].Item1, "");
                         ChangeText(tipperOne[i].Item2, "");
@@ -1512,6 +1552,7 @@ namespace Cane_Tracking
 
                     if (count > tipperTwoMaxCount)
                     {
+                        dumpCanesHistory.Remove(new Tuple<RichTextBox, RichTextBox, string>(tipperTwo[i].Item1, tipperTwo[i].Item2, "Tipper Two"));
                         bnSide = int.Parse(GetTextboxValue(tipperTwo[i].Item1));
                         ChangeText(tipperTwo[i].Item1, "");
                         ChangeText(tipperTwo[i].Item2, "");
@@ -1587,6 +1628,7 @@ namespace Cane_Tracking
 
                     if (count > dumpAndPileMaxCount)
                     {
+                        dumpCanesHistory.Remove(new Tuple<RichTextBox, RichTextBox, string>(dumpTruck[i].Item1, dumpTruck[i].Item2, "Dump Truck"));
                         bnSide = int.Parse(GetTextboxValue(dumpTruck[i].Item1));
                         ChangeText(dumpTruck[i].Item1, "");
                         ChangeText(dumpTruck[i].Item2, "");
@@ -1662,6 +1704,7 @@ namespace Cane_Tracking
 
                     if (count > dumpAndPileMaxCount)
                     {
+                        dumpCanesHistory.Remove(new Tuple<RichTextBox, RichTextBox, string>(stockPile[i].Item1, stockPile[i].Item2, "Stock Pile"));
                         bnSide = int.Parse(GetTextboxValue(stockPile[i].Item1));
                         ChangeText(stockPile[i].Item1, "");
                         ChangeText(stockPile[i].Item2, "");
@@ -1935,6 +1978,31 @@ namespace Cane_Tracking
             }
         }
 
+        private void SetTimerSaving()
+        {
+            savingStateTimer = new Timer();
+            savingStateTimer.Interval = 10000;
+            savingStateTimer.Enabled = true;
+            savingStateTimer.Tick += new EventHandler(TimerSaving_Tick);
+        }
+
+        private void TimerSaving_Tick(object sender, EventArgs e)
+        {
+            string t;
+            try
+            {
+                SavedAppState();
+                savingBatchNum += 1;
+                t = DateTime.Now.ToString() + " : Application state saved";
+                LogOutput(t);
+            }
+            catch (Exception)
+            {
+                t = DateTime.Now.ToString() + ": Application state saving error";
+                LogOutput(t);
+            }
+        }
+
         private void LogOutput(string output)
         {
             if (!string.IsNullOrEmpty(rtEvents.Text))
@@ -2159,6 +2227,8 @@ namespace Cane_Tracking
             lblMc.Text = mainCaneMaxCount.ToString();
             lblCk.Text = knivesAndShredderMaxCount.ToString();
             lblNi.Text = fossNirTime.ToString();
+
+            rtSeriesNo.Text = (seriesNo).ToString();
         }
 
         private void TipperOneValue()
@@ -2179,5 +2249,115 @@ namespace Cane_Tracking
             lblDs.Text = dumpAndPileMaxCount.ToString();
         }
 
+        private void PauseNirCount()
+        {
+            int i;
+            int y;
+
+            if (nirTm1.Count > 0 || nirTm2.Count > 0)
+            {
+                if (pause)
+                {
+                    for (i = 0; i < nirTm1.Count; i++)
+                    {
+                        nirTm1[i].Stop();
+                    }
+
+                    for (y = 0; y < nirTm2.Count; y++)
+                    {
+                        nirTm2[y].Stop();
+                    }
+                }
+                else
+                {
+                    for (i = 0; i < nirTm1.Count; i++)
+                    {
+                        nirTm1[i].Start();
+                    }
+
+                    for (y = 0; y < nirTm2.Count; y++)
+                    {
+                        nirTm2[y].Start();
+                    }
+                }
+            }
+
+        }
+
+        private void IncrementSeriesNo()
+        {
+            seriesNo += 1;
+            rtSeriesNo.Text = (seriesNo).ToString();
+        }
+
+        private void DecrementSeriesNo()
+        {
+            seriesNo -= 1;
+            rtSeriesNo.Text = (seriesNo).ToString();
+        }
+
+        private void ConnectToAppDb()
+        {
+            string t;
+            SqlConnection con = new SqlConnection(connection);
+
+            try
+            {
+                con.Open();
+                t = DateTime.Now.ToString() + " : " + "Successfuly Connected to CCTS Database";
+                LogOutput(t);
+                con.Close();
+            }
+            catch (Exception)
+            {
+                t = DateTime.Now.ToString() + " : " + "Database Connection Error";
+                LogOutput(t);
+            }
+        }
+
+        private void SavedAppState()
+        {
+            SqlConnection con = new SqlConnection(connection);
+
+            string insertString;
+            int i;
+
+            for(i = 0; i < tipperOne.Count; i++)
+            {
+                insertString = @"INSERT INTO app_state_record
+                                    (batchNumBox, batchNum, countBox, currentCount, areaName, stateBatch, batchDate)
+                                 VALUES
+                                    (@batchNumBox, @batchNum, @countBox, @currentCount, @areaName, @stateBatch, @batchDate)
+                                ";
+                SqlCommand cmd = new SqlCommand(insertString, con);
+
+                cmd.Parameters.AddWithValue("@batchNumBox", tipperOne[i].Item1);
+                cmd.Parameters.AddWithValue("@batchNum", tipperOne[i].Item1.Text);
+                cmd.Parameters.AddWithValue("@countBox", tipperOne[i].Item2);
+                cmd.Parameters.AddWithValue("@currentCount", tipperOne[i].Item2.Text);
+                cmd.Parameters.AddWithValue("@areaName", "Tipper One");
+                cmd.Parameters.AddWithValue("@stateBatch", savingBatchNum);
+                cmd.Parameters.AddWithValue("@batchDate", DateTime.Now);
+
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SqlException e)
+                {
+                    LogOutput(e.ToString());
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            SetTimerSaving();
+        }
     }
 }
