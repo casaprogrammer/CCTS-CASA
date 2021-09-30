@@ -1865,7 +1865,6 @@ namespace Cane_Tracking
             }
         }
 
-
         private void LogOutput(string output)
         {
             if (!string.IsNullOrEmpty(rtEvents.Text))
