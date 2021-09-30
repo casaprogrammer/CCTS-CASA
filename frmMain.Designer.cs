@@ -2753,7 +2753,6 @@ namespace Cane_Tracking
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Consolidated Cane Tracking System";
-            this.Load += new System.EventHandler(this.frmMain_Load);
             this.panel6.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
