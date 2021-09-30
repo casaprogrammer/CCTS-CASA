@@ -26,8 +26,6 @@ namespace Cane_Tracking
          */
 
 
-        string connection = File.ReadAllText(Path.GetFullPath("Configurations/DbConnection.txt"));
-
         System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip();
 
         Timer nirTimer1;
