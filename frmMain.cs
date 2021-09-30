@@ -84,7 +84,6 @@ namespace Cane_Tracking
             TextAlignment();
             InitializeSerialConnections();
             DefaultValues();
-            ConnectToAppDb();
         }
 
 
@@ -1866,30 +1865,6 @@ namespace Cane_Tracking
             }
         }
 
-        private void SetTimerSaving()
-        {
-            savingStateTimer = new Timer();
-            savingStateTimer.Interval = 10000;
-            savingStateTimer.Enabled = true;
-            savingStateTimer.Tick += new EventHandler(TimerSaving_Tick);
-        }
-
-        private void TimerSaving_Tick(object sender, EventArgs e)
-        {
-            string t;
-            try
-            {
-                SavedAppState();
-                savingBatchNum += 1;
-                t = DateTime.Now.ToString() + " : Application state saved";
-                LogOutput(t);
-            }
-            catch (Exception)
-            {
-                t = DateTime.Now.ToString() + ": Application state saving error";
-                LogOutput(t);
-            }
-        }
 
         private void LogOutput(string output)
         {
@@ -2182,65 +2157,6 @@ namespace Cane_Tracking
         {
             seriesNo -= 1;
             rtSeriesNo.Text = (seriesNo).ToString();
-        }
-
-        private void ConnectToAppDb()
-        {
-            /*string t;
-            SqlConnection con = new SqlConnection(connection);
-
-            try
-            {
-                con.Open();
-                t = DateTime.Now.ToString() + " : " + "Successfuly Connected to CCTS Database";
-                LogOutput(t);
-                con.Close();
-            }
-            catch (Exception)
-            {
-                t = DateTime.Now.ToString() + " : " + "Database Connection Error";
-                LogOutput(t);
-            }*/
-        }
-
-        private void SavedAppState()
-        {
-            SqlConnection con = new SqlConnection(connection);
-
-            string insertString;
-            int i;
-
-            for (i = 0; i < tipperOne.Count; i++)
-            {
-                insertString = @"INSERT INTO app_state_record
-                                    (batchNumBox, batchNum, countBox, currentCount, areaName, stateBatch, batchDate)
-                                 VALUES
-                                    (@batchNumBox, @batchNum, @countBox, @currentCount, @areaName, @stateBatch, @batchDate)
-                                ";
-                SqlCommand cmd = new SqlCommand(insertString, con);
-
-                cmd.Parameters.AddWithValue("@batchNumBox", tipperOne[i].Item1);
-                cmd.Parameters.AddWithValue("@batchNum", tipperOne[i].Item1.Text);
-                cmd.Parameters.AddWithValue("@countBox", tipperOne[i].Item2);
-                cmd.Parameters.AddWithValue("@currentCount", tipperOne[i].Item2.Text);
-                cmd.Parameters.AddWithValue("@areaName", "Tipper One");
-                cmd.Parameters.AddWithValue("@stateBatch", savingBatchNum);
-                cmd.Parameters.AddWithValue("@batchDate", DateTime.Now);
-
-                try
-                {
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                }
-                catch (SqlException e)
-                {
-                    LogOutput(e.ToString());
-                }
-                finally
-                {
-                    con.Close();
-                }
-            }
         }
 
     }
