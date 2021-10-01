@@ -27,10 +27,12 @@ namespace Cane_Tracking
 
 
         System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip();
+        SqlConnection con = new SqlConnection(File.ReadAllText(Path.GetFullPath("Configurations/DbConnection.txt")));
 
-        Timer nirTimer1;
-        Timer nirTimer2;
-        Timer savingStateTimer;
+        private Timer nirTimer1;
+        private Timer nirTimer2;
+        private Timer savingStateTimer;
+        private Timer checkConfigsTimer;
 
         private static SerialPort serialPort;
 
@@ -56,25 +58,24 @@ namespace Cane_Tracking
         List<Timer> nirTm1 = new List<Timer>();
         List<Timer> nirTm2 = new List<Timer>();
 
-
         /*MAX PROXIMITY SENSOR COUNT*/
-        int tipperOneMaxCount;
-        int tipperTwoMaxCount;
-        int dumpAndPileMaxCount;
-        int mainCaneMaxCount;
-        int knivesAndShredderMaxCount;
-        int fossNirTime;
+        private int tipperOneMaxCount;
+        private int tipperTwoMaxCount;
+        private int dumpAndPileMaxCount;
+        private int mainCaneMaxCount;
+        private int knivesAndShredderMaxCount;
+        private int fossNirTime;
 
-        int fossNirWashingTime = 5;
+        private int fossNirWashingTime = 5;
 
-        int seriesNo = 0;
-        int savingBatchNum = 0;
+        private int seriesNo = 0;
+        private int stateBatchNum;
 
-        bool decrementing = false;
-        bool pause = false;
+        private bool decrementing = false;
+        private bool pause = false;
 
-        string logTextOutput;
-        string batch;
+        private string logTextOutput;
+        private string batch;
 
         public frmMain()
         {
@@ -82,6 +83,8 @@ namespace Cane_Tracking
             TextAlignment();
             InitializeSerialConnections();
             DefaultValues();
+            ConnectToDB();
+            CheckConfigStart();
         }
 
 
@@ -89,7 +92,7 @@ namespace Cane_Tracking
         {
             string type = "Tipper One";
 
-            TipperOneValue();
+            //TipperOneValue();
 
             if (rtTipperOneBn.Text == "")
             {
@@ -192,7 +195,7 @@ namespace Cane_Tracking
         {
             string type = "Tipper Two";
 
-            TipperTwoValue();
+            //TipperTwoValue();
 
             if (rtTipperTwoBn.Text == "")
             {
@@ -295,7 +298,7 @@ namespace Cane_Tracking
         {
             string type = "Dump Truck";
 
-            DumpAndStockPileValue();
+            //DumpAndStockPileValue();
 
             if (rtDumpTruckBn.Text == "")
             {
@@ -396,7 +399,7 @@ namespace Cane_Tracking
         {
             string type = "Stock Pile";
 
-            DumpAndStockPileValue();
+           //DumpAndStockPileValue();
 
             if (rtStockPileBn.Text == "")
             {
@@ -1210,7 +1213,7 @@ namespace Cane_Tracking
         {
             toolTip.SetToolTip(this.btnReset, "Restart Application");
         }
-
+      
         private void btnEditConfigs_Click(object sender, EventArgs e)
         {
             frmEditConfigs frm = new frmEditConfigs();
@@ -1385,13 +1388,17 @@ namespace Cane_Tracking
 
         private void InitializeSerialConnections()
         {
-            serialPort = new SerialPort("COM3", 9600);
-
-            serialPort.DataReceived += new SerialDataReceivedEventHandler(CaneSensorDataReceivedHandler);
-
             try
             {
-                serialPort.Open();
+                serialPort = new SerialPort("COM3", 9600);
+
+                if (!serialPort.IsOpen)
+                {
+                    serialPort.Open();
+                }
+
+                serialPort.DataReceived += new SerialDataReceivedEventHandler(CaneSensorDataReceivedHandler);
+
                 string t = DateTime.Now.ToString() + " : " + "Ports Activated";
                 LogOutput(t);
             }
@@ -2091,24 +2098,6 @@ namespace Cane_Tracking
             rtSeriesNo.Text = (seriesNo).ToString();
         }
 
-        private void TipperOneValue()
-        {
-            tipperOneMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/tipperOneMaxCount.txt")));
-            lblT1.Text = tipperOneMaxCount.ToString();
-        }
-
-        private void TipperTwoValue()
-        {
-            tipperTwoMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/tipperTwoMaxCount.txt")));
-            lblT2.Text = tipperTwoMaxCount.ToString();
-        }
-
-        private void DumpAndStockPileValue()
-        {
-            dumpAndPileMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/dumpAndPileMaxCount.txt")));
-            lblDs.Text = dumpAndPileMaxCount.ToString();
-        }
-
         private void PauseNirCount()
         {
             int i;
@@ -2154,6 +2143,170 @@ namespace Cane_Tracking
         {
             seriesNo -= 1;
             rtSeriesNo.Text = (seriesNo).ToString();
+        }
+
+        private void ConnectToDB()
+        {
+            try
+            {
+                con.Open();
+                LogOutput(DateTime.Now.ToString() + " : Successfuly Connected to Application's Database");
+                con.Close();
+
+                SaveStateStart();
+            }
+            catch (Exception e)
+            {
+                LogOutput(e.ToString());
+            }
+        }
+
+        private void ListBox()
+        {
+            List<Tuple<RichTextBox, RichTextBox, string>> lTbox = new List<Tuple<RichTextBox, RichTextBox, string>>();
+
+            //Tipper One
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn1, rtTipOneBx1, "TipOne"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn2, rtTipOneBx2, "TipOne"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn3, rtTipOneBx3, "TipOne"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn4, rtTipOneBx4, "TipOne"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn5, rtTipOneBx5, "TipOne"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn6, rtTipOneBx6, "TipOne"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn7, rtTipOneBx7, "TipOne"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn8, rtTipOneBx8, "TipOne"));
+
+            //Tipper Two
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn1, rtTipTwoBx1, "TipTwo"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn2, rtTipTwoBx2, "TipTwo"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn3, rtTipTwoBx3, "TipTwo"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn4, rtTipTwoBx4, "TipTwo"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn5, rtTipTwoBx5, "TipTwo"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn6, rtTipTwoBx6, "TipTwo"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn7, rtTipTwoBx7, "TipTwo"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn8, rtTipTwoBx8, "TipTwo"));
+
+            //Dump Truck
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn1, rtDumpBx1, "DumpTruck"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn2, rtDumpBx2, "DumpTruck"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn3, rtDumpBx3, "DumpTruck"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn4, rtDumpBx4, "DumpTruck"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn5, rtDumpBx5, "DumpTruck"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn6, rtDumpBx6, "DumpTruck"));
+
+            //Stock Pile
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn1, rtStockBx1, "StockPile"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn2, rtStockBx2, "StockPile"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn3, rtStockBx3, "StockPile"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn4, rtStockBx4, "StockPile"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn5, rtStockBx5, "StockPile"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn6, rtStockBx6, "StockPile"));
+
+            //Main Cane
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtMainBn1, rtMainBx1, "MainCane"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtMainBn2, rtMainBx2, "MainCane"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtMainBn3, rtMainBx3, "MainCane"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtMainBn4, rtMainBx4, "MainCane"));
+
+            //Cane Knives
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtKnivesBn1, rtKnivesBx1, "CaneKnives"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtKnivesBn2, rtKnivesBx2, "CaneKnives"));
+
+            //Shredded Cane
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtShredBn1, rtShredBx1, "Shredder"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtShredBn2, rtShredBx2, "Shredder"));
+
+            //Foss NIR
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtFossBn1, rtFossBx1, "Nir"));
+            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtFossBn2, rtFossBx2, "Nir"));
+
+            try
+            {
+                foreach (var i in lTbox)
+                {
+                    if (i.Item1.Text != "")
+                    {
+                        SaveState(i.Item1, i.Item2, i.Item3);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LogOutput(e.ToString());
+            }
+            finally
+            {
+                LogOutput(DateTime.Now.ToString() + " : State save");
+
+                stateBatchNum++;
+            }
+
+        }
+
+        private void SaveState(RichTextBox rBatch, RichTextBox rCount, string areaName)
+        {
+            int bNumber = 0;
+            int bCount = 0;
+
+            if (rBatch.Text != "")
+            {
+                bNumber = int.Parse(rBatch.Text);
+                bCount = int.Parse(rCount.Text);
+            }
+
+            string saveState = @"INSERT INTO app_state_record
+                                 (batchNumBox, batchNum, countBox, currentCount, areaName, stateBatch, batchDate)
+                               VALUES
+                                 (@bNumBox, @bNum, @cntBox, @cCount, @aName, @sBatch, @bDate)";
+
+            SqlCommand cmd = new SqlCommand(saveState, con);
+
+            cmd.Parameters.AddWithValue("@bNumBox", rBatch.Rtf);
+            cmd.Parameters.AddWithValue("@bNum", bNumber);
+            cmd.Parameters.AddWithValue("@cntBox", rCount.Rtf);
+            cmd.Parameters.AddWithValue("@cCount", bCount);
+            cmd.Parameters.AddWithValue("@aName", areaName);
+            cmd.Parameters.AddWithValue("@sBatch", stateBatchNum);
+            cmd.Parameters.AddWithValue("@bDate", DateTime.Now);
+
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                LogOutput(e.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        private void SaveStateStart()
+        {
+            savingStateTimer = new Timer();
+            savingStateTimer.Interval = 10000;
+            savingStateTimer.Enabled = true;
+            savingStateTimer.Tick += new EventHandler(SaveState_Tick);
+        }
+
+        private void SaveState_Tick(object sender, EventArgs e)
+        {
+            ListBox();
+        }
+
+        private void CheckConfigStart()
+        {
+            checkConfigsTimer = new Timer();
+            checkConfigsTimer.Interval = 1;
+            checkConfigsTimer.Enabled = true;
+            checkConfigsTimer.Tick += new EventHandler(CheckConfig_Tick);
+        }
+
+        private void CheckConfig_Tick(object sender, EventArgs e)
+        {
+            DefaultValues();
         }
 
     }

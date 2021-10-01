@@ -227,6 +227,7 @@ namespace Cane_Tracking
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.rtBatchNumID = new System.Windows.Forms.RichTextBox();
             this.panel6.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -2310,6 +2311,7 @@ namespace Cane_Tracking
             // 
             this.panel18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.panel18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel18.Controls.Add(this.rtBatchNumID);
             this.panel18.Controls.Add(this.rtTrashBatchNum);
             this.panel18.Controls.Add(this.label14);
             this.panel18.Location = new System.Drawing.Point(3, 63);
@@ -2726,6 +2728,17 @@ namespace Cane_Tracking
             this.label8.TabIndex = 66;
             this.label8.Text = "Tipper One Count:";
             // 
+            // rtBatchNumID
+            // 
+            this.rtBatchNumID.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtBatchNumID.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtBatchNumID.Location = new System.Drawing.Point(206, 10);
+            this.rtBatchNumID.Name = "rtBatchNumID";
+            this.rtBatchNumID.Size = new System.Drawing.Size(63, 38);
+            this.rtBatchNumID.TabIndex = 45;
+            this.rtBatchNumID.Text = "";
+            this.rtBatchNumID.Visible = false;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -3006,6 +3019,7 @@ namespace Cane_Tracking
         private System.Windows.Forms.Label lblDs;
         private System.Windows.Forms.Label lblT2;
         private System.Windows.Forms.Label lblT1;
+        private System.Windows.Forms.RichTextBox rtBatchNumID;
     }
 }
 
