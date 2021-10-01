@@ -47,11 +47,11 @@ namespace Cane_Tracking
                 File.WriteAllText(Path.GetFullPath("Configurations/nirTimerCount.txt"), rtNir.Text);
                 MessageBox.Show("Changes Saved", "Saved");
 
-                this.Close();
+                /*this.Close();*/
             }
             else
             {
-                MessageBox.Show("Don't leave a field blank/0 count not allowed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Don't leave a field blank/0 not allowed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
