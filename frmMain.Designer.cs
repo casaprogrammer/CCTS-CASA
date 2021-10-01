@@ -1916,7 +1916,7 @@ namespace Cane_Tracking
             this.panel13.Controls.Add(this.panel14);
             this.panel13.Location = new System.Drawing.Point(1127, 109);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(594, 850);
+            this.panel13.Size = new System.Drawing.Size(594, 846);
             this.panel13.TabIndex = 45;
             // 
             // panel14
@@ -1929,7 +1929,7 @@ namespace Cane_Tracking
             this.panel14.Controls.Add(this.label11);
             this.panel14.Location = new System.Drawing.Point(3, 3);
             this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(585, 847);
+            this.panel14.Size = new System.Drawing.Size(585, 838);
             this.panel14.TabIndex = 42;
             // 
             // panel27
@@ -1938,7 +1938,7 @@ namespace Cane_Tracking
             this.panel27.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel27.Controls.Add(this.button1);
             this.panel27.Controls.Add(this.button2);
-            this.panel27.Location = new System.Drawing.Point(9, 777);
+            this.panel27.Location = new System.Drawing.Point(9, 768);
             this.panel27.Name = "panel27";
             this.panel27.Size = new System.Drawing.Size(563, 57);
             this.panel27.TabIndex = 48;
@@ -1987,7 +1987,7 @@ namespace Cane_Tracking
             this.panel16.Controls.Add(this.panel20);
             this.panel16.Controls.Add(this.panel19);
             this.panel16.Controls.Add(this.panel23);
-            this.panel16.Location = new System.Drawing.Point(9, 289);
+            this.panel16.Location = new System.Drawing.Point(9, 280);
             this.panel16.Name = "panel16";
             this.panel16.Size = new System.Drawing.Size(563, 486);
             this.panel16.TabIndex = 48;
@@ -2256,7 +2256,7 @@ namespace Cane_Tracking
             this.panel17.Controls.Add(this.dataGridView1);
             this.panel17.Controls.Add(this.panel18);
             this.panel17.Controls.Add(this.panel15);
-            this.panel17.Location = new System.Drawing.Point(9, 53);
+            this.panel17.Location = new System.Drawing.Point(9, 44);
             this.panel17.Name = "panel17";
             this.panel17.Size = new System.Drawing.Size(563, 237);
             this.panel17.TabIndex = 47;
@@ -2376,7 +2376,7 @@ namespace Cane_Tracking
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.Yellow;
-            this.label11.Location = new System.Drawing.Point(3, 16);
+            this.label11.Location = new System.Drawing.Point(3, 7);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(299, 32);
             this.label11.TabIndex = 42;
