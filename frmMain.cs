@@ -1406,7 +1406,7 @@ namespace Cane_Tracking
 
 
 
-        /*+============================================ SENSOR/TIMER METHODS ==================================================+*/
+        /*+======================================== SENSOR/TIMER/INCREMENT-DECREMENT METHODS ===============================================+*/
 
         //Serial Connection
         private void InitializeSerialConnections()
@@ -1433,7 +1433,7 @@ namespace Cane_Tracking
             }
         }
 
-        //Serial Data Receive
+        //Serial Data Received
         private void CaneSensorDataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             serialPort = (SerialPort)sender;
@@ -1463,6 +1463,7 @@ namespace Cane_Tracking
             /*Shredded Cane*/
             ShreddedCaneCount(incomingData);
         }
+
 
         /*
          * Sensor Countings and Outputs
@@ -1956,6 +1957,7 @@ namespace Cane_Tracking
             }
         }
 
+
         /*
          * FOSS NIR Timers (in seconds)
          */
@@ -2049,16 +2051,26 @@ namespace Cane_Tracking
 
         }
 
+
+        /*
+         * Increment Series No. during Side Cane Dumpings
+         * Tipper One click
+         * Tipper Two click
+         * Dump Truck click
+         * Stock PIle click
+         * 
+         * 
+         * Decrement Series No. during Undo Inputs
+         * Undo Entry click
+         */
         private void IncrementSeriesNo()
         {
-            seriesNo += 1;
-            rtSeriesNo.Text = (seriesNo).ToString();
+            rtSeriesNo.Text = (seriesNo += 1).ToString();
         }
 
         private void DecrementSeriesNo()
         {
-            seriesNo -= 1;
-            rtSeriesNo.Text = (seriesNo).ToString();
+            rtSeriesNo.Text = (seriesNo -= 1).ToString();
         }
 
 
@@ -2297,7 +2309,6 @@ namespace Cane_Tracking
 
 
         /*+======================================== OTHER METHODS ==========================================+*/
-
 
         //For logging output at the bottom richtextbox
         private void LogOutput(string output)
