@@ -74,10 +74,10 @@ namespace Cane_Tracking
             this.rtFossBn4 = new System.Windows.Forms.RichTextBox();
             this.rtFossBx3 = new System.Windows.Forms.RichTextBox();
             this.rtFossBn3 = new System.Windows.Forms.RichTextBox();
-            this.rtFossBx2 = new System.Windows.Forms.RichTextBox();
-            this.rtFossBn2 = new System.Windows.Forms.RichTextBox();
-            this.rtFossBx1 = new System.Windows.Forms.RichTextBox();
-            this.rtFossBn1 = new System.Windows.Forms.RichTextBox();
+            this.rtNirCount = new System.Windows.Forms.RichTextBox();
+            this.rtNirScanning = new System.Windows.Forms.RichTextBox();
+            this.rtWashingCount = new System.Windows.Forms.RichTextBox();
+            this.rtNirWashing = new System.Windows.Forms.RichTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.rtShredBx4 = new System.Windows.Forms.RichTextBox();
@@ -194,6 +194,7 @@ namespace Cane_Tracking
             this.BatchNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PlateNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel18 = new System.Windows.Forms.Panel();
+            this.rtBatchNumID = new System.Windows.Forms.RichTextBox();
             this.rtTrashBatchNum = new System.Windows.Forms.RichTextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.panel15 = new System.Windows.Forms.Panel();
@@ -227,7 +228,6 @@ namespace Cane_Tracking
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.rtBatchNumID = new System.Windows.Forms.RichTextBox();
             this.panel6.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -459,8 +459,8 @@ namespace Cane_Tracking
             this.rtTipOneBn3.Size = new System.Drawing.Size(85, 42);
             this.rtTipOneBn3.TabIndex = 16;
             this.rtTipOneBn3.Text = "";
+            this.rtTipOneBn3.TextChanged += new System.EventHandler(this.rtTipOneBn3_TextChanged);
             this.rtTipOneBn3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipOneBn3_KeyDown);
-            this.rtTipOneBn3.Validated += new System.EventHandler(this.rtTipOneBn3_Validated);
             // 
             // rtTipOneBx2
             // 
@@ -772,10 +772,10 @@ namespace Cane_Tracking
             this.panel8.Controls.Add(this.rtFossBn4);
             this.panel8.Controls.Add(this.rtFossBx3);
             this.panel8.Controls.Add(this.rtFossBn3);
-            this.panel8.Controls.Add(this.rtFossBx2);
-            this.panel8.Controls.Add(this.rtFossBn2);
-            this.panel8.Controls.Add(this.rtFossBx1);
-            this.panel8.Controls.Add(this.rtFossBn1);
+            this.panel8.Controls.Add(this.rtNirCount);
+            this.panel8.Controls.Add(this.rtNirScanning);
+            this.panel8.Controls.Add(this.rtWashingCount);
+            this.panel8.Controls.Add(this.rtNirWashing);
             this.panel8.Location = new System.Drawing.Point(13, 509);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(367, 115);
@@ -829,57 +829,57 @@ namespace Cane_Tracking
             this.rtFossBn3.TabIndex = 32;
             this.rtFossBn3.Text = "";
             // 
-            // rtFossBx2
+            // rtNirCount
             // 
-            this.rtFossBx2.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.rtFossBx2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtFossBx2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtFossBx2.Location = new System.Drawing.Point(97, 56);
-            this.rtFossBx2.Name = "rtFossBx2";
-            this.rtFossBx2.ReadOnly = true;
-            this.rtFossBx2.Size = new System.Drawing.Size(85, 44);
-            this.rtFossBx2.TabIndex = 31;
-            this.rtFossBx2.Text = "";
+            this.rtNirCount.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.rtNirCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtNirCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtNirCount.Location = new System.Drawing.Point(97, 56);
+            this.rtNirCount.Name = "rtNirCount";
+            this.rtNirCount.ReadOnly = true;
+            this.rtNirCount.Size = new System.Drawing.Size(85, 44);
+            this.rtNirCount.TabIndex = 31;
+            this.rtNirCount.Text = "";
             // 
-            // rtFossBn2
+            // rtNirScanning
             // 
-            this.rtFossBn2.BackColor = System.Drawing.SystemColors.Window;
-            this.rtFossBn2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtFossBn2.Enabled = false;
-            this.rtFossBn2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtFossBn2.Location = new System.Drawing.Point(97, 15);
-            this.rtFossBn2.Name = "rtFossBn2";
-            this.rtFossBn2.ReadOnly = true;
-            this.rtFossBn2.Size = new System.Drawing.Size(85, 42);
-            this.rtFossBn2.TabIndex = 30;
-            this.rtFossBn2.Text = "";
-            this.rtFossBn2.TextChanged += new System.EventHandler(this.rtFossBn2_TextChanged);
+            this.rtNirScanning.BackColor = System.Drawing.SystemColors.Window;
+            this.rtNirScanning.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtNirScanning.Enabled = false;
+            this.rtNirScanning.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtNirScanning.Location = new System.Drawing.Point(97, 15);
+            this.rtNirScanning.Name = "rtNirScanning";
+            this.rtNirScanning.ReadOnly = true;
+            this.rtNirScanning.Size = new System.Drawing.Size(85, 42);
+            this.rtNirScanning.TabIndex = 30;
+            this.rtNirScanning.Text = "";
+            this.rtNirScanning.TextChanged += new System.EventHandler(this.rtNirScanning_TextChanged);
             // 
-            // rtFossBx1
+            // rtWashingCount
             // 
-            this.rtFossBx1.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.rtFossBx1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtFossBx1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtFossBx1.Location = new System.Drawing.Point(14, 56);
-            this.rtFossBx1.Name = "rtFossBx1";
-            this.rtFossBx1.ReadOnly = true;
-            this.rtFossBx1.Size = new System.Drawing.Size(85, 44);
-            this.rtFossBx1.TabIndex = 29;
-            this.rtFossBx1.Text = "";
+            this.rtWashingCount.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.rtWashingCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtWashingCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtWashingCount.Location = new System.Drawing.Point(14, 56);
+            this.rtWashingCount.Name = "rtWashingCount";
+            this.rtWashingCount.ReadOnly = true;
+            this.rtWashingCount.Size = new System.Drawing.Size(85, 44);
+            this.rtWashingCount.TabIndex = 29;
+            this.rtWashingCount.Text = "";
             // 
-            // rtFossBn1
+            // rtNirWashing
             // 
-            this.rtFossBn1.BackColor = System.Drawing.SystemColors.Window;
-            this.rtFossBn1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtFossBn1.Enabled = false;
-            this.rtFossBn1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtFossBn1.Location = new System.Drawing.Point(14, 15);
-            this.rtFossBn1.Name = "rtFossBn1";
-            this.rtFossBn1.ReadOnly = true;
-            this.rtFossBn1.Size = new System.Drawing.Size(85, 42);
-            this.rtFossBn1.TabIndex = 28;
-            this.rtFossBn1.Text = "";
-            this.rtFossBn1.TextChanged += new System.EventHandler(this.rtFossBn1_TextChanged);
+            this.rtNirWashing.BackColor = System.Drawing.SystemColors.Window;
+            this.rtNirWashing.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtNirWashing.Enabled = false;
+            this.rtNirWashing.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtNirWashing.Location = new System.Drawing.Point(14, 15);
+            this.rtNirWashing.Name = "rtNirWashing";
+            this.rtNirWashing.ReadOnly = true;
+            this.rtNirWashing.Size = new System.Drawing.Size(85, 42);
+            this.rtNirWashing.TabIndex = 28;
+            this.rtNirWashing.Text = "";
+            this.rtNirWashing.TextChanged += new System.EventHandler(this.rtNirWashing_TextChanged);
             // 
             // label4
             // 
@@ -2319,6 +2319,17 @@ namespace Cane_Tracking
             this.panel18.Size = new System.Drawing.Size(555, 60);
             this.panel18.TabIndex = 45;
             // 
+            // rtBatchNumID
+            // 
+            this.rtBatchNumID.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtBatchNumID.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtBatchNumID.Location = new System.Drawing.Point(206, 10);
+            this.rtBatchNumID.Name = "rtBatchNumID";
+            this.rtBatchNumID.Size = new System.Drawing.Size(63, 38);
+            this.rtBatchNumID.TabIndex = 45;
+            this.rtBatchNumID.Text = "";
+            this.rtBatchNumID.Visible = false;
+            // 
             // rtTrashBatchNum
             // 
             this.rtTrashBatchNum.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -2483,6 +2494,7 @@ namespace Cane_Tracking
             this.btnLoadData.Size = new System.Drawing.Size(119, 86);
             this.btnLoadData.TabIndex = 57;
             this.btnLoadData.UseVisualStyleBackColor = false;
+            this.btnLoadData.Click += new System.EventHandler(this.btnLoadData_Click);
             this.btnLoadData.MouseHover += new System.EventHandler(this.btnLoadData_MouseHover);
             // 
             // panel32
@@ -2728,17 +2740,6 @@ namespace Cane_Tracking
             this.label8.TabIndex = 66;
             this.label8.Text = "Tipper One Count:";
             // 
-            // rtBatchNumID
-            // 
-            this.rtBatchNumID.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtBatchNumID.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtBatchNumID.Location = new System.Drawing.Point(206, 10);
-            this.rtBatchNumID.Name = "rtBatchNumID";
-            this.rtBatchNumID.Size = new System.Drawing.Size(63, 38);
-            this.rtBatchNumID.TabIndex = 45;
-            this.rtBatchNumID.Text = "";
-            this.rtBatchNumID.Visible = false;
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -2865,11 +2866,11 @@ namespace Cane_Tracking
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox rtFossBn4;
         private System.Windows.Forms.RichTextBox rtFossBx3;
-        private System.Windows.Forms.RichTextBox rtFossBn1;
+        private System.Windows.Forms.RichTextBox rtNirWashing;
         private System.Windows.Forms.RichTextBox rtFossBn3;
-        private System.Windows.Forms.RichTextBox rtFossBx1;
-        private System.Windows.Forms.RichTextBox rtFossBx2;
-        private System.Windows.Forms.RichTextBox rtFossBn2;
+        private System.Windows.Forms.RichTextBox rtWashingCount;
+        private System.Windows.Forms.RichTextBox rtNirCount;
+        private System.Windows.Forms.RichTextBox rtNirScanning;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.RichTextBox rtShredBx4;
         private System.Windows.Forms.Label label2;
