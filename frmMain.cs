@@ -826,6 +826,41 @@ namespace Cane_Tracking
 
 
 
+        /*+=============================================== MOUSE HOVERS ====================================================+*/
+
+        private void btnEditConfigs_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(this.btnEditConfigs, "Edit Application Configuration");
+        }
+
+        private void btnUndoEntry_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(this.btnUndoEntry, "Undo Last Entry");
+        }
+
+        private void btnPause_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(this.btnPause, "Pause Application");
+        }
+
+        private void btnDecrement_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(this.btnDecrement, "Decrement Side Cane Count");
+        }
+
+        private void btnLoadData_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(this.btnLoadData, "Load Saved Data");
+        }
+
+        private void btnReset_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(this.btnReset, "Restart Application");
+        }
+
+
+
+
         /*+============================================ BUTTON OPERATIONS ==================================================+*/
 
         private void btnTipperOne_Click(object sender, EventArgs e)
@@ -1366,41 +1401,6 @@ namespace Cane_Tracking
         {
             frmLoadData frm = new frmLoadData();
             frm.Show();
-        }
-
-
-
-
-        /*+=============================================== MOUSE HOVERS ====================================================+*/
-
-        private void btnEditConfigs_MouseHover(object sender, EventArgs e)
-        {
-            toolTip.SetToolTip(this.btnEditConfigs, "Edit Application Configuration");
-        }
-
-        private void btnUndoEntry_MouseHover(object sender, EventArgs e)
-        {
-            toolTip.SetToolTip(this.btnUndoEntry, "Undo Last Entry");
-        }
-
-        private void btnPause_MouseHover(object sender, EventArgs e)
-        {
-            toolTip.SetToolTip(this.btnPause, "Pause Application");
-        }
-
-        private void btnDecrement_MouseHover(object sender, EventArgs e)
-        {
-            toolTip.SetToolTip(this.btnDecrement, "Decrement Side Cane Count");
-        }
-
-        private void btnLoadData_MouseHover(object sender, EventArgs e)
-        {
-            toolTip.SetToolTip(this.btnLoadData, "Load Saved Data");
-        }
-
-        private void btnReset_MouseHover(object sender, EventArgs e)
-        {
-            toolTip.SetToolTip(this.btnReset, "Restart Application");
         }
 
 
