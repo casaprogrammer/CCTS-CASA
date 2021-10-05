@@ -18,14 +18,17 @@ namespace Cane_Tracking
             DefaultValues();
         }
 
+        Classes.CountInterval cnt = new Classes.CountInterval();
+
         private void DefaultValues()
-        {
-            rtTipperOne.Text = File.ReadAllText(Path.GetFullPath("Configurations/tipperOneMaxCount.txt"));
-            rtTipperTwo.Text = File.ReadAllText(Path.GetFullPath("Configurations/tipperTwoMaxCount.txt"));
-            rtDumpAndPile.Text = File.ReadAllText(Path.GetFullPath("Configurations/dumpAndPileMaxCount.txt"));
-            rtMainCane.Text = File.ReadAllText(Path.GetFullPath("Configurations/mainCaneMaxCount.txt"));
-            rtKnivesAndShredder.Text = File.ReadAllText(Path.GetFullPath("Configurations/knivesAndShredderMaxCount.txt"));
-            rtNir.Text = File.ReadAllText(Path.GetFullPath("Configurations/nirTimerCount.txt"));
+        { 
+            rtTipperOne.Text = cnt.TipperOneMaxCount.ToString();
+            rtTipperTwo.Text = cnt.TipperTwoMaxCount.ToString();
+            rtDumpAndPile.Text = cnt.DumpAndPileMaxCount.ToString();
+            rtMainCane.Text = cnt.MainCaneMaxCount.ToString();
+            rtKnivesAndShredder.Text = cnt.KnivesAndShredderMaxCount.ToString();
+            rtWashingTime.Text = cnt.WashingTime.ToString();
+            rtNir.Text = cnt.NirTime.ToString();
         }
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
@@ -36,16 +39,27 @@ namespace Cane_Tracking
                 rtDumpAndPile.Text != "" && rtDumpAndPile.Text != "0" && 
                 rtMainCane.Text != "" && rtMainCane.Text != "0" &&
                 rtKnivesAndShredder.Text != "" && rtKnivesAndShredder.Text != "0" &&
-                rtNir.Text != "" && rtNir.Text != "0"
+                rtNir.Text != "" && rtNir.Text != "0" &&
+                rtWashingTime.Text != "" && rtWashingTime.Text != "0"
                )
             {
-                File.WriteAllText(Path.GetFullPath("Configurations/tipperOneMaxCount.txt"), rtTipperOne.Text);
-                File.WriteAllText(Path.GetFullPath("Configurations/tipperTwoMaxCount.txt"), rtTipperTwo.Text);
-                File.WriteAllText(Path.GetFullPath("Configurations/dumpAndPileMaxCount.txt"), rtDumpAndPile.Text);
-                File.WriteAllText(Path.GetFullPath("Configurations/mainCaneMaxCount.txt"), rtMainCane.Text);
-                File.WriteAllText(Path.GetFullPath("Configurations/knivesAndShredderMaxCount.txt"), rtKnivesAndShredder.Text);
-                File.WriteAllText(Path.GetFullPath("Configurations/nirTimerCount.txt"), rtNir.Text);
-                MessageBox.Show("Changes Saved", "Saved");
+                try
+                {
+                    cnt.ChangeTipperOneCount(rtTipperOne.Text);
+                    cnt.ChangeTipperTwoCount(rtTipperTwo.Text);
+                    cnt.ChangeDumpAndPileCount(rtDumpAndPile.Text);
+                    cnt.ChangeMainCaneCount(rtMainCane.Text);
+                    cnt.ChangeKnivesAndShredderCount(rtKnivesAndShredder.Text);
+                    cnt.ChangeWashingTime(rtWashingTime.Text);
+                    cnt.ChangeNirTime(rtNir.Text);
+
+                    MessageBox.Show("Changes Saved", "Saved");
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error", e.ToString());
+                }
+                
 
                 /*this.Close();*/
             }
