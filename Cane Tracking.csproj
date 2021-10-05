@@ -47,6 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\BatchNumberList.cs" />
+    <Compile Include="Classes\CountInterval.cs" />
+    <Compile Include="Classes\CrossThreadingCheck.cs" />
+    <Compile Include="Classes\NirTimer.cs" />
+    <Compile Include="Classes\Sensor.cs" />
     <Compile Include="frmEditConfigs.cs">
       <SubType>Form</SubType>
     </Compile>

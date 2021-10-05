@@ -15,68 +15,28 @@ namespace Cane_Tracking
     public partial class frmMain : Form
     {
 
-        /*
-
-         SOME NOTES: 
-            PIN #
-            1. Side Cane = 2
-            2. Main Cane = 3
-            3. Cane Knives = 4
-            4. Shredded Cane = 5
-         */
+        Classes.Sensor sc = new Classes.Sensor();
+        Classes.BatchNumberList bnlist = new Classes.BatchNumberList();
+        Classes.CrossThreadingCheck ctcc = new Classes.CrossThreadingCheck();
+        Classes.NirTimer nirTimer = new Classes.NirTimer();
+        
+        ToolTip toolTip = new ToolTip();
+        SqlConnection con = new SqlConnection(File.ReadAllText(Path.GetFullPath("Configurations/DbConnection.txt")));
 
         private static SerialPort serialPort;
 
-        System.Windows.Forms.ToolTip toolTip = new System.Windows.Forms.ToolTip();
-        SqlConnection con = new SqlConnection(File.ReadAllText(Path.GetFullPath("Configurations/DbConnection.txt")));
-
-        delegate void SetColorCallBack(RichTextBox rt, Color color);
-        delegate void SetTextCallBack(RichTextBox rt, string text);
-        delegate void GetTextCallBack(RichTextBox rt);
-
-
-        private Timer washingTimer;
-        private Timer nirTimer;
         private Timer savingStateTimer;
         private Timer checkConfigsTimer;
 
+        private static int seriesNo = 0;
+        private static int stateBatchNum;
 
-        /*ALL DUMPED CANE ARE STORED IN LIST FOR TRACKING*/
-        List<Tuple<RichTextBox, RichTextBox, string>> dumpCanesHistory = new List<Tuple<RichTextBox, RichTextBox, string>>();
-        List<Tuple<RichTextBox, RichTextBox>> tipperOne = new List<Tuple<RichTextBox, RichTextBox>>();
-        List<Tuple<RichTextBox, RichTextBox>> tipperTwo = new List<Tuple<RichTextBox, RichTextBox>>();
-        List<Tuple<RichTextBox, RichTextBox>> dumpTruck = new List<Tuple<RichTextBox, RichTextBox>>();
-        List<Tuple<RichTextBox, RichTextBox>> stockPile = new List<Tuple<RichTextBox, RichTextBox>>();
-        List<Tuple<RichTextBox, RichTextBox>> mainCane = new List<Tuple<RichTextBox, RichTextBox>>();
-        List<Tuple<RichTextBox, RichTextBox>> caneKnives = new List<Tuple<RichTextBox, RichTextBox>>();
-        List<Tuple<RichTextBox, RichTextBox>> shreddedCane = new List<Tuple<RichTextBox, RichTextBox>>();
+        private static bool decrementing = false;
+        private static bool pause = false;
 
-        List<string> mainCaneBatchNumbers = new List<string>();
-        List<string> caneKnivesBatchNumbers = new List<string>();
-        List<string> shredderBatchNumbers = new List<string>();
+        private static string logTextOutput;
+        private static string batch;
 
-        /*NIR TIMER*/
-        List<Timer> washingTimerList = new List<Timer>();
-        List<Timer> nirTimerList = new List<Timer>();
-
-        /*MAX PROXIMITY SENSOR COUNT*/
-        private int tipperOneMaxCount;
-        private int tipperTwoMaxCount;
-        private int dumpAndPileMaxCount;
-        private int mainCaneMaxCount;
-        private int knivesAndShredderMaxCount;
-        private int fossNirTime;
-
-        private int fossNirWashingTime = 5;
-
-        private int seriesNo = 0;
-        private int stateBatchNum;
-
-        private bool decrementing = false;
-        private bool pause = false;
-
-        private string logTextOutput;
-        private string batch;
 
         public frmMain()
         {
@@ -87,7 +47,6 @@ namespace Cane_Tracking
             //ConnectToDB();
             CheckConfigStart();
         }
-
 
 
 
@@ -786,18 +745,18 @@ namespace Cane_Tracking
             int c = 0;
             if (this.rtNirWashing.Text != "")
             {
-                if (washingTimerList.Count > 0)
+                if (nirTimer.washingTimerList.Count > 0)
                 {
-                    for (int i = 0; i < washingTimerList.Count;)
+                    for (int i = 0; i < nirTimer.washingTimerList.Count;)
                     {
-                        washingTimerList[i].Stop();
-                        washingTimerList.RemoveAt(i);
+                        nirTimer.washingTimerList[i].Stop();
+                        nirTimer.washingTimerList.RemoveAt(i);
                     }
-                    SetWashingTimer(ref c, rtNirWashing, rtWashingCount);
+                    nirTimer.SetWashingTimer(ref c, rtNirScanning, rtNirCount, rtNirWashing, rtWashingCount);
                 }
                 else
                 {
-                    SetWashingTimer(ref c, rtNirWashing, rtWashingCount);
+                    nirTimer.SetWashingTimer(ref c, rtNirScanning, rtNirCount, rtNirWashing, rtWashingCount);
                 }
             }
         }
@@ -807,18 +766,18 @@ namespace Cane_Tracking
             int c = 0;
             if (this.rtNirScanning.Text != "")
             {
-                if (nirTimerList.Count > 0)
+                if (nirTimer.nirTimerList.Count > 0)
                 {
-                    for (int i = 0; i < nirTimerList.Count;)
+                    for (int i = 0; i < nirTimer.nirTimerList.Count;)
                     {
-                        nirTimerList[i].Stop();
-                        nirTimerList.RemoveAt(i);
+                        nirTimer.nirTimerList[i].Stop();
+                        nirTimer.nirTimerList.RemoveAt(i);
                     }
-                    SetNirTimer(ref c, rtNirScanning, rtNirCount);
+                    nirTimer.SetNirTimer(ref c, rtNirScanning, rtNirCount);
                 }
                 else
                 {
-                    SetNirTimer(ref c, rtNirScanning, rtNirCount);
+                    nirTimer.SetNirTimer(ref c, rtNirScanning, rtNirCount);
                 }
             }
         }
@@ -879,8 +838,8 @@ namespace Cane_Tracking
 
                 if (rtTipOneBn1.Text == "" && rtTipOneBx1.Text == "")
                 {
-                    tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn1, rtTipOneBx1));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn1, rtTipOneBx1, type));
+                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn1, rtTipOneBx1));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn1, rtTipOneBx1, type));
                     rtTipOneBn1.Text = batch;
                     rtTipOneBx1.Text = "0";
                     rtTipOneBx1.BackColor = Color.Maroon;
@@ -889,8 +848,8 @@ namespace Cane_Tracking
 
                 else if (rtTipOneBn2.Text == "" && rtTipOneBx2.Text == "")
                 {
-                    tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn2, rtTipOneBx2));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn2, rtTipOneBx2, type));
+                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn2, rtTipOneBx2));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn2, rtTipOneBx2, type));
                     rtTipOneBn2.Text = batch;
                     rtTipOneBx2.Text = "0";
                     rtTipOneBx2.BackColor = Color.Maroon;
@@ -899,8 +858,8 @@ namespace Cane_Tracking
 
                 else if (rtTipOneBn3.Text == "" && rtTipOneBx3.Text == "")
                 {
-                    tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn3, rtTipOneBx3));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn3, rtTipOneBx3, type));
+                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn3, rtTipOneBx3));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn3, rtTipOneBx3, type));
                     rtTipOneBn3.Text = batch;
                     rtTipOneBx3.Text = "0";
                     rtTipOneBx3.BackColor = Color.Maroon;
@@ -909,8 +868,8 @@ namespace Cane_Tracking
 
                 else if (rtTipOneBn4.Text == "" && rtTipOneBx4.Text == "")
                 {
-                    tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn4, rtTipOneBx4));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn4, rtTipOneBx4, type));
+                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn4, rtTipOneBx4));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn4, rtTipOneBx4, type));
                     rtTipOneBn4.Text = batch;
                     rtTipOneBx4.Text = "0";
                     rtTipOneBx4.BackColor = Color.Maroon;
@@ -919,8 +878,8 @@ namespace Cane_Tracking
 
                 else if (rtTipOneBn5.Text == "" && rtTipOneBx5.Text == "")
                 {
-                    tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn5, rtTipOneBx5));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn5, rtTipOneBx5, type));
+                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn5, rtTipOneBx5));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn5, rtTipOneBx5, type));
                     rtTipOneBn5.Text = batch;
                     rtTipOneBx5.Text = "0";
                     rtTipOneBx5.BackColor = Color.Maroon;
@@ -929,8 +888,8 @@ namespace Cane_Tracking
 
                 else if (rtTipOneBn6.Text == "" && rtTipOneBx6.Text == "")
                 {
-                    tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn6, rtTipOneBx6));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn6, rtTipOneBx6, type));
+                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn6, rtTipOneBx6));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn6, rtTipOneBx6, type));
                     rtTipOneBn6.Text = batch;
                     rtTipOneBx6.Text = "0";
                     rtTipOneBx6.BackColor = Color.Maroon;
@@ -939,8 +898,8 @@ namespace Cane_Tracking
 
                 else if (rtTipOneBn7.Text == "" && rtTipOneBx7.Text == "")
                 {
-                    tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn7, rtTipOneBx7));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn7, rtTipOneBx7, type));
+                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn7, rtTipOneBx7));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn7, rtTipOneBx7, type));
                     rtTipOneBn7.Text = batch;
                     rtTipOneBx7.Text = "0";
                     rtTipOneBx7.BackColor = Color.Maroon;
@@ -949,8 +908,8 @@ namespace Cane_Tracking
 
                 else if (rtTipOneBn8.Text == "" && rtTipOneBx8.Text == "")
                 {
-                    tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn8, rtTipOneBx8));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn8, rtTipOneBx8, type));
+                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn8, rtTipOneBx8));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn8, rtTipOneBx8, type));
                     rtTipOneBn8.Text = batch;
                     rtTipOneBx8.Text = "0";
                     rtTipOneBx8.BackColor = Color.Maroon;
@@ -982,8 +941,8 @@ namespace Cane_Tracking
 
                 if (rtTipTwoBn1.Text == "" && rtTipTwoBx1.Text == "")
                 {
-                    tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn1, rtTipTwoBx1));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn1, rtTipTwoBx1, type));
+                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn1, rtTipTwoBx1));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn1, rtTipTwoBx1, type));
                     rtTipTwoBn1.Text = batch;
                     rtTipTwoBx1.Text = "0";
                     rtTipTwoBx1.BackColor = Color.Maroon;
@@ -992,8 +951,8 @@ namespace Cane_Tracking
 
                 else if (rtTipTwoBn2.Text == "" && rtTipTwoBx2.Text == "")
                 {
-                    tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn2, rtTipTwoBx2));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn2, rtTipTwoBx2, type));
+                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn2, rtTipTwoBx2));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn2, rtTipTwoBx2, type));
                     rtTipTwoBn2.Text = batch;
                     rtTipTwoBx2.Text = "0";
                     rtTipTwoBx2.BackColor = Color.Maroon;
@@ -1002,8 +961,8 @@ namespace Cane_Tracking
 
                 else if (rtTipTwoBn3.Text == "" && rtTipTwoBx3.Text == "")
                 {
-                    tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn3, rtTipTwoBx3));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn3, rtTipTwoBx3, type));
+                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn3, rtTipTwoBx3));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn3, rtTipTwoBx3, type));
                     rtTipTwoBn3.Text = batch;
                     rtTipTwoBx3.Text = "0";
                     rtTipTwoBx3.BackColor = Color.Maroon;
@@ -1012,8 +971,8 @@ namespace Cane_Tracking
 
                 else if (rtTipTwoBn4.Text == "" && rtTipTwoBx4.Text == "")
                 {
-                    tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn4, rtTipTwoBx4));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn4, rtTipTwoBx4, type));
+                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn4, rtTipTwoBx4));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn4, rtTipTwoBx4, type));
                     rtTipTwoBn4.Text = batch;
                     rtTipTwoBx4.Text = "0";
                     rtTipTwoBx4.BackColor = Color.Maroon;
@@ -1022,8 +981,8 @@ namespace Cane_Tracking
 
                 else if (rtTipTwoBn5.Text == "" && rtTipTwoBx5.Text == "")
                 {
-                    tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn5, rtTipTwoBx5));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn5, rtTipTwoBx5, type));
+                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn5, rtTipTwoBx5));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn5, rtTipTwoBx5, type));
                     rtTipTwoBn5.Text = batch;
                     rtTipTwoBx5.Text = "0";
                     rtTipTwoBx5.BackColor = Color.Maroon;
@@ -1032,8 +991,8 @@ namespace Cane_Tracking
 
                 else if (rtTipTwoBn6.Text == "" && rtTipTwoBx6.Text == "")
                 {
-                    tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn6, rtTipTwoBx6));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn6, rtTipTwoBx6, type));
+                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn6, rtTipTwoBx6));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn6, rtTipTwoBx6, type));
                     rtTipTwoBn6.Text = batch;
                     rtTipTwoBx6.Text = "0";
                     rtTipTwoBx6.BackColor = Color.Maroon;
@@ -1042,8 +1001,8 @@ namespace Cane_Tracking
 
                 else if (rtTipTwoBn7.Text == "" && rtTipTwoBx7.Text == "")
                 {
-                    tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn7, rtTipTwoBx7));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn7, rtTipTwoBx7, type));
+                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn7, rtTipTwoBx7));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn7, rtTipTwoBx7, type));
                     rtTipTwoBn7.Text = batch;
                     rtTipTwoBx7.Text = "0";
                     rtTipTwoBx7.BackColor = Color.Maroon;
@@ -1052,8 +1011,8 @@ namespace Cane_Tracking
 
                 else if (rtTipTwoBn8.Text == "" && rtTipTwoBx8.Text == "")
                 {
-                    tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn8, rtTipTwoBx8));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn8, rtTipTwoBx8, type));
+                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn8, rtTipTwoBx8));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn8, rtTipTwoBx8, type));
                     rtTipTwoBn8.Text = batch;
                     rtTipTwoBx8.Text = "0";
                     rtTipTwoBx8.BackColor = Color.Maroon;
@@ -1085,8 +1044,8 @@ namespace Cane_Tracking
 
                 if (rtDumpBn1.Text == "" && rtDumpBx1.Text == "")
                 {
-                    dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn1, rtDumpBx1));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn1, rtDumpBx1, type));
+                    bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn1, rtDumpBx1));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn1, rtDumpBx1, type));
                     rtDumpBn1.Text = batch;
                     rtDumpBx1.Text = "0";
                     rtDumpBx1.BackColor = Color.Maroon;
@@ -1095,8 +1054,8 @@ namespace Cane_Tracking
 
                 else if (rtDumpBn2.Text == "" && rtDumpBx2.Text == "")
                 {
-                    dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn2, rtDumpBx2));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn2, rtDumpBx2, type));
+                    bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn2, rtDumpBx2));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn2, rtDumpBx2, type));
                     rtDumpBn2.Text = batch;
                     rtDumpBx2.Text = "0";
                     rtDumpBx2.BackColor = Color.Maroon;
@@ -1105,8 +1064,8 @@ namespace Cane_Tracking
 
                 else if (rtDumpBn3.Text == "" && rtDumpBx3.Text == "")
                 {
-                    dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn3, rtDumpBx3));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn3, rtDumpBx3, type));
+                    bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn3, rtDumpBx3));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn3, rtDumpBx3, type));
                     rtDumpBn3.Text = batch;
                     rtDumpBx3.Text = "0";
                     rtDumpBx3.BackColor = Color.Maroon;
@@ -1115,8 +1074,8 @@ namespace Cane_Tracking
 
                 else if (rtDumpBn4.Text == "" && rtDumpBx4.Text == "")
                 {
-                    dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn4, rtDumpBx4));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn4, rtDumpBx4, type));
+                    bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn4, rtDumpBx4));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn4, rtDumpBx4, type));
                     rtDumpBn4.Text = batch;
                     rtDumpBx4.Text = "0";
                     rtDumpBx4.BackColor = Color.Maroon;
@@ -1125,8 +1084,8 @@ namespace Cane_Tracking
 
                 else if (rtDumpBn5.Text == "" && rtDumpBx5.Text == "")
                 {
-                    dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn5, rtDumpBx5));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn5, rtDumpBx5, type));
+                    bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn5, rtDumpBx5));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn5, rtDumpBx5, type));
                     rtDumpBn5.Text = batch;
                     rtDumpBx5.Text = "0";
                     rtDumpBx5.BackColor = Color.Maroon;
@@ -1135,8 +1094,8 @@ namespace Cane_Tracking
 
                 else if (rtDumpBn6.Text == "" && rtDumpBx6.Text == "")
                 {
-                    dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn6, rtDumpBx6));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn6, rtDumpBx6, type));
+                    bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn6, rtDumpBx6));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn6, rtDumpBx6, type));
                     rtDumpBn6.Text = batch;
                     rtDumpBx6.Text = "0";
                     rtDumpBx6.BackColor = Color.Maroon;
@@ -1186,8 +1145,8 @@ namespace Cane_Tracking
 
                 if (rtStockBn1.Text == "" && rtStockBx1.Text == "")
                 {
-                    stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn1, rtStockBx1));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn1, rtStockBx1, type));
+                    bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn1, rtStockBx1));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn1, rtStockBx1, type));
                     rtStockBn1.Text = batch;
                     rtStockBx1.Text = "0";
                     rtStockBx1.BackColor = Color.Maroon;
@@ -1196,8 +1155,8 @@ namespace Cane_Tracking
 
                 else if (rtStockBn2.Text == "" && rtStockBx2.Text == "")
                 {
-                    stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn2, rtStockBx2));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn2, rtStockBx2, type));
+                    bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn2, rtStockBx2));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn2, rtStockBx2, type));
                     rtStockBn2.Text = batch;
                     rtStockBx2.Text = "0";
                     rtStockBx2.BackColor = Color.Maroon;
@@ -1206,8 +1165,8 @@ namespace Cane_Tracking
 
                 else if (rtStockBn3.Text == "" && rtStockBx3.Text == "")
                 {
-                    stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn3, rtStockBx3));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn3, rtStockBx3, type));
+                    bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn3, rtStockBx3));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn3, rtStockBx3, type));
                     rtStockBn3.Text = batch;
                     rtStockBx3.Text = "0";
                     rtStockBx3.BackColor = Color.Maroon;
@@ -1216,8 +1175,8 @@ namespace Cane_Tracking
 
                 else if (rtStockBn4.Text == "" && rtStockBx4.Text == "")
                 {
-                    stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn4, rtStockBx4));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn4, rtStockBx4, type));
+                    bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn4, rtStockBx4));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn4, rtStockBx4, type));
                     rtStockBn4.Text = batch;
                     rtStockBx4.Text = "0";
                     rtStockBx4.BackColor = Color.Maroon;
@@ -1226,8 +1185,8 @@ namespace Cane_Tracking
 
                 else if (rtStockBn5.Text == "" && rtStockBx5.Text == "")
                 {
-                    stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn5, rtStockBx5));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn5, rtStockBx5, type));
+                    bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn5, rtStockBx5));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn5, rtStockBx5, type));
                     rtStockBn5.Text = batch;
                     rtStockBx5.Text = "0";
                     rtStockBx5.BackColor = Color.Maroon;
@@ -1236,8 +1195,8 @@ namespace Cane_Tracking
 
                 else if (rtStockBn6.Text == "" && rtStockBx6.Text == "")
                 {
-                    stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn6, rtStockBx6));
-                    dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn6, rtStockBx6, type));
+                    bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn6, rtStockBx6));
+                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn6, rtStockBx6, type));
                     rtStockBn6.Text = batch;
                     rtStockBx6.Text = "0";
                     rtStockBx6.BackColor = Color.Maroon;
@@ -1300,63 +1259,63 @@ namespace Cane_Tracking
         {
             int i;
 
-            if (dumpCanesHistory.Count > 0)
+            if (bnlist.dumpCanesHistory.Count > 0)
             {
                 DialogResult dialog = MessageBox.Show("Are you sure you want to undo last entry?", "Confirmation", MessageBoxButtons.YesNo);
 
                 if (dialog == DialogResult.Yes)
                 {
-                    if (dumpCanesHistory[dumpCanesHistory.Count - 1].Item3.Equals("Tipper One"))
+                    if (bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item3.Equals("Tipper One"))
                     {
-                        for (i = 0; i < tipperOne.Count; i++)
+                        for (i = 0; i < bnlist.tipperOne.Count; i++)
                         {
-                            if (tipperOne[i].Item1 == dumpCanesHistory[dumpCanesHistory.Count - 1].Item1)
+                            if (bnlist.tipperOne[i].Item1 == bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item1)
                             {
-                                tipperOne.RemoveAt(i);
+                                bnlist.tipperOne.RemoveAt(i);
                             }
                         }
                     }
-                    else if (dumpCanesHistory[dumpCanesHistory.Count - 1].Item3.Equals("Tipper Two"))
+                    else if (bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item3.Equals("Tipper Two"))
                     {
-                        for (i = 0; i < tipperTwo.Count; i++)
+                        for (i = 0; i < bnlist.tipperTwo.Count; i++)
                         {
-                            if (tipperTwo[i].Item1 == dumpCanesHistory[dumpCanesHistory.Count - 1].Item1)
+                            if (bnlist.tipperTwo[i].Item1 == bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item1)
                             {
-                                tipperTwo.RemoveAt(i);
+                                bnlist.tipperTwo.RemoveAt(i);
                             }
                         }
                     }
-                    else if (dumpCanesHistory[dumpCanesHistory.Count - 1].Item3.Equals("Dump Truck"))
+                    else if (bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item3.Equals("Dump Truck"))
                     {
-                        for (i = 0; i < dumpTruck.Count; i++)
+                        for (i = 0; i < bnlist.dumpTruck.Count; i++)
                         {
-                            if (dumpTruck[i].Item1 == dumpCanesHistory[dumpCanesHistory.Count - 1].Item1)
+                            if (bnlist.dumpTruck[i].Item1 == bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item1)
                             {
-                                dumpTruck.RemoveAt(i);
+                                bnlist.dumpTruck.RemoveAt(i);
                             }
                         }
                     }
-                    else if (dumpCanesHistory[dumpCanesHistory.Count - 1].Item3.Equals("Stock Pile"))
+                    else if (bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item3.Equals("Stock Pile"))
                     {
-                        for (i = 0; i < stockPile.Count; i++)
+                        for (i = 0; i < bnlist.stockPile.Count; i++)
                         {
-                            if (stockPile[i].Item1 == dumpCanesHistory[dumpCanesHistory.Count - 1].Item1)
+                            if (bnlist.stockPile[i].Item1 == bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item1)
                             {
-                                stockPile.RemoveAt(i);
+                                bnlist.stockPile.RemoveAt(i);
                             }
                         }
                     }
 
 
-                    string t = DateTime.Now.ToString() + " : " + "Removed Batch #" + dumpCanesHistory[dumpCanesHistory.Count - 1].Item1.Text
-                                                       + " at " + dumpCanesHistory[dumpCanesHistory.Count - 1].Item3;
+                    string t = DateTime.Now.ToString() + " : " + "Removed Batch #" + bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item1.Text
+                                                       + " at " + bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item3;
                     LogOutput(t);
 
-                    ChangeText(dumpCanesHistory[dumpCanesHistory.Count - 1].Item1, "");
-                    ChangeText(dumpCanesHistory[dumpCanesHistory.Count - 1].Item2, "");
-                    ChangeColorTextBox(dumpCanesHistory[dumpCanesHistory.Count - 1].Item2, Color.CornflowerBlue);
+                    ctcc.ChangeText(bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item1, "");
+                    ctcc.ChangeText(bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item2, "");
+                    ctcc.ChangeColorTextBox(bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item2, Color.CornflowerBlue);
 
-                    dumpCanesHistory.RemoveAt(dumpCanesHistory.Count - 1);
+                    bnlist.dumpCanesHistory.RemoveAt(bnlist.dumpCanesHistory.Count - 1);
 
                     DecrementSeriesNo();
                 }
@@ -1384,7 +1343,7 @@ namespace Cane_Tracking
             }
 
             LogOutput(t);
-            PauseNirCount();
+            nirTimer.PauseNirCount(pause);
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -1406,7 +1365,7 @@ namespace Cane_Tracking
 
 
 
-        /*+======================================== SENSOR/TIMER/INCREMENT-DECREMENT METHODS ===============================================+*/
+        /*+======================================== SENSOR/INCREMENT-DECREMENT METHODS ===============================================+*/
 
         //Serial Connection
         private void InitializeSerialConnections()
@@ -1439,616 +1398,24 @@ namespace Cane_Tracking
             serialPort = (SerialPort)sender;
             string incomingData = serialPort.ReadLine().TrimEnd('\r');
 
-            /*Sensor Indicators*/
-            SensorIndicatorColor(incomingData);
+            sc.SensorIndicator(incomingData, rtSideCaneCheck, rtMainCaneCheck, rtCaneKnivesCheck, rtShredderCheck);
 
-            /*Tipper One*/
-            TipperOneCount(incomingData);
+            sc.TipperOne(incomingData, pause, decrementing, bnlist);
 
-            /*Tipper Two*/
-            TipperTwoCount(incomingData);
+            sc.TipperTwo(incomingData, pause, decrementing, bnlist);
 
-            /*Dump Truck*/
-            DumpTruckCount(incomingData);
+            sc.DumpTruck(incomingData, pause, decrementing, bnlist);
 
-            /*Stock Pile*/
-            StockPileCount(incomingData);
+            sc.StockPile(incomingData, pause, decrementing, bnlist);
 
-            /*Main Cane*/
-            MainCanecount(incomingData);
+            sc.MainCane(incomingData, pause, bnlist,
+                        rtMainBn1, rtMainBn2, rtMainBn3, rtMainBn4, rtMainBx1, rtMainBx2, rtMainBx3, rtMainBx4);
 
-            /*Cane Knives*/
-            CaneKnivesCount(incomingData);
+            sc.CaneKnives(incomingData, pause, bnlist,
+                          rtKnivesBn1, rtKnivesBn2, rtKnivesBx1, rtKnivesBx2);
 
-            /*Shredded Cane*/
-            ShreddedCaneCount(incomingData);
-        }
-
-
-        /*
-         * Sensor Countings and Outputs
-         * All methods here are place 
-         * inside (CaneSensorDataReceivedHandler)
-         */
-        private void SensorIndicatorColor(string incomingData)
-        {
-            ChangeColorTextBox(rtSideCaneCheck, Color.CornflowerBlue);
-            ChangeColorTextBox(rtMainCaneCheck, Color.CornflowerBlue);
-            ChangeColorTextBox(rtCaneKnivesCheck, Color.CornflowerBlue);
-            ChangeColorTextBox(rtShredderCheck, Color.CornflowerBlue);
-
-            if (incomingData.ToLower() == "side cane object")
-            {
-                ChangeColorTextBox(rtSideCaneCheck, Color.Orange);
-            }
-
-            if (incomingData.ToLower() == "main cane object")
-            {
-                ChangeColorTextBox(rtMainCaneCheck, Color.Orange);
-            }
-
-            if (incomingData.ToLower() == "cane knives object")
-            {
-                ChangeColorTextBox(rtCaneKnivesCheck, Color.Orange);
-            }
-
-            if (incomingData.ToLower() == "shredded cane object")
-            {
-                ChangeColorTextBox(rtShredderCheck, Color.Orange);
-            }
-        }
-
-        private void TipperOneCount(string incomingData)
-        {
-            int count;
-
-            for (int i = 0; i < tipperOne.Count; i++)
-            {
-                if (incomingData.ToLower() == "side cane object")
-                {
-                    count = int.Parse(GetTextboxValue(tipperOne[i].Item2));
-                    if (decrementing)
-                    {
-                        if (!pause)
-                        {
-                            count--;
-                        }
-                    }
-                    else
-                    {
-                        if (!pause)
-                        {
-                            count++;
-                        }
-                    }
-                    ChangeText(tipperOne[i].Item2, count.ToString());
-
-                    if (count > tipperOneMaxCount)
-                    {
-                        dumpCanesHistory.Remove(new Tuple<RichTextBox, RichTextBox, string>(tipperOne[i].Item1, tipperOne[i].Item2, "Tipper One"));
-                        mainCaneBatchNumbers.Add(GetTextboxValue(tipperOne[i].Item1));
-
-                        ChangeText(tipperOne[i].Item1, "");
-                        ChangeText(tipperOne[i].Item2, "");
-                        ChangeColorTextBox(tipperOne[i].Item2, Color.CornflowerBlue);
-
-                    }
-                }
-            }
-
-            for (int i = tipperOne.Count - 1; i >= 0; i--)
-            {
-                if (GetTextboxValue(tipperOne[i].Item1) == "")
-                {
-                    tipperOne.RemoveAt(i);
-                }
-            }
-        }
-
-        private void TipperTwoCount(string incomingData)
-        {
-            int count;
-            for (int i = 0; i < tipperTwo.Count; i++)
-            {
-                if (incomingData.ToLower() == "side cane object")
-                {
-                    count = int.Parse(GetTextboxValue(tipperTwo[i].Item2));
-                    if (decrementing)
-                    {
-                        if (!pause)
-                        {
-                            count--;
-                        }
-                    }
-                    else
-                    {
-                        if (!pause)
-                        {
-                            count++;
-                        }
-                    }
-                    ChangeText(tipperTwo[i].Item2, count.ToString());
-
-                    if (count > tipperTwoMaxCount)
-                    {
-                        dumpCanesHistory.Remove(new Tuple<RichTextBox, RichTextBox, string>(tipperTwo[i].Item1, tipperTwo[i].Item2, "Tipper Two"));
-                        mainCaneBatchNumbers.Add(GetTextboxValue(tipperTwo[i].Item1));
-
-                        ChangeText(tipperTwo[i].Item1, "");
-                        ChangeText(tipperTwo[i].Item2, "");
-                        ChangeColorTextBox(tipperTwo[i].Item2, Color.CornflowerBlue);
-                    }
-                }
-            }
-
-            for (int i = tipperTwo.Count - 1; i >= 0; i--)
-            {
-                if (GetTextboxValue(tipperTwo[i].Item1) == "")
-                {
-                    tipperTwo.RemoveAt(i);
-                }
-            }
-        }
-
-        private void DumpTruckCount(string incomingData)
-        {
-            int count;
-            for (int i = 0; i < dumpTruck.Count; i++)
-            {
-                if (incomingData.ToLower() == "side cane object")
-                {
-                    count = int.Parse(GetTextboxValue(dumpTruck[i].Item2));
-                    if (decrementing)
-                    {
-                        if (!pause)
-                        {
-                            count--;
-                        }
-                    }
-                    else
-                    {
-                        if (!pause)
-                        {
-                            count++;
-                        }
-                    }
-                    ChangeText(dumpTruck[i].Item2, count.ToString());
-
-                    if (count > dumpAndPileMaxCount)
-                    {
-                        dumpCanesHistory.Remove(new Tuple<RichTextBox, RichTextBox, string>(dumpTruck[i].Item1, dumpTruck[i].Item2, "Dump Truck"));
-                        mainCaneBatchNumbers.Add(GetTextboxValue(dumpTruck[i].Item1));
-
-                        ChangeText(dumpTruck[i].Item1, "");
-                        ChangeText(dumpTruck[i].Item2, "");
-                        ChangeColorTextBox(dumpTruck[i].Item2, Color.CornflowerBlue);
-                    }
-                }
-            }
-
-            for (int i = dumpTruck.Count - 1; i >= 0; i--)
-            {
-                if (GetTextboxValue(dumpTruck[i].Item1) == "")
-                {
-                    dumpTruck.RemoveAt(i);
-                }
-            }
-        }
-
-        private void StockPileCount(string incomingData)
-        {
-            int count;
-            for (int i = 0; i < stockPile.Count; i++)
-            {
-                if (incomingData.ToLower() == "side cane object")
-                {
-                    count = int.Parse(GetTextboxValue(stockPile[i].Item2));
-                    if (decrementing)
-                    {
-                        if (!pause)
-                        {
-                            count--;
-                        }
-                    }
-                    else
-                    {
-                        if (!pause)
-                        {
-                            count++;
-                        }
-                    }
-                    ChangeText(stockPile[i].Item2, count.ToString());
-
-                    if (count > dumpAndPileMaxCount)
-                    {
-                        dumpCanesHistory.Remove(new Tuple<RichTextBox, RichTextBox, string>(stockPile[i].Item1, stockPile[i].Item2, "Stock Pile"));
-                        mainCaneBatchNumbers.Add(GetTextboxValue(stockPile[i].Item1));
-
-                        ChangeText(stockPile[i].Item1, "");
-                        ChangeText(stockPile[i].Item2, "");
-                        ChangeColorTextBox(stockPile[i].Item2, Color.CornflowerBlue);
-                    }
-                }
-            }
-
-            for (int i = stockPile.Count - 1; i >= 0; i--)
-            {
-                if (GetTextboxValue(stockPile[i].Item1) == "")
-                {
-                    stockPile.RemoveAt(i);
-                }
-            }
-        }
-
-        private void MainCanecount(string incomingData)
-        {
-            int count;
-
-            /*
-             * Looping to the batch numbers stored in list coming from side canes.
-             * Loop from list to fill in empty boxes
-             * Loop from list to prevent overlapping of 
-             * batch numbers with the same countings.
-             * 
-             * Batch numbers are also being added to another list
-             * responsible for tracking the countings
-             */
-
-            for (int i = 0; i < mainCaneBatchNumbers.Count; i++)
-            {
-                if (GetTextboxValue(rtMainBn1) == "")
-                {
-                    ChangeText(rtMainBn1, mainCaneBatchNumbers[i]);
-                    ChangeText(rtMainBx1, "0");
-                    ChangeColorTextBox(rtMainBx1, Color.Maroon);
-                    ChangeForeColorTextBox(rtMainBx1, Color.White);
-                    mainCane.Add(new Tuple<RichTextBox, RichTextBox>(rtMainBn1, rtMainBx1));
-                }
-                else if (GetTextboxValue(rtMainBn1) != "" && GetTextboxValue(rtMainBn2) == "")
-                {
-                    ChangeText(rtMainBn2, mainCaneBatchNumbers[i]);
-                    ChangeText(rtMainBx2, "0");
-                    ChangeColorTextBox(rtMainBx2, Color.Maroon);
-                    ChangeForeColorTextBox(rtMainBx2, Color.White);
-                    mainCane.Add(new Tuple<RichTextBox, RichTextBox>(rtMainBn2, rtMainBx2));
-                }
-                else if (GetTextboxValue(rtMainBn1) != "" && GetTextboxValue(rtMainBn2) != "" && GetTextboxValue(rtMainBn3) == "")
-                {
-                    ChangeText(rtMainBn3, mainCaneBatchNumbers[i]);
-                    ChangeText(rtMainBx3, "0");
-                    ChangeColorTextBox(rtMainBx3, Color.Maroon);
-                    ChangeForeColorTextBox(rtMainBx3, Color.White);
-                    mainCane.Add(new Tuple<RichTextBox, RichTextBox>(rtMainBn3, rtMainBx3));
-                }
-                else if (GetTextboxValue(rtMainBn1) != "" && GetTextboxValue(rtMainBn2) != "" && GetTextboxValue(rtMainBn3) != "" && GetTextboxValue(rtMainBn4) == "")
-                {
-                    ChangeText(rtMainBn4, mainCaneBatchNumbers[i]);
-                    ChangeText(rtMainBx4, "0");
-                    ChangeColorTextBox(rtMainBx4, Color.Maroon);
-                    ChangeForeColorTextBox(rtMainBx4, Color.White);
-                    mainCane.Add(new Tuple<RichTextBox, RichTextBox>(rtMainBn4, rtMainBx4));
-                }
-            }
-
-            /*
-             * Loop to remove batch numbers from list after 
-             * filling empty boxes
-             */
-            for (int i = mainCaneBatchNumbers.Count - 1; i >= 0; i--)
-            {
-                mainCaneBatchNumbers.RemoveAt(i);
-            }
-
-            /*
-             * Looping on the stored batch numbers in list 
-             * for counting
-             */
-
-            for (int i = 0; i < mainCane.Count; i++)
-            {
-                if (incomingData.ToLower() == "main cane object")
-                {
-                    count = int.Parse(GetTextboxValue(mainCane[i].Item2));
-
-                    if (!pause)
-                    {
-                        count++;
-                    }
-                    ChangeText(mainCane[i].Item2, count.ToString());
-
-                    if (count > mainCaneMaxCount)
-                    {
-                        caneKnivesBatchNumbers.Add(GetTextboxValue(mainCane[i].Item1));
-
-                        ChangeText(mainCane[i].Item1, "");
-                        ChangeText(mainCane[i].Item2, "");
-                        ChangeColorTextBox(mainCane[i].Item2, Color.CornflowerBlue);
-                    }
-                }
-            }
-
-            /*
-             * Removing batch numbers from list after counting is finished.
-             */
-
-            for (int i = mainCane.Count - 1; i >= 0; i--)
-            {
-                if (GetTextboxValue(mainCane[i].Item1) == "")
-                {
-                    mainCane.RemoveAt(i);
-                }
-            }
-        }
-
-        private void CaneKnivesCount(string incomingData)
-        {
-            int count;
-
-            /*
-             * Looping to the batch numbers stored in list coming from side canes.
-             * Loop from list to fill in empty boxes
-             * Loop from list to prevent overlapping of 
-             * batch numbers with the same countings.
-             * 
-             * Batch numbers are also being added to another list
-             * responsible for tracking the countings
-             */
-
-            for (int i = 0; i < caneKnivesBatchNumbers.Count; i++)
-            {
-                if (GetTextboxValue(rtKnivesBn1) == "")
-                {
-                    ChangeText(rtKnivesBn1, caneKnivesBatchNumbers[i]);
-                    ChangeText(rtKnivesBx1, "0");
-                    ChangeColorTextBox(rtKnivesBx1, Color.Maroon);
-                    ChangeForeColorTextBox(rtKnivesBx1, Color.White);
-                    caneKnives.Add(new Tuple<RichTextBox, RichTextBox>(rtKnivesBn1, rtKnivesBx1));
-                }
-                else if (GetTextboxValue(rtKnivesBn1) != "" && GetTextboxValue(rtKnivesBn2) == "")
-                {
-                    ChangeText(rtKnivesBn2, caneKnivesBatchNumbers[i]);
-                    ChangeText(rtKnivesBx2, "0");
-                    ChangeColorTextBox(rtKnivesBx2, Color.Maroon);
-                    ChangeForeColorTextBox(rtKnivesBx2, Color.White);
-                    caneKnives.Add(new Tuple<RichTextBox, RichTextBox>(rtKnivesBn2, rtKnivesBx2));
-                }
-            }
-
-            /*
-             * Loop to remove batch numbers from list after 
-             * filling empty boxes
-             */
-
-            for (int i = caneKnivesBatchNumbers.Count - 1; i >= 0; i--)
-            {
-                caneKnivesBatchNumbers.RemoveAt(i);
-            }
-
-            /*
-             * Looping on the stored batch numbers in list 
-             * for counting
-             */
-
-            for (int i = 0; i < caneKnives.Count; i++)
-            {
-                if (incomingData.ToLower() == "cane knives object")
-                {
-                    count = int.Parse(GetTextboxValue(caneKnives[i].Item2));
-                    if (!pause)
-                    {
-                        count++;
-                    }
-                    ChangeText(caneKnives[i].Item2, count.ToString());
-
-                    if (count > knivesAndShredderMaxCount)
-                    {
-                        shredderBatchNumbers.Add(GetTextboxValue(caneKnives[i].Item1));
-
-                        ChangeText(caneKnives[i].Item1, "");
-                        ChangeText(caneKnives[i].Item2, "");
-                        ChangeColorTextBox(caneKnives[i].Item2, Color.CornflowerBlue);
-                    }
-                }
-            }
-
-            /*
-             * Removing batch numbers from list after counting is finished.
-             */
-
-            for (int i = caneKnives.Count - 1; i >= 0; i--)
-            {
-                if (GetTextboxValue(caneKnives[i].Item1) == "")
-                {
-                    caneKnives.RemoveAt(i);
-                }
-            }
-        }
-
-        private void ShreddedCaneCount(string incomingData)
-        {
-            int count;
-            int bnShred = 0;
-
-            /*
-             * Looping to the batch numbers stored in list coming from side canes.
-             * Loop from list to fill in empty boxes
-             * Loop from list to prevent overlapping of 
-             * batch numbers with the same countings.
-             * 
-             * Batch numbers are also being added to another list
-             * responsible for tracking the countings
-             */
-
-            for (int i = 0; i < shredderBatchNumbers.Count; i++)
-            {
-                if (GetTextboxValue(rtShredBn1) == "")
-                {
-                    ChangeText(rtShredBn1, shredderBatchNumbers[i]);
-                    ChangeText(rtShredBx1, "0");
-                    ChangeColorTextBox(rtShredBx1, Color.Maroon);
-                    ChangeForeColorTextBox(rtShredBx1, Color.White);
-                    shreddedCane.Add(new Tuple<RichTextBox, RichTextBox>(rtShredBn1, rtShredBx1));
-                }
-                else if (GetTextboxValue(rtShredBn1) != "" && GetTextboxValue(rtShredBn2) == "")
-                {
-                    ChangeText(rtShredBn2, shredderBatchNumbers[i]);
-                    ChangeText(rtShredBx2, "0");
-                    ChangeColorTextBox(rtShredBx2, Color.Maroon);
-                    ChangeForeColorTextBox(rtShredBx2, Color.White);
-                    shreddedCane.Add(new Tuple<RichTextBox, RichTextBox>(rtShredBn2, rtShredBx2));
-                }
-            }
-
-            /*
-             * Loop to remove batch numbers from list after 
-             * filling empty boxes
-             */
-
-            for (int i = shredderBatchNumbers.Count - 1; i >= 0; i--)
-            {
-                shredderBatchNumbers.RemoveAt(i);
-            }
-
-            /*
-            * Looping on the stored batch numbers in list 
-            * for counting
-            */
-
-            for (int i = 0; i < shreddedCane.Count; i++)
-            {
-                if (incomingData.ToLower() == "shredded cane object")
-                {
-                    count = int.Parse(GetTextboxValue(shreddedCane[i].Item2));
-                    if (!pause)
-                    {
-                        count++;
-                    }
-                    ChangeText(shreddedCane[i].Item2, count.ToString());
-
-                    if (count > knivesAndShredderMaxCount)
-                    {
-                        bnShred = int.Parse(GetTextboxValue(shreddedCane[i].Item1));
-                        ChangeText(shreddedCane[i].Item1, "");
-                        ChangeText(shreddedCane[i].Item2, "");
-                        ChangeColorTextBox(shreddedCane[i].Item2, Color.CornflowerBlue);
-                    }
-                }
-            }
-
-            /*
-             * Loop to transfer finished batch number count 
-             * to rtNirWashing. 
-             * No need to store in list since the last 
-             * part only accepts one batch number per 
-             * cycle
-             */
-
-            for (int i = shreddedCane.Count - 1; i >= 0; i--)
-            {
-                if (GetTextboxValue(shreddedCane[i].Item1) == "")
-                {
-                    ChangeText(rtNirWashing, bnShred.ToString());
-                    ChangeText(rtWashingCount, "0");
-                    ChangeColorTextBox(rtWashingCount, Color.Maroon);
-                    ChangeForeColorTextBox(rtWashingCount, Color.White);
-
-                    shreddedCane.RemoveAt(i);
-                }
-            }
-        }
-
-
-        /*
-         * FOSS NIR Timers (in seconds)
-         */
-        private void SetWashingTimer(ref int count, RichTextBox rtBn, RichTextBox rtCnt)
-        {
-            int c = count;
-            washingTimer = new Timer();
-            washingTimer.Interval = 1000;
-            washingTimer.Enabled = true;
-            washingTimer.Tick += (object sender, EventArgs e) => WashingTimer_Tick(sender, e, ref c, rtBn, rtCnt);
-            washingTimerList.Add(washingTimer);
-        }
-
-        private void WashingTimer_Tick(object sender, EventArgs e, ref int count, RichTextBox rtBn, RichTextBox rtCnt)
-        {
-            washingTimer = (Timer)sender;
-
-            ChangeText(rtCnt, (count += 1).ToString());
-
-            if (count > fossNirWashingTime)
-            {
-                ChangeText(rtNirScanning, rtBn.Text);
-                ChangeText(rtNirCount, "0");
-                ChangeColorTextBox(rtNirCount, Color.Maroon);
-                ChangeForeColorTextBox(rtNirCount, Color.White);
-
-                washingTimer.Stop();
-                ChangeText(rtBn, "");
-                ChangeText(rtCnt, "");
-                ChangeColorTextBox(rtCnt, Color.CornflowerBlue);
-            }
-        }
-
-        private void SetNirTimer(ref int count, RichTextBox rtBn, RichTextBox rtCnt)
-        {
-            int c = count;
-            nirTimer = new Timer();
-            nirTimer.Interval = 1000;
-            nirTimer.Enabled = true;
-            nirTimer.Tick += (object sender, EventArgs e) => NirTimer_Tick(sender, e, ref c, rtBn, rtCnt);
-            nirTimerList.Add(nirTimer);
-        }
-
-        private void NirTimer_Tick(object sender, EventArgs e, ref int count, RichTextBox rtBn, RichTextBox rtCnt)
-        {
-            nirTimer = (Timer)sender;
-
-            ChangeText(rtCnt, (count += 1).ToString());
-
-            if (count > fossNirTime)
-            {
-                nirTimer.Stop();
-                ChangeText(rtBn, "");
-                ChangeText(rtCnt, "");
-                ChangeColorTextBox(rtCnt, Color.CornflowerBlue);
-            }
-        }
-
-        private void PauseNirCount()
-        {
-            int i;
-            int y;
-
-            if (washingTimerList.Count > 0 || nirTimerList.Count > 0)
-            {
-                if (pause)
-                {
-                    for (i = 0; i < washingTimerList.Count; i++)
-                    {
-                        washingTimerList[i].Stop();
-                    }
-
-                    for (y = 0; y < nirTimerList.Count; y++)
-                    {
-                        nirTimerList[y].Stop();
-                    }
-                }
-                else
-                {
-                    for (i = 0; i < washingTimerList.Count; i++)
-                    {
-                        washingTimerList[i].Start();
-                    }
-
-                    for (y = 0; y < nirTimerList.Count; y++)
-                    {
-                        nirTimerList[y].Start();
-                    }
-                }
-            }
-
+            sc.ShreddedCane(incomingData, pause, bnlist,
+                            rtShredBn1, rtShredBn2, rtShredBx1, rtShredBx2, rtNirWashing, rtWashingCount);
         }
 
 
@@ -2071,64 +1438,6 @@ namespace Cane_Tracking
         private void DecrementSeriesNo()
         {
             rtSeriesNo.Text = (seriesNo -= 1).ToString();
-        }
-
-
-
-
-        /*+==================================== CROSS THREADING PREVENTION METHODS =========================================+*/
-
-        private void ChangeColorTextBox(RichTextBox rt, Color color)
-        {
-            if (rt.InvokeRequired)
-            {
-                var d = new SetColorCallBack(ChangeColorTextBox);
-                this.Invoke(d, new object[] { rt, color });
-            }
-            else
-            {
-                rt.BackColor = color;
-            }
-        }
-
-        private void ChangeForeColorTextBox(RichTextBox rt, Color color)
-        {
-            if (rt.InvokeRequired)
-            {
-                var d = new SetColorCallBack(ChangeForeColorTextBox);
-                this.Invoke(d, new object[] { rt, color });
-            }
-            else
-            {
-                rt.ForeColor = color;
-            }
-        }
-
-        private void ChangeText(RichTextBox rt, string text)
-        {
-            if (rt.InvokeRequired)
-            {
-                var d = new SetTextCallBack(ChangeText);
-                this.Invoke(d, new object[] { rt, text });
-            }
-            else
-            {
-                rt.Text = text;
-            }
-        }
-
-        private string GetTextboxValue(Control control)
-        {
-            if (control.InvokeRequired)
-            {
-                return (string)control.Invoke(
-                    new Func<String>(() => GetTextboxValue(control)));
-            }
-            else
-            {
-                string text = control.Text;
-                return text;
-            }
         }
 
 
@@ -2471,19 +1780,13 @@ namespace Cane_Tracking
         //Counting default values
         private void DefaultValues()
         {
-            tipperOneMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/tipperOneMaxCount.txt")));
-            tipperTwoMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/tipperTwoMaxCount.txt")));
-            dumpAndPileMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/dumpAndPileMaxCount.txt")));
-            mainCaneMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/mainCaneMaxCount.txt")));
-            knivesAndShredderMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/knivesAndShredderMaxCount.txt")));
-            fossNirTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/nirTimerCount.txt")));
-
-            lblT1.Text = tipperOneMaxCount.ToString();
-            lblT2.Text = tipperTwoMaxCount.ToString();
-            lblDs.Text = dumpAndPileMaxCount.ToString();
-            lblMc.Text = mainCaneMaxCount.ToString();
-            lblCk.Text = knivesAndShredderMaxCount.ToString();
-            lblNi.Text = fossNirTime.ToString();
+            Classes.CountInterval cnt = new Classes.CountInterval();
+            lblT1.Text = cnt.TipperOneMaxCount.ToString();
+            lblT2.Text = cnt.TipperTwoMaxCount.ToString();
+            lblDs.Text = cnt.DumpAndPileMaxCount.ToString();
+            lblMc.Text = cnt.MainCaneMaxCount.ToString();
+            lblCk.Text = cnt.KnivesAndShredderMaxCount.ToString();
+            lblNi.Text = cnt.NirTime.ToString();
 
             rtSeriesNo.Text = (seriesNo).ToString();
         }
