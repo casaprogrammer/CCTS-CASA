@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\BatchNumberList.cs" />
+    <Compile Include="Classes\TrackingList.cs" />
     <Compile Include="Classes\CountInterval.cs" />
     <Compile Include="Classes\CrossThreadingCheck.cs" />
     <Compile Include="Classes\NirTimer.cs" />
@@ -102,6 +102,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Arduino\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

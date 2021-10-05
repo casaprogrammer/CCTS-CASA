@@ -12,36 +12,74 @@ namespace Cane_Tracking.Classes
         CrossThreadingCheck ctcc = new CrossThreadingCheck();
         CountInterval ci = new CountInterval();
 
-        public void SensorIndicator(string incomingData,
-                                    RichTextBox rtSideCaneCheck, RichTextBox rtMainCaneCheck, RichTextBox rtCaneKnivesCheck, RichTextBox rtShredderCheck)
+        private string incomingData { get; set; }
+        private bool pause { get; set; }
+        private bool decrementing { get; set; }
+        private TrackingList bnlist { get; set; }
+
+        public Sensor(string incomingData, bool pause, bool decrementing, TrackingList bnlist)
         {
-            ctcc.ChangeColorTextBox(rtSideCaneCheck, Color.CornflowerBlue);
-            ctcc.ChangeColorTextBox(rtMainCaneCheck, Color.CornflowerBlue);
-            ctcc.ChangeColorTextBox(rtCaneKnivesCheck, Color.CornflowerBlue);
-            ctcc.ChangeColorTextBox(rtShredderCheck, Color.CornflowerBlue);
-
-            if (incomingData.ToLower() == "side cane object")
-            {
-                ctcc.ChangeColorTextBox(rtSideCaneCheck, Color.Orange);
-            }
-
-            if (incomingData.ToLower() == "main cane object")
-            {
-                ctcc.ChangeColorTextBox(rtMainCaneCheck, Color.Orange);
-            }
-
-            if (incomingData.ToLower() == "cane knives object")
-            {
-                ctcc.ChangeColorTextBox(rtCaneKnivesCheck, Color.Orange);
-            }
-
-            if (incomingData.ToLower() == "shredded cane object")
-            {
-                ctcc.ChangeColorTextBox(rtShredderCheck, Color.Orange);
-            }
+            this.incomingData = incomingData;
+            this.pause = pause;
+            this.decrementing = decrementing;
+            this.bnlist = bnlist;
         }
 
-        public void TipperOne(string incomingData, bool pause, bool decrementing, BatchNumberList bnlist)
+        public void SensorActions()
+        {
+            SensorIndicator();
+            TipperOne();
+            TipperTwo();
+            DumpTruck();
+            StockPile();
+            MainCane();
+            CaneKnives();
+            ShreddedCane();
+        }
+
+        private void SensorIndicator()
+        {
+            for(int i = 0; i < bnlist.sensorIndicators.Count; i++)
+            {
+                ctcc.ChangeColorTextBox(bnlist.sensorIndicators[i].Item1, Color.CornflowerBlue);
+
+
+                if (incomingData.ToLower() == "side cane object")
+                {
+                    if (bnlist.sensorIndicators[i].Item2 == "Side Cane")
+                    {
+                        ctcc.ChangeColorTextBox(bnlist.sensorIndicators[i].Item1, Color.Orange);
+                    }
+                }
+
+                if (incomingData.ToLower() == "main cane object")
+                {
+                    if (bnlist.sensorIndicators[i].Item2 == "Main Cane")
+                    {
+                        ctcc.ChangeColorTextBox(bnlist.sensorIndicators[i].Item1, Color.Orange);
+                    }
+                }
+
+                if (incomingData.ToLower() == "cane knives object")
+                {
+                    if (bnlist.sensorIndicators[i].Item2 == "Cane Knives")
+                    {
+                        ctcc.ChangeColorTextBox(bnlist.sensorIndicators[i].Item1, Color.Orange);
+                    }
+                }
+
+                if (incomingData.ToLower() == "shredded cane object")
+                {
+                    if (bnlist.sensorIndicators[i].Item2 == "Shredder")
+                    {
+                        ctcc.ChangeColorTextBox(bnlist.sensorIndicators[i].Item1, Color.Orange);
+                    }
+                }
+            }
+
+        }
+
+        private void TipperOne()
         {
             int count;
             int tipperOneMaxCount = ci.TipperOneMaxCount;
@@ -88,7 +126,7 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        public void TipperTwo(string incomingData, bool pause, bool decrementing, BatchNumberList bnlist)
+        private void TipperTwo()
         {
             int count;
             int tipperTwoMaxCount = ci.TipperTwoMaxCount;
@@ -134,7 +172,7 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        public void DumpTruck(string incomingData, bool pause, bool decrementing, BatchNumberList bnlist)
+        private void DumpTruck()
         {
             int count;
             int dumpAndPileMaxCount = ci.DumpAndPileMaxCount;
@@ -180,7 +218,7 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        public void StockPile(string incomingData, bool pause, bool decrementing, BatchNumberList bnlist)
+        private void StockPile()
         {
             int count;
             int dumpAndPileMaxCount = ci.DumpAndPileMaxCount;
@@ -226,9 +264,7 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        public void MainCane(string incomingData, bool pause, BatchNumberList bnlist,
-                             RichTextBox rtMainBn1, RichTextBox rtMainBn2, RichTextBox rtMainBn3, RichTextBox rtMainBn4,
-                             RichTextBox rtMainBx1, RichTextBox rtMainBx2, RichTextBox rtMainBx3, RichTextBox rtMainBx4)
+        private void MainCane()
         {
             int count;
             int mainCaneMaxCount = ci.MainCaneMaxCount;
@@ -243,50 +279,36 @@ namespace Cane_Tracking.Classes
              * responsible for tracking the countings
              */
 
-            for (int i = 0; i < bnlist.mainCaneBatchNumbers.Count; i++)
+            for (int i = 0; i <= bnlist.mainCaneBatchNumbers.Count -1; i++)
             {
-                if (ctcc.GetTextboxValue(rtMainBn1) == "")
+                for (int y = 0; y < bnlist.lTbox.Count; y++)
                 {
-                    ctcc.ChangeText(rtMainBn1, bnlist.mainCaneBatchNumbers[i]);
-                    ctcc.ChangeText(rtMainBx1, "0");
-                    ctcc.ChangeColorTextBox(rtMainBx1, Color.Maroon);
-                    ctcc.ChangeForeColorTextBox(rtMainBx1, Color.White);
-                    bnlist.mainCane.Add(new Tuple<RichTextBox, RichTextBox>(rtMainBn1, rtMainBx1));
+                    if (ctcc.GetTextboxValue(bnlist.lTbox[y].Item1) == "" && bnlist.lTbox[y].Item3 == "MainCane")
+                    {
+                        ctcc.ChangeText(bnlist.lTbox[y].Item1, bnlist.mainCaneBatchNumbers[i]);
+                        ctcc.ChangeText(bnlist.lTbox[y].Item2, "0");
+                        ctcc.ChangeColorTextBox(bnlist.lTbox[y].Item2, Color.Maroon);
+                        ctcc.ChangeForeColorTextBox(bnlist.lTbox[y].Item2, Color.White);
+
+                        bnlist.mainCane.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[y].Item1, bnlist.lTbox[y].Item2));
+
+
+                        break;
+
+                    }
                 }
-                else if (ctcc.GetTextboxValue(rtMainBn1) != "" && ctcc.GetTextboxValue(rtMainBn2) == "")
-                {
-                    ctcc.ChangeText(rtMainBn2, bnlist.mainCaneBatchNumbers[i]);
-                    ctcc.ChangeText(rtMainBx2, "0");
-                    ctcc.ChangeColorTextBox(rtMainBx2, Color.Maroon);
-                    ctcc.ChangeForeColorTextBox(rtMainBx2, Color.White);
-                    bnlist.mainCane.Add(new Tuple<RichTextBox, RichTextBox>(rtMainBn2, rtMainBx2));
-                }
-                else if (ctcc.GetTextboxValue(rtMainBn1) != "" && ctcc.GetTextboxValue(rtMainBn2) != "" && ctcc.GetTextboxValue(rtMainBn3) == "")
-                {
-                    ctcc.ChangeText(rtMainBn3, bnlist.mainCaneBatchNumbers[i]);
-                    ctcc.ChangeText(rtMainBx3, "0");
-                    ctcc.ChangeColorTextBox(rtMainBx3, Color.Maroon);
-                    ctcc.ChangeForeColorTextBox(rtMainBx3, Color.White);
-                    bnlist.mainCane.Add(new Tuple<RichTextBox, RichTextBox>(rtMainBn3, rtMainBx3));
-                }
-                else if (ctcc.GetTextboxValue(rtMainBn1) != "" && ctcc.GetTextboxValue(rtMainBn2) != "" && ctcc.GetTextboxValue(rtMainBn3) != "" && ctcc.GetTextboxValue(rtMainBn4) == "")
-                {
-                    ctcc.ChangeText(rtMainBn4, bnlist.mainCaneBatchNumbers[i]);
-                    ctcc.ChangeText(rtMainBx4, "0");
-                    ctcc.ChangeColorTextBox(rtMainBx4, Color.Maroon);
-                    ctcc.ChangeForeColorTextBox(rtMainBx4, Color.White);
-                    bnlist.mainCane.Add(new Tuple<RichTextBox, RichTextBox>(rtMainBn4, rtMainBx4));
-                }
+                bnlist.mainCaneBatchNumbers.RemoveAt(i);
             }
 
             /*
              * Loop to remove batch numbers from list after 
              * filling empty boxes
              */
-            for (int i = bnlist.mainCaneBatchNumbers.Count - 1; i >= 0; i--)
+
+           /* for (int i = bnlist.mainCaneBatchNumbers.Count - 1; i >= 0; i--)
             {
                 bnlist.mainCaneBatchNumbers.RemoveAt(i);
-            }
+            }*/
 
             /*
              * Looping on the stored batch numbers in list 
@@ -330,9 +352,7 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        public void CaneKnives(string incomingData, bool pause, BatchNumberList bnlist,
-                            RichTextBox rtKnivesBn1, RichTextBox rtKnivesBn2,
-                            RichTextBox rtKnivesBx1, RichTextBox rtKnivesBx2)
+        private void CaneKnives()
         {
             int count;
             int knivesAndShredderMaxCount = ci.KnivesAndShredderMaxCount;
@@ -347,24 +367,25 @@ namespace Cane_Tracking.Classes
              * responsible for tracking the countings
              */
 
-            for (int i = 0; i < bnlist.caneKnivesBatchNumbers.Count; i++)
+            for (int i = 0; i <= bnlist.caneKnivesBatchNumbers.Count - 1; i++)
             {
-                if (ctcc.GetTextboxValue(rtKnivesBn1) == "")
+                for (int y = 0; y < bnlist.lTbox.Count; y++)
                 {
-                    ctcc.ChangeText(rtKnivesBn1, bnlist.caneKnivesBatchNumbers[i]);
-                    ctcc.ChangeText(rtKnivesBx1, "0");
-                    ctcc.ChangeColorTextBox(rtKnivesBx1, Color.Maroon);
-                    ctcc.ChangeForeColorTextBox(rtKnivesBx1, Color.White);
-                    bnlist.caneKnives.Add(new Tuple<RichTextBox, RichTextBox>(rtKnivesBn1, rtKnivesBx1));
+                    if (ctcc.GetTextboxValue(bnlist.lTbox[y].Item1) == "" && bnlist.lTbox[y].Item3 == "CaneKnives")
+                    {
+                        ctcc.ChangeText(bnlist.lTbox[y].Item1, bnlist.caneKnivesBatchNumbers[i]);
+                        ctcc.ChangeText(bnlist.lTbox[y].Item2, "0");
+                        ctcc.ChangeColorTextBox(bnlist.lTbox[y].Item2, Color.Maroon);
+                        ctcc.ChangeForeColorTextBox(bnlist.lTbox[y].Item2, Color.White);
+
+                        bnlist.caneKnives.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[y].Item1, bnlist.lTbox[y].Item2));
+
+
+                        break;
+
+                    }
                 }
-                else if (ctcc.GetTextboxValue(rtKnivesBn1) != "" && ctcc.GetTextboxValue(rtKnivesBn2) == "")
-                {
-                    ctcc.ChangeText(rtKnivesBn2, bnlist.caneKnivesBatchNumbers[i]);
-                    ctcc.ChangeText(rtKnivesBx2, "0");
-                    ctcc.ChangeColorTextBox(rtKnivesBx2, Color.Maroon);
-                    ctcc.ChangeForeColorTextBox(rtKnivesBx2, Color.White);
-                    bnlist.caneKnives.Add(new Tuple<RichTextBox, RichTextBox>(rtKnivesBn2, rtKnivesBx2));
-                }
+                bnlist.caneKnivesBatchNumbers.RemoveAt(i);
             }
 
             /*
@@ -372,10 +393,10 @@ namespace Cane_Tracking.Classes
              * filling empty boxes
              */
 
-            for (int i = bnlist.caneKnivesBatchNumbers.Count - 1; i >= 0; i--)
+            /*for (int i = bnlist.caneKnivesBatchNumbers.Count - 1; i >= 0; i--)
             {
                 bnlist.caneKnivesBatchNumbers.RemoveAt(i);
-            }
+            }*/
 
             /*
              * Looping on the stored batch numbers in list 
@@ -419,10 +440,7 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        public void ShreddedCane(string incomingData, bool pause, BatchNumberList bnlist,
-                            RichTextBox rtShredBn1, RichTextBox rtShredBn2,
-                            RichTextBox rtShredBx1, RichTextBox rtShredBx2,
-                            RichTextBox rtNirWashing, RichTextBox rtWashingCount)
+        private void ShreddedCane()
         {
             int count;
             int knivesAndShredderMaxCount = ci.KnivesAndShredderMaxCount;
@@ -438,24 +456,25 @@ namespace Cane_Tracking.Classes
              * responsible for tracking the countings
              */
 
-            for (int i = 0; i < bnlist.shredderBatchNumbers.Count; i++)
+            for (int i = 0; i <= bnlist.shredderBatchNumbers.Count - 1; i++)
             {
-                if (ctcc.GetTextboxValue(rtShredBn1) == "")
+                for (int y = 0; y < bnlist.lTbox.Count; y++)
                 {
-                    ctcc.ChangeText(rtShredBn1, bnlist.shredderBatchNumbers[i]);
-                    ctcc.ChangeText(rtShredBx1, "0");
-                    ctcc.ChangeColorTextBox(rtShredBx1, Color.Maroon);
-                    ctcc.ChangeForeColorTextBox(rtShredBx1, Color.White);
-                    bnlist.shreddedCane.Add(new Tuple<RichTextBox, RichTextBox>(rtShredBn1, rtShredBx1));
+                    if (ctcc.GetTextboxValue(bnlist.lTbox[y].Item1) == "" && bnlist.lTbox[y].Item3 == "Shredder")
+                    {
+                        ctcc.ChangeText(bnlist.lTbox[y].Item1, bnlist.shredderBatchNumbers[i]);
+                        ctcc.ChangeText(bnlist.lTbox[y].Item2, "0");
+                        ctcc.ChangeColorTextBox(bnlist.lTbox[y].Item2, Color.Maroon);
+                        ctcc.ChangeForeColorTextBox(bnlist.lTbox[y].Item2, Color.White);
+
+                        bnlist.shreddedCane.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[y].Item1, bnlist.lTbox[y].Item2));
+
+
+                        break;
+
+                    }
                 }
-                else if (ctcc.GetTextboxValue(rtShredBn1) != "" && ctcc.GetTextboxValue(rtShredBn2) == "")
-                {
-                    ctcc.ChangeText(rtShredBn2, bnlist.shredderBatchNumbers[i]);
-                    ctcc.ChangeText(rtShredBx2, "0");
-                    ctcc.ChangeColorTextBox(rtShredBx2, Color.Maroon);
-                    ctcc.ChangeForeColorTextBox(rtShredBx2, Color.White);
-                    bnlist.shreddedCane.Add(new Tuple<RichTextBox, RichTextBox>(rtShredBn2, rtShredBx2));
-                }
+                bnlist.shredderBatchNumbers.RemoveAt(i);
             }
 
             /*
@@ -463,10 +482,10 @@ namespace Cane_Tracking.Classes
              * filling empty boxes
              */
 
-            for (int i = bnlist.shredderBatchNumbers.Count - 1; i >= 0; i--)
+            /*for (int i = bnlist.shredderBatchNumbers.Count - 1; i >= 0; i--)
             {
                 bnlist.shredderBatchNumbers.RemoveAt(i);
-            }
+            }*/
 
             /*
             * Looping on the stored batch numbers in list 
@@ -508,11 +527,18 @@ namespace Cane_Tracking.Classes
             {
                 if (ctcc.GetTextboxValue(bnlist.shreddedCane[i].Item1) == "")
                 {
-                    ctcc.ChangeText(rtNirWashing, bnShred.ToString());
-                    ctcc.ChangeText(rtWashingCount, "0");
-                    ctcc.ChangeColorTextBox(rtWashingCount, Color.Maroon);
-                    ctcc.ChangeForeColorTextBox(rtWashingCount, Color.White);
+                    for (int y = 0; y < bnlist.lTbox.Count; y++)
+                    {
+                        if (bnlist.lTbox[y].Item3 == "Nir")
+                        {
+                            ctcc.ChangeText(bnlist.lTbox[y].Item1, bnShred.ToString());
+                            ctcc.ChangeText(bnlist.lTbox[y].Item2, "0");
+                            ctcc.ChangeColorTextBox(bnlist.lTbox[y].Item2, Color.Maroon);
+                            ctcc.ChangeForeColorTextBox(bnlist.lTbox[y].Item2, Color.White);
 
+                            break;
+                        }
+                    }
                     bnlist.shreddedCane.RemoveAt(i);
                 }
             }

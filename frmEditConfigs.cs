@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Cane_Tracking.Classes;
 
 namespace Cane_Tracking
 {
@@ -18,7 +19,7 @@ namespace Cane_Tracking
             DefaultValues();
         }
 
-        Classes.CountInterval cnt = new Classes.CountInterval();
+        CountInterval cnt = new CountInterval();
 
         private void DefaultValues()
         { 

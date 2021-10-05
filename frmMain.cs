@@ -1,35 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
-using System.IO;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using Cane_Tracking.Classes;
 
 namespace Cane_Tracking
 {
     public partial class frmMain : Form
     {
 
-        Classes.Sensor sc = new Classes.Sensor();
-        Classes.BatchNumberList bnlist = new Classes.BatchNumberList();
-        Classes.CrossThreadingCheck ctcc = new Classes.CrossThreadingCheck();
-        Classes.NirTimer nirTimer = new Classes.NirTimer();
-        
+        CrossThreadingCheck ctcc = new CrossThreadingCheck();
+        TrackingList bnlist = new TrackingList();
+        NirTimer nirTimer = new NirTimer();
         ToolTip toolTip = new ToolTip();
-        SqlConnection con = new SqlConnection(File.ReadAllText(Path.GetFullPath("Configurations/DbConnection.txt")));
+
 
         private static SerialPort serialPort;
 
-        private Timer savingStateTimer;
         private Timer checkConfigsTimer;
 
         private static int seriesNo = 0;
-        private static int stateBatchNum;
 
         private static bool decrementing = false;
         private static bool pause = false;
@@ -44,13 +34,56 @@ namespace Cane_Tracking
             TextAlignment();
             InitializeSerialConnections();
             DefaultValues();
-            //ConnectToDB();
             CheckConfigStart();
+            RegisterTextboxes();
+            /*TextboxKeyDown();
+            TextboxTextChange();*/
         }
 
 
 
         /*+============================================= RICHTEXTBOX FORMATS ==================================================+*/
+
+        /* private void TextboxKeyDown()
+         {
+             for (int i = 0; i < bnlist.lTbox.Count; i++)
+             {
+                 bnlist.lTbox[i].Item1.KeyDown += (object sender, KeyEventArgs e) => KeyPressed(sender, e, bnlist.lTbox[i].Item1);
+             }
+         }
+
+         private void KeyPressed(object sender, KeyEventArgs e, RichTextBox rt)
+         {
+             if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
+             {
+                 MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                 rt.Text = "";
+             }
+         }
+
+         private void TextboxTextChange()
+         {
+             for (int i = 0; i < bnlist.lTbox.Count; i++)
+             {
+                 if (bnlist.lTbox[i].Item3 == "TipOne" || bnlist.lTbox[i].Item3 == "TipTwo" || bnlist.lTbox[i].Item3 == "DumpTruck" || bnlist.lTbox[i].Item3 == "StockPile")
+                 {
+                     bnlist.lTbox[i].Item1.TextChanged += (object sender, EventArgs e) => BoxesTextChanged(sender, e, bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2, bnlist.lTbox[i].Item3);
+                 }
+             }
+         }
+
+         private void BoxesTextChanged(object sender, EventArgs e, RichTextBox rtbn, RichTextBox rtcnt, string area)
+         {
+             if (rtbn.Text != "" && rtcnt.Text != "")
+             {
+                 if (rtbn.Text != batch)
+                 {
+                     logTextOutput = DateTime.Now.ToString() + " : " + area + " Changed Batch #" + batch + " to " + rtbn.Text + " @ count " + rtcnt.Text;
+                     batch = rtbn.Text;
+                     LogOutput(logTextOutput);
+                 }
+             }
+         }*/
 
         private void rtTipperOneBn_KeyDown(object sender, KeyEventArgs e)
         {
@@ -820,13 +853,10 @@ namespace Cane_Tracking
 
 
 
-        /*+============================================ BUTTON OPERATIONS ==================================================+*/
+        /*+============================================= BUTTON ACTIONS ==================================================+*/
 
         private void btnTipperOne_Click(object sender, EventArgs e)
         {
-            string type = "Tipper One";
-
-            //TipperOneValue();
 
             if (rtTipperOneBn.Text == "")
             {
@@ -835,101 +865,32 @@ namespace Cane_Tracking
             else
             {
                 batch = rtTipperOneBn.Text;
-
-                if (rtTipOneBn1.Text == "" && rtTipOneBx1.Text == "")
+                for (int i = 0; i < bnlist.lTbox.Count; i++)
                 {
-                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn1, rtTipOneBx1));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn1, rtTipOneBx1, type));
-                    rtTipOneBn1.Text = batch;
-                    rtTipOneBx1.Text = "0";
-                    rtTipOneBx1.BackColor = Color.Maroon;
-                    rtTipOneBx1.ForeColor = Color.White;
+                    if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "TipOne")
+                    {
+                        bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2));
+                        bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2, "Tipper One"));
+                        bnlist.lTbox[i].Item1.Text = batch;
+                        bnlist.lTbox[i].Item2.Text = "0";
+                        bnlist.lTbox[i].Item2.BackColor = Color.Maroon;
+                        bnlist.lTbox[i].Item2.ForeColor = Color.White;
+
+
+                        logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Tipper One Area";
+                        LogOutput(logTextOutput);
+
+                        rtTipperOneBn.Text = "";
+                        IncrementSeriesNo();
+                        break;
+                    }
                 }
-
-                else if (rtTipOneBn2.Text == "" && rtTipOneBx2.Text == "")
-                {
-                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn2, rtTipOneBx2));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn2, rtTipOneBx2, type));
-                    rtTipOneBn2.Text = batch;
-                    rtTipOneBx2.Text = "0";
-                    rtTipOneBx2.BackColor = Color.Maroon;
-                    rtTipOneBx2.ForeColor = Color.White;
-                }
-
-                else if (rtTipOneBn3.Text == "" && rtTipOneBx3.Text == "")
-                {
-                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn3, rtTipOneBx3));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn3, rtTipOneBx3, type));
-                    rtTipOneBn3.Text = batch;
-                    rtTipOneBx3.Text = "0";
-                    rtTipOneBx3.BackColor = Color.Maroon;
-                    rtTipOneBx3.ForeColor = Color.White;
-                }
-
-                else if (rtTipOneBn4.Text == "" && rtTipOneBx4.Text == "")
-                {
-                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn4, rtTipOneBx4));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn4, rtTipOneBx4, type));
-                    rtTipOneBn4.Text = batch;
-                    rtTipOneBx4.Text = "0";
-                    rtTipOneBx4.BackColor = Color.Maroon;
-                    rtTipOneBx4.ForeColor = Color.White;
-                }
-
-                else if (rtTipOneBn5.Text == "" && rtTipOneBx5.Text == "")
-                {
-                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn5, rtTipOneBx5));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn5, rtTipOneBx5, type));
-                    rtTipOneBn5.Text = batch;
-                    rtTipOneBx5.Text = "0";
-                    rtTipOneBx5.BackColor = Color.Maroon;
-                    rtTipOneBx5.ForeColor = Color.White;
-                }
-
-                else if (rtTipOneBn6.Text == "" && rtTipOneBx6.Text == "")
-                {
-                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn6, rtTipOneBx6));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn6, rtTipOneBx6, type));
-                    rtTipOneBn6.Text = batch;
-                    rtTipOneBx6.Text = "0";
-                    rtTipOneBx6.BackColor = Color.Maroon;
-                    rtTipOneBx6.ForeColor = Color.White;
-                }
-
-                else if (rtTipOneBn7.Text == "" && rtTipOneBx7.Text == "")
-                {
-                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn7, rtTipOneBx7));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn7, rtTipOneBx7, type));
-                    rtTipOneBn7.Text = batch;
-                    rtTipOneBx7.Text = "0";
-                    rtTipOneBx7.BackColor = Color.Maroon;
-                    rtTipOneBx7.ForeColor = Color.White;
-                }
-
-                else if (rtTipOneBn8.Text == "" && rtTipOneBx8.Text == "")
-                {
-                    bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(rtTipOneBn8, rtTipOneBx8));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn8, rtTipOneBx8, type));
-                    rtTipOneBn8.Text = batch;
-                    rtTipOneBx8.Text = "0";
-                    rtTipOneBx8.BackColor = Color.Maroon;
-                    rtTipOneBx8.ForeColor = Color.White;
-                }
-
-                logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Tipper One Area";
-                LogOutput(logTextOutput);
-
-                rtTipperOneBn.Text = "";
-
-                IncrementSeriesNo();
             }
+
         }
 
         private void btnTipperTwo_Click(object sender, EventArgs e)
         {
-            string type = "Tipper Two";
-
-            //TipperTwoValue();
 
             if (rtTipperTwoBn.Text == "")
             {
@@ -938,296 +899,96 @@ namespace Cane_Tracking
             else
             {
                 batch = rtTipperTwoBn.Text;
-
-                if (rtTipTwoBn1.Text == "" && rtTipTwoBx1.Text == "")
+                for (int i = 0; i < bnlist.lTbox.Count; i++)
                 {
-                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn1, rtTipTwoBx1));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn1, rtTipTwoBx1, type));
-                    rtTipTwoBn1.Text = batch;
-                    rtTipTwoBx1.Text = "0";
-                    rtTipTwoBx1.BackColor = Color.Maroon;
-                    rtTipTwoBx1.ForeColor = Color.White;
+                    if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "TipTwo")
+                    {
+                        bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2));
+                        bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2, "Tipper Two"));
+                        bnlist.lTbox[i].Item1.Text = batch;
+                        bnlist.lTbox[i].Item2.Text = "0";
+                        bnlist.lTbox[i].Item2.BackColor = Color.Maroon;
+                        bnlist.lTbox[i].Item2.ForeColor = Color.White;
+
+
+                        logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Tipper Two Area";
+                        LogOutput(logTextOutput);
+
+                        rtTipperTwoBn.Text = "";
+                        IncrementSeriesNo();
+                        break;
+                    }
                 }
-
-                else if (rtTipTwoBn2.Text == "" && rtTipTwoBx2.Text == "")
-                {
-                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn2, rtTipTwoBx2));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn2, rtTipTwoBx2, type));
-                    rtTipTwoBn2.Text = batch;
-                    rtTipTwoBx2.Text = "0";
-                    rtTipTwoBx2.BackColor = Color.Maroon;
-                    rtTipTwoBx2.ForeColor = Color.White;
-                }
-
-                else if (rtTipTwoBn3.Text == "" && rtTipTwoBx3.Text == "")
-                {
-                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn3, rtTipTwoBx3));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn3, rtTipTwoBx3, type));
-                    rtTipTwoBn3.Text = batch;
-                    rtTipTwoBx3.Text = "0";
-                    rtTipTwoBx3.BackColor = Color.Maroon;
-                    rtTipTwoBx3.ForeColor = Color.White;
-                }
-
-                else if (rtTipTwoBn4.Text == "" && rtTipTwoBx4.Text == "")
-                {
-                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn4, rtTipTwoBx4));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn4, rtTipTwoBx4, type));
-                    rtTipTwoBn4.Text = batch;
-                    rtTipTwoBx4.Text = "0";
-                    rtTipTwoBx4.BackColor = Color.Maroon;
-                    rtTipTwoBx4.ForeColor = Color.White;
-                }
-
-                else if (rtTipTwoBn5.Text == "" && rtTipTwoBx5.Text == "")
-                {
-                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn5, rtTipTwoBx5));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn5, rtTipTwoBx5, type));
-                    rtTipTwoBn5.Text = batch;
-                    rtTipTwoBx5.Text = "0";
-                    rtTipTwoBx5.BackColor = Color.Maroon;
-                    rtTipTwoBx5.ForeColor = Color.White;
-                }
-
-                else if (rtTipTwoBn6.Text == "" && rtTipTwoBx6.Text == "")
-                {
-                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn6, rtTipTwoBx6));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn6, rtTipTwoBx6, type));
-                    rtTipTwoBn6.Text = batch;
-                    rtTipTwoBx6.Text = "0";
-                    rtTipTwoBx6.BackColor = Color.Maroon;
-                    rtTipTwoBx6.ForeColor = Color.White;
-                }
-
-                else if (rtTipTwoBn7.Text == "" && rtTipTwoBx7.Text == "")
-                {
-                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn7, rtTipTwoBx7));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn7, rtTipTwoBx7, type));
-                    rtTipTwoBn7.Text = batch;
-                    rtTipTwoBx7.Text = "0";
-                    rtTipTwoBx7.BackColor = Color.Maroon;
-                    rtTipTwoBx7.ForeColor = Color.White;
-                }
-
-                else if (rtTipTwoBn8.Text == "" && rtTipTwoBx8.Text == "")
-                {
-                    bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(rtTipTwoBn8, rtTipTwoBx8));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn8, rtTipTwoBx8, type));
-                    rtTipTwoBn8.Text = batch;
-                    rtTipTwoBx8.Text = "0";
-                    rtTipTwoBx8.BackColor = Color.Maroon;
-                    rtTipTwoBx8.ForeColor = Color.White;
-                }
-
-                logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Tipper Two Area";
-                LogOutput(logTextOutput);
-
-                rtTipperTwoBn.Text = "";
-
-                IncrementSeriesNo();
             }
+
         }
 
         private void btnDumpTruck_Click(object sender, EventArgs e)
         {
-            string type = "Dump Truck";
-
-            //DumpAndStockPileValue();
 
             if (rtDumpTruckBn.Text == "")
             {
-                MessageBox.Show("Dump Truck Batch Number Field is blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Tipper Two Batch Number Field is blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 batch = rtDumpTruckBn.Text;
-
-                if (rtDumpBn1.Text == "" && rtDumpBx1.Text == "")
+                for (int i = 0; i < bnlist.lTbox.Count; i++)
                 {
-                    bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn1, rtDumpBx1));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn1, rtDumpBx1, type));
-                    rtDumpBn1.Text = batch;
-                    rtDumpBx1.Text = "0";
-                    rtDumpBx1.BackColor = Color.Maroon;
-                    rtDumpBx1.ForeColor = Color.White;
+                    if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "DumpTruck")
+                    {
+                        bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2));
+                        bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2, "Dump Truck"));
+                        bnlist.lTbox[i].Item1.Text = batch;
+                        bnlist.lTbox[i].Item2.Text = "0";
+                        bnlist.lTbox[i].Item2.BackColor = Color.Maroon;
+                        bnlist.lTbox[i].Item2.ForeColor = Color.White;
+
+
+                        logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Dump Truck Area";
+                        LogOutput(logTextOutput);
+
+                        rtDumpTruckBn.Text = "";
+                        IncrementSeriesNo();
+                        break;
+                    }
                 }
-
-                else if (rtDumpBn2.Text == "" && rtDumpBx2.Text == "")
-                {
-                    bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn2, rtDumpBx2));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn2, rtDumpBx2, type));
-                    rtDumpBn2.Text = batch;
-                    rtDumpBx2.Text = "0";
-                    rtDumpBx2.BackColor = Color.Maroon;
-                    rtDumpBx2.ForeColor = Color.White;
-                }
-
-                else if (rtDumpBn3.Text == "" && rtDumpBx3.Text == "")
-                {
-                    bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn3, rtDumpBx3));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn3, rtDumpBx3, type));
-                    rtDumpBn3.Text = batch;
-                    rtDumpBx3.Text = "0";
-                    rtDumpBx3.BackColor = Color.Maroon;
-                    rtDumpBx3.ForeColor = Color.White;
-                }
-
-                else if (rtDumpBn4.Text == "" && rtDumpBx4.Text == "")
-                {
-                    bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn4, rtDumpBx4));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn4, rtDumpBx4, type));
-                    rtDumpBn4.Text = batch;
-                    rtDumpBx4.Text = "0";
-                    rtDumpBx4.BackColor = Color.Maroon;
-                    rtDumpBx4.ForeColor = Color.White;
-                }
-
-                else if (rtDumpBn5.Text == "" && rtDumpBx5.Text == "")
-                {
-                    bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn5, rtDumpBx5));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn5, rtDumpBx5, type));
-                    rtDumpBn5.Text = batch;
-                    rtDumpBx5.Text = "0";
-                    rtDumpBx5.BackColor = Color.Maroon;
-                    rtDumpBx5.ForeColor = Color.White;
-                }
-
-                else if (rtDumpBn6.Text == "" && rtDumpBx6.Text == "")
-                {
-                    bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn6, rtDumpBx6));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn6, rtDumpBx6, type));
-                    rtDumpBn6.Text = batch;
-                    rtDumpBx6.Text = "0";
-                    rtDumpBx6.BackColor = Color.Maroon;
-                    rtDumpBx6.ForeColor = Color.White;
-                }
-
-                /*else if (rtDumpBn7.Text == "" && rtDumpBx7.Text == "")
-                {
-                    dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn7, rtDumpBx7));
-                    rtDumpBn7.Text = batch;
-                    rtDumpBx7.Text = "0";
-                    rtDumpBx7.BackColor = Color.Maroon;
-                    rtDumpBx7.ForeColor = Color.White;
-                }
-
-                else if (rtDumpBn8.Text == "" && rtDumpBx8.Text == "")
-                {
-                    dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(rtDumpBn8, rtDumpBx8));
-                    rtDumpBn8.Text = batch;
-                    rtDumpBx8.Text = "0";
-                    rtDumpBx8.BackColor = Color.Maroon;
-                    rtDumpBx8.ForeColor = Color.White;
-                }*/
-
-                logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Dump Truck Area";
-                LogOutput(logTextOutput);
-
-                rtDumpTruckBn.Text = "";
-
-                IncrementSeriesNo();
             }
+
         }
 
         private void btnStockPile_Click(object sender, EventArgs e)
         {
-            string type = "Stock Pile";
-
-            //DumpAndStockPileValue();
 
             if (rtStockPileBn.Text == "")
             {
-                MessageBox.Show("Stock Pile Batch Number Field is blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Tipper Two Batch Number Field is blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
                 batch = rtStockPileBn.Text;
-
-                if (rtStockBn1.Text == "" && rtStockBx1.Text == "")
+                for (int i = 0; i < bnlist.lTbox.Count; i++)
                 {
-                    bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn1, rtStockBx1));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn1, rtStockBx1, type));
-                    rtStockBn1.Text = batch;
-                    rtStockBx1.Text = "0";
-                    rtStockBx1.BackColor = Color.Maroon;
-                    rtStockBx1.ForeColor = Color.White;
+                    if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "StockPile")
+                    {
+                        bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2));
+                        bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2, "Stock Pile"));
+                        bnlist.lTbox[i].Item1.Text = batch;
+                        bnlist.lTbox[i].Item2.Text = "0";
+                        bnlist.lTbox[i].Item2.BackColor = Color.Maroon;
+                        bnlist.lTbox[i].Item2.ForeColor = Color.White;
+
+
+                        logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Stock Pile Area";
+                        LogOutput(logTextOutput);
+
+                        rtStockPileBn.Text = "";
+                        IncrementSeriesNo();
+                        break;
+                    }
                 }
-
-                else if (rtStockBn2.Text == "" && rtStockBx2.Text == "")
-                {
-                    bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn2, rtStockBx2));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn2, rtStockBx2, type));
-                    rtStockBn2.Text = batch;
-                    rtStockBx2.Text = "0";
-                    rtStockBx2.BackColor = Color.Maroon;
-                    rtStockBx2.ForeColor = Color.White;
-                }
-
-                else if (rtStockBn3.Text == "" && rtStockBx3.Text == "")
-                {
-                    bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn3, rtStockBx3));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn3, rtStockBx3, type));
-                    rtStockBn3.Text = batch;
-                    rtStockBx3.Text = "0";
-                    rtStockBx3.BackColor = Color.Maroon;
-                    rtStockBx3.ForeColor = Color.White;
-                }
-
-                else if (rtStockBn4.Text == "" && rtStockBx4.Text == "")
-                {
-                    bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn4, rtStockBx4));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn4, rtStockBx4, type));
-                    rtStockBn4.Text = batch;
-                    rtStockBx4.Text = "0";
-                    rtStockBx4.BackColor = Color.Maroon;
-                    rtStockBx4.ForeColor = Color.White;
-                }
-
-                else if (rtStockBn5.Text == "" && rtStockBx5.Text == "")
-                {
-                    bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn5, rtStockBx5));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn5, rtStockBx5, type));
-                    rtStockBn5.Text = batch;
-                    rtStockBx5.Text = "0";
-                    rtStockBx5.BackColor = Color.Maroon;
-                    rtStockBx5.ForeColor = Color.White;
-                }
-
-                else if (rtStockBn6.Text == "" && rtStockBx6.Text == "")
-                {
-                    bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn6, rtStockBx6));
-                    bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn6, rtStockBx6, type));
-                    rtStockBn6.Text = batch;
-                    rtStockBx6.Text = "0";
-                    rtStockBx6.BackColor = Color.Maroon;
-                    rtStockBx6.ForeColor = Color.White;
-                }
-
-                /*else if (rtStockBn7.Text == "" && rtStockBx7.Text == "")
-                {
-                    stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn7, rtStockBx7));
-                    rtStockBn7.Text = batch;
-                    rtStockBx7.Text = "0";
-                    rtStockBx7.BackColor = Color.Maroon;
-                    rtStockBx7.ForeColor = Color.White;
-                }
-
-                else if (rtStockBn8.Text == "" && rtStockBx8.Text == "")
-                {
-                    stockPile.Add(new Tuple<RichTextBox, RichTextBox>(rtStockBn8, rtStockBx8));
-                    rtStockBn8.Text = batch;
-                    rtStockBx8.Text = "0";
-                    rtStockBx8.BackColor = Color.Maroon;
-                    rtStockBx8.ForeColor = Color.White;
-                }*/
-
-                logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Stock Pile Area";
-                LogOutput(logTextOutput);
-
-                rtStockPileBn.Text = "";
-
-                IncrementSeriesNo();
             }
+
         }
 
         private void btnEditConfigs_Click(object sender, EventArgs e)
@@ -1365,7 +1126,7 @@ namespace Cane_Tracking
 
 
 
-        /*+======================================== SENSOR/INCREMENT-DECREMENT METHODS ===============================================+*/
+        /*+============================================== SERIAL CONNECTION ===============================================+*/
 
         //Serial Connection
         private void InitializeSerialConnections()
@@ -1395,36 +1156,27 @@ namespace Cane_Tracking
         //Serial Data Received
         private void CaneSensorDataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
+
             serialPort = (SerialPort)sender;
             string incomingData = serialPort.ReadLine().TrimEnd('\r');
 
-            sc.SensorIndicator(incomingData, rtSideCaneCheck, rtMainCaneCheck, rtCaneKnivesCheck, rtShredderCheck);
+            Sensor sc = new Sensor(incomingData, pause, decrementing, bnlist);
 
-            sc.TipperOne(incomingData, pause, decrementing, bnlist);
+            sc.SensorActions();
 
-            sc.TipperTwo(incomingData, pause, decrementing, bnlist);
-
-            sc.DumpTruck(incomingData, pause, decrementing, bnlist);
-
-            sc.StockPile(incomingData, pause, decrementing, bnlist);
-
-            sc.MainCane(incomingData, pause, bnlist,
-                        rtMainBn1, rtMainBn2, rtMainBn3, rtMainBn4, rtMainBx1, rtMainBx2, rtMainBx3, rtMainBx4);
-
-            sc.CaneKnives(incomingData, pause, bnlist,
-                          rtKnivesBn1, rtKnivesBn2, rtKnivesBx1, rtKnivesBx2);
-
-            sc.ShreddedCane(incomingData, pause, bnlist,
-                            rtShredBn1, rtShredBn2, rtShredBx1, rtShredBx2, rtNirWashing, rtWashingCount);
         }
 
+
+
+
+        /*+======================================== SERIES NO. INCREMENT-DECREMENT===============================================+*/
 
         /*
          * Increment Series No. during Side Cane Dumpings
          * Tipper One click
          * Tipper Two click
          * Dump Truck click
-         * Stock PIle click
+         * Stock Pile click
          * 
          * 
          * Decrement Series No. during Undo Inputs
@@ -1445,7 +1197,11 @@ namespace Cane_Tracking
 
         /*+================================== APP STATE DATABASE SAVING AND CONNECTION =====================================+*/
 
-        private void ConnectToDB()
+        /*SqlConnection con = new SqlConnection(File.ReadAllText(Path.GetFullPath("Configurations/DbConnection.txt")));
+        private Timer savingStateTimer;
+        private static int stateBatchNum;*/
+
+        /*private void ConnectToDB()
         {
             try
             {
@@ -1463,65 +1219,10 @@ namespace Cane_Tracking
 
         private void ListBox()
         {
-            List<Tuple<RichTextBox, RichTextBox, string>> lTbox = new List<Tuple<RichTextBox, RichTextBox, string>>();
-
-            //Tipper One
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn1, rtTipOneBx1, "TipOne"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn2, rtTipOneBx2, "TipOne"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn3, rtTipOneBx3, "TipOne"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn4, rtTipOneBx4, "TipOne"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn5, rtTipOneBx5, "TipOne"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn6, rtTipOneBx6, "TipOne"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn7, rtTipOneBx7, "TipOne"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn8, rtTipOneBx8, "TipOne"));
-
-            //Tipper Two
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn1, rtTipTwoBx1, "TipTwo"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn2, rtTipTwoBx2, "TipTwo"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn3, rtTipTwoBx3, "TipTwo"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn4, rtTipTwoBx4, "TipTwo"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn5, rtTipTwoBx5, "TipTwo"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn6, rtTipTwoBx6, "TipTwo"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn7, rtTipTwoBx7, "TipTwo"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn8, rtTipTwoBx8, "TipTwo"));
-
-            //Dump Truck
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn1, rtDumpBx1, "DumpTruck"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn2, rtDumpBx2, "DumpTruck"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn3, rtDumpBx3, "DumpTruck"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn4, rtDumpBx4, "DumpTruck"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn5, rtDumpBx5, "DumpTruck"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn6, rtDumpBx6, "DumpTruck"));
-
-            //Stock Pile
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn1, rtStockBx1, "StockPile"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn2, rtStockBx2, "StockPile"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn3, rtStockBx3, "StockPile"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn4, rtStockBx4, "StockPile"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn5, rtStockBx5, "StockPile"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn6, rtStockBx6, "StockPile"));
-
-            //Main Cane
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtMainBn1, rtMainBx1, "MainCane"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtMainBn2, rtMainBx2, "MainCane"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtMainBn3, rtMainBx3, "MainCane"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtMainBn4, rtMainBx4, "MainCane"));
-
-            //Cane Knives
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtKnivesBn1, rtKnivesBx1, "CaneKnives"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtKnivesBn2, rtKnivesBx2, "CaneKnives"));
-
-            //Shredded Cane
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtShredBn1, rtShredBx1, "Shredder"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtShredBn2, rtShredBx2, "Shredder"));
-
-            //Foss NIR
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtNirWashing, rtWashingCount, "Nir"));
-            lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtNirScanning, rtNirCount, "Nir"));
 
             try
             {
-                foreach (var i in lTbox)
+                foreach (var i in bnlist.lTbox)
                 {
                     if (i.Item1.Text != "")
                     {
@@ -1594,12 +1295,16 @@ namespace Cane_Tracking
         private void SaveState_Tick(object sender, EventArgs e)
         {
             ListBox();
-        }
+        }*/
 
 
 
 
         /*+===================================== CHECKS ON CONFIGURATION CHANGES ========================================+*/
+
+        /*
+         * To check changes in the configuration text files
+         */
 
         private void CheckConfigStart()
         {
@@ -1701,8 +1406,8 @@ namespace Cane_Tracking
             rtStockBn4.SelectionAlignment = HorizontalAlignment.Center;
             rtStockBn5.SelectionAlignment = HorizontalAlignment.Center;
             rtStockBn6.SelectionAlignment = HorizontalAlignment.Center;
-           /* rtStockBn7.SelectionAlignment = HorizontalAlignment.Center;
-            rtStockBn8.SelectionAlignment = HorizontalAlignment.Center;*/
+            /* rtStockBn7.SelectionAlignment = HorizontalAlignment.Center;
+             rtStockBn8.SelectionAlignment = HorizontalAlignment.Center;*/
 
             rtStockBx1.SelectionAlignment = HorizontalAlignment.Center;
             rtStockBx2.SelectionAlignment = HorizontalAlignment.Center;
@@ -1745,8 +1450,8 @@ namespace Cane_Tracking
 
             rtShredBn1.SelectionAlignment = HorizontalAlignment.Center;
             rtShredBn2.SelectionAlignment = HorizontalAlignment.Center;
-           /* rtShredBn3.SelectionAlignment = HorizontalAlignment.Center;
-            rtShredBn4.SelectionAlignment = HorizontalAlignment.Center;*/
+            /* rtShredBn3.SelectionAlignment = HorizontalAlignment.Center;
+             rtShredBn4.SelectionAlignment = HorizontalAlignment.Center;*/
 
             rtShredBx1.SelectionAlignment = HorizontalAlignment.Center;
             rtShredBx2.SelectionAlignment = HorizontalAlignment.Center;
@@ -1780,7 +1485,7 @@ namespace Cane_Tracking
         //Counting default values
         private void DefaultValues()
         {
-            Classes.CountInterval cnt = new Classes.CountInterval();
+            CountInterval cnt = new CountInterval();
             lblT1.Text = cnt.TipperOneMaxCount.ToString();
             lblT2.Text = cnt.TipperTwoMaxCount.ToString();
             lblDs.Text = cnt.DumpAndPileMaxCount.ToString();
@@ -1791,5 +1496,68 @@ namespace Cane_Tracking
             rtSeriesNo.Text = (seriesNo).ToString();
         }
 
+        //Add textboxes for tracking on program start
+        private void RegisterTextboxes()
+        {
+            //Tipper One
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn1, rtTipOneBx1, "TipOne"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn2, rtTipOneBx2, "TipOne"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn3, rtTipOneBx3, "TipOne"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn4, rtTipOneBx4, "TipOne"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn5, rtTipOneBx5, "TipOne"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn6, rtTipOneBx6, "TipOne"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn7, rtTipOneBx7, "TipOne"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipOneBn8, rtTipOneBx8, "TipOne"));
+
+            //Tipper Two
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn1, rtTipTwoBx1, "TipTwo"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn2, rtTipTwoBx2, "TipTwo"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn3, rtTipTwoBx3, "TipTwo"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn4, rtTipTwoBx4, "TipTwo"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn5, rtTipTwoBx5, "TipTwo"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn6, rtTipTwoBx6, "TipTwo"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn7, rtTipTwoBx7, "TipTwo"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtTipTwoBn8, rtTipTwoBx8, "TipTwo"));
+
+            //Dump Truck
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn1, rtDumpBx1, "DumpTruck"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn2, rtDumpBx2, "DumpTruck"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn3, rtDumpBx3, "DumpTruck"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn4, rtDumpBx4, "DumpTruck"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn5, rtDumpBx5, "DumpTruck"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn6, rtDumpBx6, "DumpTruck"));
+
+            //Stock Pile
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn1, rtStockBx1, "StockPile"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn2, rtStockBx2, "StockPile"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn3, rtStockBx3, "StockPile"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn4, rtStockBx4, "StockPile"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn5, rtStockBx5, "StockPile"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn6, rtStockBx6, "StockPile"));
+
+            //Main Cane
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtMainBn1, rtMainBx1, "MainCane"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtMainBn2, rtMainBx2, "MainCane"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtMainBn3, rtMainBx3, "MainCane"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtMainBn4, rtMainBx4, "MainCane"));
+
+            //Cane Knives
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtKnivesBn1, rtKnivesBx1, "CaneKnives"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtKnivesBn2, rtKnivesBx2, "CaneKnives"));
+
+            //Shredded Cane
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtShredBn1, rtShredBx1, "Shredder"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtShredBn2, rtShredBx2, "Shredder"));
+
+            //Foss NIR
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtNirWashing, rtWashingCount, "Nir"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtNirScanning, rtNirCount, "Nir"));
+
+            //Sensor Indicators
+            bnlist.sensorIndicators.Add(new Tuple<RichTextBox, string>(rtSideCaneCheck, "Side Cane"));
+            bnlist.sensorIndicators.Add(new Tuple<RichTextBox, string>(rtMainCaneCheck, "Main Cane"));
+            bnlist.sensorIndicators.Add(new Tuple<RichTextBox, string>(rtCaneKnivesCheck, "Cane Knives"));
+            bnlist.sensorIndicators.Add(new Tuple<RichTextBox, string>(rtShredderCheck, "Shredder"));
+        }
     }
 }
