@@ -10,7 +10,7 @@ namespace Cane_Tracking.Classes
     class Sensor
     {
         CrossThreadingCheck ctcc = new CrossThreadingCheck();
-        CountInterval ci = new CountInterval();
+        ConfigValues ci = new ConfigValues();
 
         private string incomingData { get; set; }
         private bool pause { get; set; }
@@ -444,7 +444,7 @@ namespace Cane_Tracking.Classes
         {
             int count;
             int knivesAndShredderMaxCount = ci.KnivesAndShredderMaxCount;
-            int bnShred = 0;
+            string bnShred = "";
 
             /*
              * Looping to the batch numbers stored in list coming from side canes.
@@ -507,7 +507,7 @@ namespace Cane_Tracking.Classes
 
                     if (count > knivesAndShredderMaxCount)
                     {
-                        bnShred = int.Parse(ctcc.GetTextboxValue(bnlist.shreddedCane[i].Item1));
+                        bnShred = ctcc.GetTextboxValue(bnlist.shreddedCane[i].Item1);
                         ctcc.ChangeText(bnlist.shreddedCane[i].Item1, "");
                         ctcc.ChangeText(bnlist.shreddedCane[i].Item2, "");
                         ctcc.ChangeColorTextBox(bnlist.shreddedCane[i].Item2, Color.CornflowerBlue);
@@ -529,9 +529,9 @@ namespace Cane_Tracking.Classes
                 {
                     for (int y = 0; y < bnlist.lTbox.Count; y++)
                     {
-                        if (bnlist.lTbox[y].Item3 == "Nir")
+                        if (bnlist.lTbox[y].Item3 == "NirWashing")
                         {
-                            ctcc.ChangeText(bnlist.lTbox[y].Item1, bnShred.ToString());
+                            ctcc.ChangeText(bnlist.lTbox[y].Item1, bnShred);
                             ctcc.ChangeText(bnlist.lTbox[y].Item2, "0");
                             ctcc.ChangeColorTextBox(bnlist.lTbox[y].Item2, Color.Maroon);
                             ctcc.ChangeForeColorTextBox(bnlist.lTbox[y].Item2, Color.White);
