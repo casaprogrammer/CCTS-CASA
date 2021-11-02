@@ -10,7 +10,7 @@ namespace Cane_Tracking.Classes
     class NirTimer
     {
         CrossThreadingCheck ctcc = new CrossThreadingCheck();
-        CountInterval ci = new CountInterval();
+        ConfigValues ci = new ConfigValues();
 
         private Timer washingTimer;
         private Timer nirTimer;
@@ -21,53 +21,59 @@ namespace Cane_Tracking.Classes
         private static int fossNirWashingTime;
         private static int fossNirTime;
 
-        public void SetWashingTimer(ref int count, RichTextBox rtNirScanning, RichTextBox rtNirCount, RichTextBox rtBn, RichTextBox rtCnt)
+
+        public void SetWashingTimer(RichTextBox rtNirScanning, RichTextBox rtNirCount, RichTextBox rtBn, RichTextBox rtCnt)
         {
-            int c = count;
             washingTimer = new Timer();
             washingTimer.Interval = 1000;
             washingTimer.Enabled = true;
-            washingTimer.Tick += (object sender, EventArgs e) => WashingTimer_Tick(sender, e, ref c, rtNirScanning, rtNirCount, rtBn, rtCnt);
+            washingTimer.Tick += (object sender, EventArgs e) => WashingTimer_Tick(sender, e, rtNirScanning, rtNirCount, rtBn, rtCnt);
             washingTimerList.Add(washingTimer);
         }
 
-        private void WashingTimer_Tick(object sender, EventArgs e, ref int count, RichTextBox rtNirScanning, RichTextBox rtNirCount, RichTextBox rtBn, RichTextBox rtCnt)
+        private void WashingTimer_Tick(object sender, EventArgs e, RichTextBox rtNirScanning, RichTextBox rtNirCount, RichTextBox rtBn, RichTextBox rtCnt)
         {
             washingTimer = (Timer)sender;
 
             fossNirWashingTime = ci.WashingTime;
 
+            int count = int.Parse(rtCnt.Text);
+
             ctcc.ChangeText(rtCnt, (count += 1).ToString());
 
             if (count > fossNirWashingTime)
             {
+                washingTimer.Stop();
+
                 ctcc.ChangeText(rtNirScanning, rtBn.Text);
                 ctcc.ChangeText(rtNirCount, "0");
                 ctcc.ChangeColorTextBox(rtNirCount, Color.Maroon);
                 ctcc.ChangeForeColorTextBox(rtNirCount, Color.White);
 
-                washingTimer.Stop();
                 ctcc.ChangeText(rtBn, "");
                 ctcc.ChangeText(rtCnt, "");
                 ctcc.ChangeColorTextBox(rtCnt, Color.CornflowerBlue);
+
+                washingTimerList.Clear();
             }
         }
 
-        public void SetNirTimer(ref int count, RichTextBox rtBn, RichTextBox rtCnt)
+        public void SetNirTimer(RichTextBox rtBn, RichTextBox rtCnt)
         {
-            int c = count;
             nirTimer = new Timer();
             nirTimer.Interval = 1000;
             nirTimer.Enabled = true;
-            nirTimer.Tick += (object sender, EventArgs e) => NirTimer_Tick(sender, e, ref c, rtBn, rtCnt);
+            nirTimer.Tick += (object sender, EventArgs e) => NirTimer_Tick(sender, e, rtBn, rtCnt);
             nirTimerList.Add(nirTimer);
         }
 
-        private void NirTimer_Tick(object sender, EventArgs e, ref int count, RichTextBox rtBn, RichTextBox rtCnt)
+        private void NirTimer_Tick(object sender, EventArgs e, RichTextBox rtBn, RichTextBox rtCnt)
         {
             nirTimer = (Timer)sender;
 
             fossNirTime = ci.NirTime;
+
+            int count = int.Parse(rtCnt.Text);
 
             ctcc.ChangeText(rtCnt, (count += 1).ToString());
 
@@ -77,42 +83,53 @@ namespace Cane_Tracking.Classes
                 ctcc.ChangeText(rtBn, "");
                 ctcc.ChangeText(rtCnt, "");
                 ctcc.ChangeColorTextBox(rtCnt, Color.CornflowerBlue);
+
+                nirTimerList.Clear();
             }
         }
 
-        public void PauseNirCount(bool pause)
+        private void PauseWashingCount(bool pause)
         {
-            int i;
-            int y;
-
-            if (washingTimerList.Count > 0 || nirTimerList.Count > 0)
+            if (washingTimerList.Count > 0)
             {
-                if (pause)
+                for (int i = 0; i < washingTimerList.Count; i++)
                 {
-                    for (i = 0; i < washingTimerList.Count; i++)
+                    if (pause)
                     {
                         washingTimerList[i].Stop();
                     }
-
-                    for (y = 0; y < nirTimerList.Count; y++)
-                    {
-                        nirTimerList[y].Stop();
-                    }
-                }
-                else
-                {
-                    for (i = 0; i < washingTimerList.Count; i++)
+                    else
                     {
                         washingTimerList[i].Start();
                     }
-
-                    for (y = 0; y < nirTimerList.Count; y++)
-                    {
-                        nirTimerList[y].Start();
-                    }
                 }
             }
-
         }
+
+        private void PauseNirCount(bool pause)
+        {
+            if (nirTimerList.Count > 0)
+            {
+                for (int i = 0; i < nirTimerList.Count; i++)
+                {
+                    if (pause)
+                    {
+                        nirTimerList[i].Stop();
+                    }
+                    else
+                    {
+                        nirTimerList[i].Start();
+                    }
+                }
+
+            }
+        }
+
+        public void PauseNir(bool pause)
+        {
+            PauseNirCount(pause);
+            PauseWashingCount(pause);
+        }
+
     }
 }
