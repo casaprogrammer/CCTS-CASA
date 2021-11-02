@@ -236,10 +236,8 @@ namespace Cane_Tracking.Classes
                             break;
                         }
 
-                        /*if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "Nir"
-                          && rdr["areaName"].ToString() == "Nir")
+                        if (bnlist.lTbox[i].Item3 == "NirWashing" && rdr["areaName"].ToString() == "NirWashing")
                         {
-                            bnlist.shreddedCane.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2));
                             bnlist.lTbox[i].Item1.Text = rdr["batchNumber"].ToString();
                             bnlist.lTbox[i].Item2.Text = rdr["currentCount"].ToString();
 
@@ -249,7 +247,20 @@ namespace Cane_Tracking.Classes
                                 bnlist.lTbox[i].Item2.ForeColor = Color.White;
                             }
                             break;
-                        }*/
+                        }
+
+                        if (bnlist.lTbox[i].Item3 == "NirScanning" && rdr["areaName"].ToString() == "NirScanning")
+                        {
+                            bnlist.lTbox[i].Item1.Text = rdr["batchNumber"].ToString();
+                            bnlist.lTbox[i].Item2.Text = rdr["currentCount"].ToString();
+
+                            if (bnlist.lTbox[i].Item1.Text != "")
+                            {
+                                bnlist.lTbox[i].Item2.BackColor = Color.Maroon;
+                                bnlist.lTbox[i].Item2.ForeColor = Color.White;
+                            }
+                            break;
+                        }
                     }
                 }
             }
@@ -271,7 +282,7 @@ namespace Cane_Tracking.Classes
 
             if (Data_is_loaded)
             {
-                LoadBatchNumber(bnlist);  
+                LoadBatchNumber(bnlist);
             }
             ResetLoadValues();
         }
