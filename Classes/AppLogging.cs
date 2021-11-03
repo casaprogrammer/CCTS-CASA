@@ -24,7 +24,7 @@ namespace Cane_Tracking.Classes
             con = new SqlConnection(cnf.DbAddress);
         }
 
-        public void CaneDumpLog(string log)
+        public void AppEventLog(string log)
         {
             SqlCommand cmd = new SqlCommand(query.SaveLog(log), con);
 
@@ -84,7 +84,7 @@ namespace Cane_Tracking.Classes
                 con.Open();
                 Db_Connected = true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -94,6 +94,25 @@ namespace Cane_Tracking.Classes
             }
 
             return Db_Connected;
+        }
+
+        public void TruncateSavedStateLogs()
+        {
+            SqlCommand cmd = new SqlCommand(query.TruncateSavedStateLogs(), con);
+
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
         }
     }
 }
