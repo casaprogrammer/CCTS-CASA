@@ -16,13 +16,15 @@ namespace Cane_Tracking
     {
 
         Queries query = new Queries();
-        LoadingValues appLoading = new LoadingValues();
-        SqlConnection con = new SqlConnection(File.ReadAllText(Path.GetFullPath("Configurations/DbConnection.txt")));
+        ConfigValues cnf = new ConfigValues();
+        AppLogging log = new AppLogging();
+        SqlConnection con;
 
 
         public frmLoadData()
         {
             InitializeComponent();
+            con = new SqlConnection(cnf.DbAddress);
         }
 
         private void frmStateLogs_Load(object sender, EventArgs e)
@@ -37,6 +39,7 @@ namespace Cane_Tracking
                 if (cmd.ExecuteScalar() == null)
                 {
                     MessageBox.Show("No Records found");
+                    this.Close();
                 }
                 else
                 {
@@ -60,7 +63,7 @@ namespace Cane_Tracking
         {
             if (e.RowIndex != -1)
             {
-                string val = dgvStateLogs.Rows[e.RowIndex].Cells["Saved State Logs"].FormattedValue.ToString();
+                string val = dgvStateLogs.Rows[e.RowIndex].Cells["Date and Time"].FormattedValue.ToString();
 
                 DialogResult dialogResult = MessageBox.Show("Proceed loading selected data?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -73,6 +76,8 @@ namespace Cane_Tracking
                         con.Open();
                         cmd.ExecuteNonQuery();
 
+                        string t = DateTime.Now + " : " + "Loaded saved state data";
+                        log.AppEventLog(t);
                     }
                     catch(Exception ex)
                     {
