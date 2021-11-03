@@ -8,18 +8,21 @@ namespace Cane_Tracking.Classes
 {
     class ConfigValues
     {
-        private static int tipperOneMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/tipperOneMaxCount.txt")));
-        private static int tipperTwoMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/tipperTwoMaxCount.txt")));
-        private static int dumpAndPileMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/dumpAndPileMaxCount.txt")));
-        private static int mainCaneMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/mainCaneMaxCount.txt")));
-        private static int knivesAndShredderMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/knivesAndShredderMaxCount.txt")));
-        private static int nirWashingTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/nirWashingTime.txt")));
-        private static int nirTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/nirTimerCount.txt")));
+        private static int tipperOneMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/Cane Prep/tipperOneMaxCount.txt")));
+        private static int tipperTwoMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/Cane Prep/tipperTwoMaxCount.txt")));
+        private static int dumpAndPileMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/Cane Prep/dumpAndPileMaxCount.txt")));
+        private static int mainCaneMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/Cane Prep/mainCaneMaxCount.txt")));
+        private static int knivesAndShredderMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/Cane Prep/knivesAndShredderMaxCount.txt")));
+        private static int nirWashingTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirWashingTime.txt")));
+        private static int nirTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirTimerCount.txt")));
 
-        private static string nirAddress = File.ReadAllText(Path.GetFullPath("Configurations/nirAddress.txt"));
-        private static int nirPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/nirPort.txt")));
+        private static string nirAddress = File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirAddress.txt"));
+        private static int nirPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirPort.txt")));
 
-        private static string dbAddress = File.ReadAllText(Path.GetFullPath("Configurations/DbConnection.txt"));
+        private static string sendMessageFormat = File.ReadAllText(Path.GetFullPath("Configurations/NIR/sendMessageFormat.txt"));
+        private static string endMessageFormat = File.ReadAllText(Path.GetFullPath("Configurations/NIR/endMessageFormat.txt"));
+
+        private static string dbAddress = File.ReadAllText(Path.GetFullPath("Configurations/DB Config/DbConnection.txt"));
 
 
         public int TipperOneMaxCount
@@ -94,6 +97,22 @@ namespace Cane_Tracking.Classes
             }
         }
 
+        public string NirSendMessage
+        {
+            get
+            {
+                return sendMessageFormat;
+            }
+        }
+
+        public string NirEndMessage
+        {
+            get
+            {
+                return endMessageFormat;
+            }
+        }
+
         public string DbAddress
         {
             get
@@ -106,8 +125,8 @@ namespace Cane_Tracking.Classes
         {
             try
             {
-                File.WriteAllText(Path.GetFullPath("Configurations/tipperOneMaxCount.txt"), count);
-                tipperOneMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/tipperOneMaxCount.txt")));
+                File.WriteAllText(Path.GetFullPath("Configurations/Cane Prep/tipperOneMaxCount.txt"), count);
+                tipperOneMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/Cane Prep/tipperOneMaxCount.txt")));
             }
             catch (Exception)
             {
@@ -118,8 +137,8 @@ namespace Cane_Tracking.Classes
         {
             try
             {
-                File.WriteAllText(Path.GetFullPath("Configurations/tipperTwoMaxCount.txt"), count);
-                tipperTwoMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/tipperTwoMaxCount.txt")));
+                File.WriteAllText(Path.GetFullPath("Configurations/Cane Prep/tipperTwoMaxCount.txt"), count);
+                tipperTwoMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/Cane Prep/tipperTwoMaxCount.txt")));
             }
             catch (Exception)
             {
@@ -130,8 +149,8 @@ namespace Cane_Tracking.Classes
         {
             try
             {
-                File.WriteAllText(Path.GetFullPath("Configurations/dumpAndPileMaxCount.txt"), count);
-                dumpAndPileMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/dumpAndPileMaxCount.txt")));
+                File.WriteAllText(Path.GetFullPath("Configurations/Cane Prep/dumpAndPileMaxCount.txt"), count);
+                dumpAndPileMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/Cane Prep/dumpAndPileMaxCount.txt")));
             }
             catch (Exception)
             {
@@ -142,8 +161,8 @@ namespace Cane_Tracking.Classes
         {
             try
             {
-                File.WriteAllText(Path.GetFullPath("Configurations/mainCaneMaxCount.txt"), count);
-                mainCaneMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/mainCaneMaxCount.txt")));
+                File.WriteAllText(Path.GetFullPath("Configurations/Cane Prep/mainCaneMaxCount.txt"), count);
+                mainCaneMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/Cane Prep/mainCaneMaxCount.txt")));
             }
             catch (Exception)
             {
@@ -154,8 +173,8 @@ namespace Cane_Tracking.Classes
         {
             try
             {
-                File.WriteAllText(Path.GetFullPath("Configurations/knivesAndShredderMaxCount.txt"), count);
-                knivesAndShredderMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/knivesAndShredderMaxCount.txt")));
+                File.WriteAllText(Path.GetFullPath("Configurations/Cane Prep/knivesAndShredderMaxCount.txt"), count);
+                knivesAndShredderMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/Cane Prep/knivesAndShredderMaxCount.txt")));
             }
             catch (Exception)
             {
@@ -166,8 +185,8 @@ namespace Cane_Tracking.Classes
         {
             try
             {
-                File.WriteAllText(Path.GetFullPath("Configurations/nirWashingTime.txt"), count);
-                nirWashingTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/nirWashingTime.txt")));
+                File.WriteAllText(Path.GetFullPath("Configurations/NIR/nirWashingTime.txt"), count);
+                nirWashingTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirWashingTime.txt")));
             }
             catch (Exception)
             {
@@ -178,8 +197,8 @@ namespace Cane_Tracking.Classes
         {
             try
             {
-                File.WriteAllText(Path.GetFullPath("Configurations/nirTimerCount.txt"), count);
-                nirTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/nirTimerCount.txt")));
+                File.WriteAllText(Path.GetFullPath("Configurations/NIR/nirTimerCount.txt"), count);
+                nirTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirTimerCount.txt")));
             }
             catch (Exception)
             {
@@ -191,8 +210,8 @@ namespace Cane_Tracking.Classes
         {
             try
             {
-                File.WriteAllText(Path.GetFullPath("Configurations/nirAddress.txt"), address);
-                nirAddress = File.ReadAllText(Path.GetFullPath("Configurations/nirAddress.txt"));
+                File.WriteAllText(Path.GetFullPath("Configurations/NIR/nirAddress.txt"), address);
+                nirAddress = File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirAddress.txt"));
             }
             catch (Exception)
             {
@@ -204,8 +223,8 @@ namespace Cane_Tracking.Classes
         {
             try
             {
-                File.WriteAllText(Path.GetFullPath("Configurations/nirPort.txt"), port);
-                nirPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/nirPort.txt")));
+                File.WriteAllText(Path.GetFullPath("Configurations/NIR/nirPort.txt"), port);
+                nirPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirPort.txt")));
             }
             catch (Exception)
             {
