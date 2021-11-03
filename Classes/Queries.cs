@@ -14,7 +14,7 @@ namespace Cane_Tracking.Classes
         public string SaveLog(string data)
         {
             this.query = @"INSERT INTO app_logs
-                           (logDescription)
+                           (log_description)
                            VALUES
                            ('{0}')";
             this.query = this.query.Replace("{0}", data);
@@ -25,7 +25,7 @@ namespace Cane_Tracking.Classes
         public string SaveStateLog(string batchNum, string currentCount, string areaName, string dateSaved, string seriesNo)
         {
             this.query = @"INSERT INTO saved_state_logs
-                           (batchNumber, currentCount, areaName, dateSaved, seriesNo)
+                           (batch_number, current_count, area_name, date_saved, series_no)
                            VALUES
                            ('{0}', '{1}', '{2}', '{3}', '{4}')";
 
@@ -40,10 +40,8 @@ namespace Cane_Tracking.Classes
 
         public string LoadData(string data)
         {
-            this.query = @"SELECT batchNumber, currentCount, areaName, 
-	                              (SELECT MAX(seriesNo) FROM saved_state_logs WHERE dateSaved = '{0}') as seriesNo,
-	                              (SELECT MAX(currentScannedSeries) FROM saved_state_logs WHERE dateSaved = '{1}') as currentScannedSeries
-                           FROM saved_state_logs WHERE dateSaved = '{2}'";
+            this.query = @"SELECT batch_number, current_count, area_name
+                           FROM saved_state_logs WHERE date_saved = '{2}'";
 
             this.query = this.query.Replace("{0}", data);
             this.query = this.query.Replace("{1}", data);
@@ -54,7 +52,14 @@ namespace Cane_Tracking.Classes
 
         public string ListStatusLog()
         {
-            this.query = "SELECT CONVERT(varchar,dateSaved,20) as [Saved State Logs] FROM saved_state_logs GROUP BY dateSaved ORDER BY dateSaved ASC";
+            this.query = "SELECT CONVERT(varchar,date_saved,20) as [Date and Time] FROM saved_state_logs GROUP BY dateSaved ORDER BY dateSaved ASC";
+
+            return this.query;
+        }
+
+        public string ListEventLog()
+        {
+            this.query = "SELECT log_description as [Log Description] FROM app_logs";
 
             return this.query;
         }
@@ -83,6 +88,13 @@ namespace Cane_Tracking.Classes
         public string CheckStatus()
         {
             this.query = "SELECT current_status, CONVERT(varchar,status_value,20) as [status_val] FROM app_status";
+
+            return this.query;
+        }
+
+        public string TruncateSavedStateLogs()
+        {
+            this.query = "TRUNCATE TABLE saved_state_logs";
 
             return this.query;
         }
