@@ -44,12 +44,14 @@ namespace Cane_Tracking
             this.label6 = new System.Windows.Forms.Label();
             this.btnSaveChanges = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.richTextBox7 = new System.Windows.Forms.RichTextBox();
+            this.rtWbServer = new System.Windows.Forms.RichTextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.richTextBox8 = new System.Windows.Forms.RichTextBox();
+            this.rtNirNCS = new System.Windows.Forms.RichTextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.rtWashingTime = new System.Windows.Forms.RichTextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.rtNcsPort = new System.Windows.Forms.RichTextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -67,6 +69,7 @@ namespace Cane_Tracking
             // 
             this.rtTipperOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipperOne.Location = new System.Drawing.Point(18, 54);
+            this.rtTipperOne.Multiline = false;
             this.rtTipperOne.Name = "rtTipperOne";
             this.rtTipperOne.Size = new System.Drawing.Size(331, 47);
             this.rtTipperOne.TabIndex = 1;
@@ -77,6 +80,7 @@ namespace Cane_Tracking
             // 
             this.rtTipperTwo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipperTwo.Location = new System.Drawing.Point(18, 139);
+            this.rtTipperTwo.Multiline = false;
             this.rtTipperTwo.Name = "rtTipperTwo";
             this.rtTipperTwo.Size = new System.Drawing.Size(331, 47);
             this.rtTipperTwo.TabIndex = 3;
@@ -98,6 +102,7 @@ namespace Cane_Tracking
             // 
             this.rtDumpAndPile.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtDumpAndPile.Location = new System.Drawing.Point(18, 224);
+            this.rtDumpAndPile.Multiline = false;
             this.rtDumpAndPile.Name = "rtDumpAndPile";
             this.rtDumpAndPile.Size = new System.Drawing.Size(331, 47);
             this.rtDumpAndPile.TabIndex = 5;
@@ -119,6 +124,7 @@ namespace Cane_Tracking
             // 
             this.rtMainCane.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtMainCane.Location = new System.Drawing.Point(18, 309);
+            this.rtMainCane.Multiline = false;
             this.rtMainCane.Name = "rtMainCane";
             this.rtMainCane.Size = new System.Drawing.Size(331, 47);
             this.rtMainCane.TabIndex = 7;
@@ -140,6 +146,7 @@ namespace Cane_Tracking
             // 
             this.rtKnivesAndShredder.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtKnivesAndShredder.Location = new System.Drawing.Point(18, 394);
+            this.rtKnivesAndShredder.Multiline = false;
             this.rtKnivesAndShredder.Name = "rtKnivesAndShredder";
             this.rtKnivesAndShredder.Size = new System.Drawing.Size(331, 47);
             this.rtKnivesAndShredder.TabIndex = 9;
@@ -161,6 +168,7 @@ namespace Cane_Tracking
             // 
             this.rtNir.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtNir.Location = new System.Drawing.Point(18, 570);
+            this.rtNir.Multiline = false;
             this.rtNir.Name = "rtNir";
             this.rtNir.Size = new System.Drawing.Size(331, 47);
             this.rtNir.TabIndex = 11;
@@ -174,16 +182,16 @@ namespace Cane_Tracking
             this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(18, 535);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(74, 32);
+            this.label6.Size = new System.Drawing.Size(159, 32);
             this.label6.TabIndex = 10;
-            this.label6.Text = "NIR:";
+            this.label6.Text = "NIR Timer:";
             // 
             // btnSaveChanges
             // 
             this.btnSaveChanges.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.btnSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSaveChanges.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSaveChanges.Location = new System.Drawing.Point(179, 810);
+            this.btnSaveChanges.Location = new System.Drawing.Point(179, 887);
             this.btnSaveChanges.Name = "btnSaveChanges";
             this.btnSaveChanges.Size = new System.Drawing.Size(170, 69);
             this.btnSaveChanges.TabIndex = 12;
@@ -196,7 +204,7 @@ namespace Cane_Tracking
             this.btnCancel.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(18, 810);
+            this.btnCancel.Location = new System.Drawing.Point(18, 887);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(155, 69);
             this.btnCancel.TabIndex = 13;
@@ -204,14 +212,15 @@ namespace Cane_Tracking
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // richTextBox7
+            // rtWbServer
             // 
-            this.richTextBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox7.Location = new System.Drawing.Point(18, 655);
-            this.richTextBox7.Name = "richTextBox7";
-            this.richTextBox7.Size = new System.Drawing.Size(331, 47);
-            this.richTextBox7.TabIndex = 15;
-            this.richTextBox7.Text = "";
+            this.rtWbServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtWbServer.Location = new System.Drawing.Point(18, 655);
+            this.rtWbServer.Multiline = false;
+            this.rtWbServer.Name = "rtWbServer";
+            this.rtWbServer.Size = new System.Drawing.Size(331, 47);
+            this.rtWbServer.TabIndex = 15;
+            this.rtWbServer.Text = "";
             // 
             // label7
             // 
@@ -220,18 +229,19 @@ namespace Cane_Tracking
             this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.Location = new System.Drawing.Point(17, 620);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(107, 32);
+            this.label7.Size = new System.Drawing.Size(201, 32);
             this.label7.TabIndex = 14;
-            this.label7.Text = "LAN 1:";
+            this.label7.Text = "WB SERVER:";
             // 
-            // richTextBox8
+            // rtNirNCS
             // 
-            this.richTextBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox8.Location = new System.Drawing.Point(18, 740);
-            this.richTextBox8.Name = "richTextBox8";
-            this.richTextBox8.Size = new System.Drawing.Size(331, 47);
-            this.richTextBox8.TabIndex = 17;
-            this.richTextBox8.Text = "";
+            this.rtNirNCS.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtNirNCS.Location = new System.Drawing.Point(18, 740);
+            this.rtNirNCS.Multiline = false;
+            this.rtNirNCS.Name = "rtNirNCS";
+            this.rtNirNCS.Size = new System.Drawing.Size(331, 47);
+            this.rtNirNCS.TabIndex = 17;
+            this.rtNirNCS.Text = "";
             // 
             // label8
             // 
@@ -240,14 +250,15 @@ namespace Cane_Tracking
             this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.Location = new System.Drawing.Point(18, 705);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(107, 32);
+            this.label8.Size = new System.Drawing.Size(144, 32);
             this.label8.TabIndex = 16;
-            this.label8.Text = "LAN 2:";
+            this.label8.Text = "NIR NCS:";
             // 
             // rtWashingTime
             // 
             this.rtWashingTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtWashingTime.Location = new System.Drawing.Point(18, 485);
+            this.rtWashingTime.Multiline = false;
             this.rtWashingTime.Name = "rtWashingTime";
             this.rtWashingTime.Size = new System.Drawing.Size(331, 47);
             this.rtWashingTime.TabIndex = 19;
@@ -264,17 +275,40 @@ namespace Cane_Tracking
             this.label9.TabIndex = 18;
             this.label9.Text = "Washing Time:";
             // 
+            // rtNcsPort
+            // 
+            this.rtNcsPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtNcsPort.Location = new System.Drawing.Point(18, 825);
+            this.rtNcsPort.Multiline = false;
+            this.rtNcsPort.Name = "rtNcsPort";
+            this.rtNcsPort.Size = new System.Drawing.Size(331, 47);
+            this.rtNcsPort.TabIndex = 21;
+            this.rtNcsPort.Text = "";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.White;
+            this.label10.Location = new System.Drawing.Point(18, 790);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(234, 32);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "NIR NCS PORT:";
+            // 
             // frmEditConfigs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.ClientSize = new System.Drawing.Size(369, 905);
+            this.ClientSize = new System.Drawing.Size(367, 972);
+            this.Controls.Add(this.rtNcsPort);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.rtWashingTime);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.richTextBox8);
+            this.Controls.Add(this.rtNirNCS);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.richTextBox7);
+            this.Controls.Add(this.rtWbServer);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSaveChanges);
@@ -318,11 +352,13 @@ namespace Cane_Tracking
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnSaveChanges;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.RichTextBox richTextBox7;
+        private System.Windows.Forms.RichTextBox rtWbServer;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.RichTextBox richTextBox8;
+        private System.Windows.Forms.RichTextBox rtNirNCS;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.RichTextBox rtWashingTime;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.RichTextBox rtNcsPort;
+        private System.Windows.Forms.Label label10;
     }
 }

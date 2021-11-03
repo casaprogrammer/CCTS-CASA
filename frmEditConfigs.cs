@@ -19,17 +19,20 @@ namespace Cane_Tracking
             DefaultValues();
         }
 
-        CountInterval cnt = new CountInterval();
+        ConfigValues cnf = new ConfigValues();
+        AppLogging log = new AppLogging();
 
         private void DefaultValues()
         { 
-            rtTipperOne.Text = cnt.TipperOneMaxCount.ToString();
-            rtTipperTwo.Text = cnt.TipperTwoMaxCount.ToString();
-            rtDumpAndPile.Text = cnt.DumpAndPileMaxCount.ToString();
-            rtMainCane.Text = cnt.MainCaneMaxCount.ToString();
-            rtKnivesAndShredder.Text = cnt.KnivesAndShredderMaxCount.ToString();
-            rtWashingTime.Text = cnt.WashingTime.ToString();
-            rtNir.Text = cnt.NirTime.ToString();
+            rtTipperOne.Text = cnf.TipperOneMaxCount.ToString();
+            rtTipperTwo.Text = cnf.TipperTwoMaxCount.ToString();
+            rtDumpAndPile.Text = cnf.DumpAndPileMaxCount.ToString();
+            rtMainCane.Text = cnf.MainCaneMaxCount.ToString();
+            rtKnivesAndShredder.Text = cnf.KnivesAndShredderMaxCount.ToString();
+            rtWashingTime.Text = cnf.WashingTime.ToString();
+            rtNir.Text = cnf.NirTime.ToString();
+            rtNirNCS.Text = cnf.NirAddress;
+            rtNcsPort.Text = cnf.NirPort.ToString();
         }
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
@@ -41,18 +44,24 @@ namespace Cane_Tracking
                 rtMainCane.Text != "" && rtMainCane.Text != "0" &&
                 rtKnivesAndShredder.Text != "" && rtKnivesAndShredder.Text != "0" &&
                 rtNir.Text != "" && rtNir.Text != "0" &&
-                rtWashingTime.Text != "" && rtWashingTime.Text != "0"
+                rtWashingTime.Text != "" && rtWashingTime.Text != "0" &&
+                rtNirNCS.Text != "" && rtNcsPort.Text != ""
                )
             {
                 try
                 {
-                    cnt.ChangeTipperOneCount(rtTipperOne.Text);
-                    cnt.ChangeTipperTwoCount(rtTipperTwo.Text);
-                    cnt.ChangeDumpAndPileCount(rtDumpAndPile.Text);
-                    cnt.ChangeMainCaneCount(rtMainCane.Text);
-                    cnt.ChangeKnivesAndShredderCount(rtKnivesAndShredder.Text);
-                    cnt.ChangeWashingTime(rtWashingTime.Text);
-                    cnt.ChangeNirTime(rtNir.Text);
+                    cnf.ChangeTipperOneCount(rtTipperOne.Text);
+                    cnf.ChangeTipperTwoCount(rtTipperTwo.Text);
+                    cnf.ChangeDumpAndPileCount(rtDumpAndPile.Text);
+                    cnf.ChangeMainCaneCount(rtMainCane.Text);
+                    cnf.ChangeKnivesAndShredderCount(rtKnivesAndShredder.Text);
+                    cnf.ChangeWashingTime(rtWashingTime.Text);
+                    cnf.ChangeNirTime(rtNir.Text);
+                    cnf.ChangeNirAddress(rtNirNCS.Text);
+                    cnf.ChangeNirPort(rtNcsPort.Text);
+
+                    string t = DateTime.Now + " : " + "Changes to configuration file was made";
+                    log.AppEventLog(t);
 
                     MessageBox.Show("Changes Saved", "Saved");
                 }
@@ -80,7 +89,7 @@ namespace Cane_Tracking
             if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
             {
                 MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtTipperOne.Text = File.ReadAllText(Path.GetFullPath("Configurations/tipperOneMaxCount.txt"));
+                rtTipperOne.Text = cnf.TipperOneMaxCount.ToString();
             }
         }
 
@@ -89,7 +98,7 @@ namespace Cane_Tracking
             if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
             {
                 MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtTipperTwo.Text = File.ReadAllText(Path.GetFullPath("Configurations/tipperTwoMaxCount.txt"));
+                rtTipperTwo.Text = cnf.TipperTwoMaxCount.ToString();
             }
         }
 
@@ -98,7 +107,7 @@ namespace Cane_Tracking
             if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
             {
                 MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtDumpAndPile.Text = File.ReadAllText(Path.GetFullPath("Configurations/dumpAndPileMaxCount.txt"));
+                rtDumpAndPile.Text = cnf.DumpAndPileMaxCount.ToString();
             }
         }
 
@@ -107,7 +116,7 @@ namespace Cane_Tracking
             if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
             {
                 MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtMainCane.Text = File.ReadAllText(Path.GetFullPath("Configurations/mainCaneMaxCount.txt"));
+                rtMainCane.Text = cnf.MainCaneMaxCount.ToString();
             }
         }
 
@@ -116,7 +125,7 @@ namespace Cane_Tracking
             if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
             {
                 MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtKnivesAndShredder.Text = File.ReadAllText(Path.GetFullPath("Configurations/knivesAndShredderMaxCount.txt"));
+                rtKnivesAndShredder.Text = cnf.KnivesAndShredderMaxCount.ToString();
             }
         }
 
@@ -125,7 +134,7 @@ namespace Cane_Tracking
             if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
             {
                 MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtNir.Text = File.ReadAllText(Path.GetFullPath("Configurations/nirTimerCount.txt"));
+                rtNir.Text = cnf.NirTime.ToString();
             }
         }
     }
