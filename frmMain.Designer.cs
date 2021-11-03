@@ -150,8 +150,9 @@ namespace Cane_Tracking
             this.label6 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.panel11 = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
             this.rtForceScan = new System.Windows.Forms.RichTextBox();
+            this.btnForceScan = new System.Windows.Forms.Button();
+            this.rtForceScanCnt = new System.Windows.Forms.RichTextBox();
             this.rtShredderCheck = new System.Windows.Forms.RichTextBox();
             this.rtCaneKnivesCheck = new System.Windows.Forms.RichTextBox();
             this.rtMainCaneCheck = new System.Windows.Forms.RichTextBox();
@@ -215,19 +216,9 @@ namespace Cane_Tracking
             this.btnEditConfigs = new System.Windows.Forms.Button();
             this.panel35 = new System.Windows.Forms.Panel();
             this.btnReset = new System.Windows.Forms.Button();
+            this.rtCurrentScannedSample = new System.Windows.Forms.RichTextBox();
             this.panel28 = new System.Windows.Forms.Panel();
-            this.lblNi = new System.Windows.Forms.Label();
-            this.lblCk = new System.Windows.Forms.Label();
-            this.lblMc = new System.Windows.Forms.Label();
-            this.lblDs = new System.Windows.Forms.Label();
-            this.lblT2 = new System.Windows.Forms.Label();
-            this.lblT1 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.btnEventLogs = new System.Windows.Forms.Button();
             this.panel6.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -272,10 +263,11 @@ namespace Cane_Tracking
             this.btnTipperOne.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnTipperOne.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTipperOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTipperOne.Location = new System.Drawing.Point(16, 61);
+            this.btnTipperOne.Location = new System.Drawing.Point(14, 61);
             this.btnTipperOne.Name = "btnTipperOne";
             this.btnTipperOne.Size = new System.Drawing.Size(303, 110);
             this.btnTipperOne.TabIndex = 0;
+            this.btnTipperOne.TabStop = false;
             this.btnTipperOne.Text = "Tipper 1";
             this.btnTipperOne.UseVisualStyleBackColor = false;
             this.btnTipperOne.Click += new System.EventHandler(this.btnTipperOne_Click);
@@ -311,7 +303,8 @@ namespace Cane_Tracking
             // 
             this.rtTipperOneBn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipperOneBn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtTipperOneBn.Location = new System.Drawing.Point(16, 13);
+            this.rtTipperOneBn.Location = new System.Drawing.Point(14, 13);
+            this.rtTipperOneBn.Multiline = false;
             this.rtTipperOneBn.Name = "rtTipperOneBn";
             this.rtTipperOneBn.Size = new System.Drawing.Size(299, 46);
             this.rtTipperOneBn.TabIndex = 1;
@@ -328,6 +321,7 @@ namespace Cane_Tracking
             this.rtTipOneBx8.ReadOnly = true;
             this.rtTipOneBx8.Size = new System.Drawing.Size(85, 42);
             this.rtTipOneBx8.TabIndex = 27;
+            this.rtTipOneBx8.TabStop = false;
             this.rtTipOneBx8.Text = "";
             // 
             // rtTipOneBn8
@@ -335,9 +329,11 @@ namespace Cane_Tracking
             this.rtTipOneBn8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipOneBn8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipOneBn8.Location = new System.Drawing.Point(576, 91);
+            this.rtTipOneBn8.Multiline = false;
             this.rtTipOneBn8.Name = "rtTipOneBn8";
             this.rtTipOneBn8.Size = new System.Drawing.Size(85, 42);
             this.rtTipOneBn8.TabIndex = 26;
+            this.rtTipOneBn8.TabStop = false;
             this.rtTipOneBn8.Text = "";
             this.rtTipOneBn8.TextChanged += new System.EventHandler(this.rtTipOneBn8_TextChanged);
             this.rtTipOneBn8.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipOneBn8_KeyDown);
@@ -352,6 +348,7 @@ namespace Cane_Tracking
             this.rtTipOneBx7.ReadOnly = true;
             this.rtTipOneBx7.Size = new System.Drawing.Size(85, 42);
             this.rtTipOneBx7.TabIndex = 25;
+            this.rtTipOneBx7.TabStop = false;
             this.rtTipOneBx7.Text = "";
             // 
             // rtTipOneBn7
@@ -359,9 +356,11 @@ namespace Cane_Tracking
             this.rtTipOneBn7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipOneBn7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipOneBn7.Location = new System.Drawing.Point(493, 91);
+            this.rtTipOneBn7.Multiline = false;
             this.rtTipOneBn7.Name = "rtTipOneBn7";
             this.rtTipOneBn7.Size = new System.Drawing.Size(85, 42);
             this.rtTipOneBn7.TabIndex = 24;
+            this.rtTipOneBn7.TabStop = false;
             this.rtTipOneBn7.Text = "";
             this.rtTipOneBn7.TextChanged += new System.EventHandler(this.rtTipOneBn7_TextChanged);
             this.rtTipOneBn7.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipOneBn7_KeyDown);
@@ -376,6 +375,7 @@ namespace Cane_Tracking
             this.rtTipOneBx6.ReadOnly = true;
             this.rtTipOneBx6.Size = new System.Drawing.Size(85, 42);
             this.rtTipOneBx6.TabIndex = 23;
+            this.rtTipOneBx6.TabStop = false;
             this.rtTipOneBx6.Text = "";
             // 
             // rtTipOneBn6
@@ -383,9 +383,11 @@ namespace Cane_Tracking
             this.rtTipOneBn6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipOneBn6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipOneBn6.Location = new System.Drawing.Point(409, 91);
+            this.rtTipOneBn6.Multiline = false;
             this.rtTipOneBn6.Name = "rtTipOneBn6";
             this.rtTipOneBn6.Size = new System.Drawing.Size(85, 42);
             this.rtTipOneBn6.TabIndex = 22;
+            this.rtTipOneBn6.TabStop = false;
             this.rtTipOneBn6.Text = "";
             this.rtTipOneBn6.TextChanged += new System.EventHandler(this.rtTipOneBn6_TextChanged);
             this.rtTipOneBn6.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipOneBn6_KeyDown);
@@ -400,6 +402,7 @@ namespace Cane_Tracking
             this.rtTipOneBx5.ReadOnly = true;
             this.rtTipOneBx5.Size = new System.Drawing.Size(85, 42);
             this.rtTipOneBx5.TabIndex = 21;
+            this.rtTipOneBx5.TabStop = false;
             this.rtTipOneBx5.Text = "";
             // 
             // rtTipOneBn5
@@ -407,9 +410,11 @@ namespace Cane_Tracking
             this.rtTipOneBn5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipOneBn5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipOneBn5.Location = new System.Drawing.Point(325, 91);
+            this.rtTipOneBn5.Multiline = false;
             this.rtTipOneBn5.Name = "rtTipOneBn5";
             this.rtTipOneBn5.Size = new System.Drawing.Size(85, 42);
             this.rtTipOneBn5.TabIndex = 20;
+            this.rtTipOneBn5.TabStop = false;
             this.rtTipOneBn5.Text = "";
             this.rtTipOneBn5.TextChanged += new System.EventHandler(this.rtTipOneBn5_TextChanged);
             this.rtTipOneBn5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipOneBn5_KeyDown);
@@ -424,6 +429,7 @@ namespace Cane_Tracking
             this.rtTipOneBx4.ReadOnly = true;
             this.rtTipOneBx4.Size = new System.Drawing.Size(85, 44);
             this.rtTipOneBx4.TabIndex = 19;
+            this.rtTipOneBx4.TabStop = false;
             this.rtTipOneBx4.Text = "";
             // 
             // rtTipOneBn4
@@ -431,9 +437,11 @@ namespace Cane_Tracking
             this.rtTipOneBn4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipOneBn4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipOneBn4.Location = new System.Drawing.Point(576, 12);
+            this.rtTipOneBn4.Multiline = false;
             this.rtTipOneBn4.Name = "rtTipOneBn4";
             this.rtTipOneBn4.Size = new System.Drawing.Size(85, 42);
             this.rtTipOneBn4.TabIndex = 18;
+            this.rtTipOneBn4.TabStop = false;
             this.rtTipOneBn4.Text = "";
             this.rtTipOneBn4.TextChanged += new System.EventHandler(this.rtTipOneBn4_TextChanged);
             this.rtTipOneBn4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipOneBn4_KeyDown);
@@ -448,6 +456,7 @@ namespace Cane_Tracking
             this.rtTipOneBx3.ReadOnly = true;
             this.rtTipOneBx3.Size = new System.Drawing.Size(85, 44);
             this.rtTipOneBx3.TabIndex = 17;
+            this.rtTipOneBx3.TabStop = false;
             this.rtTipOneBx3.Text = "";
             // 
             // rtTipOneBn3
@@ -455,9 +464,11 @@ namespace Cane_Tracking
             this.rtTipOneBn3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipOneBn3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipOneBn3.Location = new System.Drawing.Point(493, 12);
+            this.rtTipOneBn3.Multiline = false;
             this.rtTipOneBn3.Name = "rtTipOneBn3";
             this.rtTipOneBn3.Size = new System.Drawing.Size(85, 42);
             this.rtTipOneBn3.TabIndex = 16;
+            this.rtTipOneBn3.TabStop = false;
             this.rtTipOneBn3.Text = "";
             this.rtTipOneBn3.TextChanged += new System.EventHandler(this.rtTipOneBn3_TextChanged);
             this.rtTipOneBn3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipOneBn3_KeyDown);
@@ -472,6 +483,7 @@ namespace Cane_Tracking
             this.rtTipOneBx2.ReadOnly = true;
             this.rtTipOneBx2.Size = new System.Drawing.Size(85, 44);
             this.rtTipOneBx2.TabIndex = 15;
+            this.rtTipOneBx2.TabStop = false;
             this.rtTipOneBx2.Text = "";
             // 
             // rtTipOneBn2
@@ -479,9 +491,11 @@ namespace Cane_Tracking
             this.rtTipOneBn2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipOneBn2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipOneBn2.Location = new System.Drawing.Point(409, 12);
+            this.rtTipOneBn2.Multiline = false;
             this.rtTipOneBn2.Name = "rtTipOneBn2";
             this.rtTipOneBn2.Size = new System.Drawing.Size(85, 42);
             this.rtTipOneBn2.TabIndex = 14;
+            this.rtTipOneBn2.TabStop = false;
             this.rtTipOneBn2.Text = "";
             this.rtTipOneBn2.TextChanged += new System.EventHandler(this.rtTipOneBn2_TextChanged);
             this.rtTipOneBn2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipOneBn2_KeyDown);
@@ -496,6 +510,7 @@ namespace Cane_Tracking
             this.rtTipOneBx1.ReadOnly = true;
             this.rtTipOneBx1.Size = new System.Drawing.Size(85, 44);
             this.rtTipOneBx1.TabIndex = 13;
+            this.rtTipOneBx1.TabStop = false;
             this.rtTipOneBx1.Text = "";
             // 
             // rtTipOneBn1
@@ -503,9 +518,11 @@ namespace Cane_Tracking
             this.rtTipOneBn1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipOneBn1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipOneBn1.Location = new System.Drawing.Point(325, 12);
+            this.rtTipOneBn1.Multiline = false;
             this.rtTipOneBn1.Name = "rtTipOneBn1";
             this.rtTipOneBn1.Size = new System.Drawing.Size(85, 42);
             this.rtTipOneBn1.TabIndex = 6;
+            this.rtTipOneBn1.TabStop = false;
             this.rtTipOneBn1.Text = "";
             this.rtTipOneBn1.TextChanged += new System.EventHandler(this.rtTipOneBn1_TextChanged);
             this.rtTipOneBn1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipOneBn1_KeyDown);
@@ -537,6 +554,7 @@ namespace Cane_Tracking
             this.rtMainBx4.ReadOnly = true;
             this.rtMainBx4.Size = new System.Drawing.Size(85, 42);
             this.rtMainBx4.TabIndex = 35;
+            this.rtMainBx4.TabStop = false;
             this.rtMainBx4.Text = "";
             // 
             // rtMainBn4
@@ -550,7 +568,9 @@ namespace Cane_Tracking
             this.rtMainBn4.ReadOnly = true;
             this.rtMainBn4.Size = new System.Drawing.Size(85, 42);
             this.rtMainBn4.TabIndex = 34;
+            this.rtMainBn4.TabStop = false;
             this.rtMainBn4.Text = "";
+            this.rtMainBn4.TextChanged += new System.EventHandler(this.rtMainBn4_TextChanged);
             // 
             // rtMainBx3
             // 
@@ -562,6 +582,7 @@ namespace Cane_Tracking
             this.rtMainBx3.ReadOnly = true;
             this.rtMainBx3.Size = new System.Drawing.Size(85, 42);
             this.rtMainBx3.TabIndex = 33;
+            this.rtMainBx3.TabStop = false;
             this.rtMainBx3.Text = "";
             // 
             // rtMainBn3
@@ -575,7 +596,9 @@ namespace Cane_Tracking
             this.rtMainBn3.ReadOnly = true;
             this.rtMainBn3.Size = new System.Drawing.Size(85, 42);
             this.rtMainBn3.TabIndex = 32;
+            this.rtMainBn3.TabStop = false;
             this.rtMainBn3.Text = "";
+            this.rtMainBn3.TextChanged += new System.EventHandler(this.rtMainBn3_TextChanged);
             // 
             // rtMainBx2
             // 
@@ -587,6 +610,7 @@ namespace Cane_Tracking
             this.rtMainBx2.ReadOnly = true;
             this.rtMainBx2.Size = new System.Drawing.Size(85, 42);
             this.rtMainBx2.TabIndex = 31;
+            this.rtMainBx2.TabStop = false;
             this.rtMainBx2.Text = "";
             // 
             // rtMainBn2
@@ -600,7 +624,9 @@ namespace Cane_Tracking
             this.rtMainBn2.ReadOnly = true;
             this.rtMainBn2.Size = new System.Drawing.Size(85, 42);
             this.rtMainBn2.TabIndex = 30;
+            this.rtMainBn2.TabStop = false;
             this.rtMainBn2.Text = "";
+            this.rtMainBn2.TextChanged += new System.EventHandler(this.rtMainBn2_TextChanged);
             // 
             // rtMainBx1
             // 
@@ -612,6 +638,7 @@ namespace Cane_Tracking
             this.rtMainBx1.ReadOnly = true;
             this.rtMainBx1.Size = new System.Drawing.Size(85, 42);
             this.rtMainBx1.TabIndex = 29;
+            this.rtMainBx1.TabStop = false;
             this.rtMainBx1.Text = "";
             // 
             // rtMainBn1
@@ -625,7 +652,9 @@ namespace Cane_Tracking
             this.rtMainBn1.ReadOnly = true;
             this.rtMainBn1.Size = new System.Drawing.Size(85, 42);
             this.rtMainBn1.TabIndex = 28;
+            this.rtMainBn1.TabStop = false;
             this.rtMainBn1.Text = "";
+            this.rtMainBn1.TextChanged += new System.EventHandler(this.rtMainBn1_TextChanged);
             // 
             // label1
             // 
@@ -665,6 +694,7 @@ namespace Cane_Tracking
             this.rtKnivesBx4.ReadOnly = true;
             this.rtKnivesBx4.Size = new System.Drawing.Size(85, 44);
             this.rtKnivesBx4.TabIndex = 35;
+            this.rtKnivesBx4.TabStop = false;
             this.rtKnivesBx4.Text = "";
             // 
             // rtKnivesBn4
@@ -677,6 +707,7 @@ namespace Cane_Tracking
             this.rtKnivesBn4.ReadOnly = true;
             this.rtKnivesBn4.Size = new System.Drawing.Size(85, 42);
             this.rtKnivesBn4.TabIndex = 34;
+            this.rtKnivesBn4.TabStop = false;
             this.rtKnivesBn4.Text = "";
             // 
             // rtKnivesBx3
@@ -689,6 +720,7 @@ namespace Cane_Tracking
             this.rtKnivesBx3.ReadOnly = true;
             this.rtKnivesBx3.Size = new System.Drawing.Size(85, 44);
             this.rtKnivesBx3.TabIndex = 33;
+            this.rtKnivesBx3.TabStop = false;
             this.rtKnivesBx3.Text = "";
             // 
             // rtKnivesBn3
@@ -701,6 +733,7 @@ namespace Cane_Tracking
             this.rtKnivesBn3.ReadOnly = true;
             this.rtKnivesBn3.Size = new System.Drawing.Size(85, 42);
             this.rtKnivesBn3.TabIndex = 32;
+            this.rtKnivesBn3.TabStop = false;
             this.rtKnivesBn3.Text = "";
             // 
             // rtKnivesBx2
@@ -713,6 +746,7 @@ namespace Cane_Tracking
             this.rtKnivesBx2.ReadOnly = true;
             this.rtKnivesBx2.Size = new System.Drawing.Size(85, 44);
             this.rtKnivesBx2.TabIndex = 31;
+            this.rtKnivesBx2.TabStop = false;
             this.rtKnivesBx2.Text = "";
             // 
             // rtKnivesBn2
@@ -726,7 +760,9 @@ namespace Cane_Tracking
             this.rtKnivesBn2.ReadOnly = true;
             this.rtKnivesBn2.Size = new System.Drawing.Size(85, 42);
             this.rtKnivesBn2.TabIndex = 30;
+            this.rtKnivesBn2.TabStop = false;
             this.rtKnivesBn2.Text = "";
+            this.rtKnivesBn2.TextChanged += new System.EventHandler(this.rtKnivesBn2_TextChanged);
             // 
             // rtKnivesBx1
             // 
@@ -738,6 +774,7 @@ namespace Cane_Tracking
             this.rtKnivesBx1.ReadOnly = true;
             this.rtKnivesBx1.Size = new System.Drawing.Size(85, 44);
             this.rtKnivesBx1.TabIndex = 29;
+            this.rtKnivesBx1.TabStop = false;
             this.rtKnivesBx1.Text = "";
             // 
             // rtKnivesBn1
@@ -751,7 +788,9 @@ namespace Cane_Tracking
             this.rtKnivesBn1.ReadOnly = true;
             this.rtKnivesBn1.Size = new System.Drawing.Size(85, 42);
             this.rtKnivesBn1.TabIndex = 28;
+            this.rtKnivesBn1.TabStop = false;
             this.rtKnivesBn1.Text = "";
+            this.rtKnivesBn1.TextChanged += new System.EventHandler(this.rtKnivesBn1_TextChanged);
             // 
             // label3
             // 
@@ -791,6 +830,7 @@ namespace Cane_Tracking
             this.rtFossBx4.ReadOnly = true;
             this.rtFossBx4.Size = new System.Drawing.Size(85, 44);
             this.rtFossBx4.TabIndex = 35;
+            this.rtFossBx4.TabStop = false;
             this.rtFossBx4.Text = "";
             // 
             // rtFossBn4
@@ -803,6 +843,7 @@ namespace Cane_Tracking
             this.rtFossBn4.ReadOnly = true;
             this.rtFossBn4.Size = new System.Drawing.Size(85, 42);
             this.rtFossBn4.TabIndex = 34;
+            this.rtFossBn4.TabStop = false;
             this.rtFossBn4.Text = "";
             // 
             // rtFossBx3
@@ -815,6 +856,7 @@ namespace Cane_Tracking
             this.rtFossBx3.ReadOnly = true;
             this.rtFossBx3.Size = new System.Drawing.Size(85, 44);
             this.rtFossBx3.TabIndex = 33;
+            this.rtFossBx3.TabStop = false;
             this.rtFossBx3.Text = "";
             // 
             // rtFossBn3
@@ -827,6 +869,7 @@ namespace Cane_Tracking
             this.rtFossBn3.ReadOnly = true;
             this.rtFossBn3.Size = new System.Drawing.Size(85, 42);
             this.rtFossBn3.TabIndex = 32;
+            this.rtFossBn3.TabStop = false;
             this.rtFossBn3.Text = "";
             // 
             // rtNirCount
@@ -839,6 +882,7 @@ namespace Cane_Tracking
             this.rtNirCount.ReadOnly = true;
             this.rtNirCount.Size = new System.Drawing.Size(85, 44);
             this.rtNirCount.TabIndex = 31;
+            this.rtNirCount.TabStop = false;
             this.rtNirCount.Text = "";
             // 
             // rtNirScanning
@@ -852,6 +896,7 @@ namespace Cane_Tracking
             this.rtNirScanning.ReadOnly = true;
             this.rtNirScanning.Size = new System.Drawing.Size(85, 42);
             this.rtNirScanning.TabIndex = 30;
+            this.rtNirScanning.TabStop = false;
             this.rtNirScanning.Text = "";
             this.rtNirScanning.TextChanged += new System.EventHandler(this.rtNirScanning_TextChanged);
             // 
@@ -865,6 +910,7 @@ namespace Cane_Tracking
             this.rtWashingCount.ReadOnly = true;
             this.rtWashingCount.Size = new System.Drawing.Size(85, 44);
             this.rtWashingCount.TabIndex = 29;
+            this.rtWashingCount.TabStop = false;
             this.rtWashingCount.Text = "";
             // 
             // rtNirWashing
@@ -878,6 +924,7 @@ namespace Cane_Tracking
             this.rtNirWashing.ReadOnly = true;
             this.rtNirWashing.Size = new System.Drawing.Size(85, 42);
             this.rtNirWashing.TabIndex = 28;
+            this.rtNirWashing.TabStop = false;
             this.rtNirWashing.Text = "";
             this.rtNirWashing.TextChanged += new System.EventHandler(this.rtNirWashing_TextChanged);
             // 
@@ -919,6 +966,7 @@ namespace Cane_Tracking
             this.rtShredBx4.ReadOnly = true;
             this.rtShredBx4.Size = new System.Drawing.Size(85, 44);
             this.rtShredBx4.TabIndex = 35;
+            this.rtShredBx4.TabStop = false;
             this.rtShredBx4.Text = "";
             // 
             // rtShredBx3
@@ -931,6 +979,7 @@ namespace Cane_Tracking
             this.rtShredBx3.ReadOnly = true;
             this.rtShredBx3.Size = new System.Drawing.Size(85, 44);
             this.rtShredBx3.TabIndex = 33;
+            this.rtShredBx3.TabStop = false;
             this.rtShredBx3.Text = "";
             // 
             // rtShredBx2
@@ -943,6 +992,7 @@ namespace Cane_Tracking
             this.rtShredBx2.ReadOnly = true;
             this.rtShredBx2.Size = new System.Drawing.Size(85, 44);
             this.rtShredBx2.TabIndex = 31;
+            this.rtShredBx2.TabStop = false;
             this.rtShredBx2.Text = "";
             // 
             // rtShredBx1
@@ -955,6 +1005,7 @@ namespace Cane_Tracking
             this.rtShredBx1.ReadOnly = true;
             this.rtShredBx1.Size = new System.Drawing.Size(85, 44);
             this.rtShredBx1.TabIndex = 29;
+            this.rtShredBx1.TabStop = false;
             this.rtShredBx1.Text = "";
             // 
             // rtShredBn4
@@ -967,6 +1018,7 @@ namespace Cane_Tracking
             this.rtShredBn4.ReadOnly = true;
             this.rtShredBn4.Size = new System.Drawing.Size(85, 42);
             this.rtShredBn4.TabIndex = 34;
+            this.rtShredBn4.TabStop = false;
             this.rtShredBn4.Text = "";
             // 
             // rtShredBn3
@@ -979,6 +1031,7 @@ namespace Cane_Tracking
             this.rtShredBn3.ReadOnly = true;
             this.rtShredBn3.Size = new System.Drawing.Size(85, 42);
             this.rtShredBn3.TabIndex = 32;
+            this.rtShredBn3.TabStop = false;
             this.rtShredBn3.Text = "";
             // 
             // rtShredBn2
@@ -992,7 +1045,9 @@ namespace Cane_Tracking
             this.rtShredBn2.ReadOnly = true;
             this.rtShredBn2.Size = new System.Drawing.Size(85, 42);
             this.rtShredBn2.TabIndex = 30;
+            this.rtShredBn2.TabStop = false;
             this.rtShredBn2.Text = "";
+            this.rtShredBn2.TextChanged += new System.EventHandler(this.rtShredBn2_TextChanged);
             // 
             // rtShredBn1
             // 
@@ -1005,7 +1060,9 @@ namespace Cane_Tracking
             this.rtShredBn1.ReadOnly = true;
             this.rtShredBn1.Size = new System.Drawing.Size(85, 42);
             this.rtShredBn1.TabIndex = 28;
+            this.rtShredBn1.TabStop = false;
             this.rtShredBn1.Text = "";
+            this.rtShredBn1.TextChanged += new System.EventHandler(this.rtShredBn1_TextChanged);
             // 
             // label2
             // 
@@ -1049,7 +1106,8 @@ namespace Cane_Tracking
             // 
             this.rtTipperTwoBn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipperTwoBn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtTipperTwoBn.Location = new System.Drawing.Point(16, 13);
+            this.rtTipperTwoBn.Location = new System.Drawing.Point(14, 13);
+            this.rtTipperTwoBn.Multiline = false;
             this.rtTipperTwoBn.Name = "rtTipperTwoBn";
             this.rtTipperTwoBn.Size = new System.Drawing.Size(299, 46);
             this.rtTipperTwoBn.TabIndex = 2;
@@ -1066,6 +1124,7 @@ namespace Cane_Tracking
             this.rtTipTwoBx8.ReadOnly = true;
             this.rtTipTwoBx8.Size = new System.Drawing.Size(85, 42);
             this.rtTipTwoBx8.TabIndex = 27;
+            this.rtTipTwoBx8.TabStop = false;
             this.rtTipTwoBx8.Text = "";
             // 
             // rtTipTwoBn8
@@ -1073,9 +1132,11 @@ namespace Cane_Tracking
             this.rtTipTwoBn8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipTwoBn8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipTwoBn8.Location = new System.Drawing.Point(576, 91);
+            this.rtTipTwoBn8.Multiline = false;
             this.rtTipTwoBn8.Name = "rtTipTwoBn8";
             this.rtTipTwoBn8.Size = new System.Drawing.Size(85, 42);
             this.rtTipTwoBn8.TabIndex = 26;
+            this.rtTipTwoBn8.TabStop = false;
             this.rtTipTwoBn8.Text = "";
             this.rtTipTwoBn8.TextChanged += new System.EventHandler(this.rtTipTwoBn8_TextChanged);
             this.rtTipTwoBn8.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipTwoBn8_KeyDown);
@@ -1090,6 +1151,7 @@ namespace Cane_Tracking
             this.rtTipTwoBx7.ReadOnly = true;
             this.rtTipTwoBx7.Size = new System.Drawing.Size(85, 42);
             this.rtTipTwoBx7.TabIndex = 25;
+            this.rtTipTwoBx7.TabStop = false;
             this.rtTipTwoBx7.Text = "";
             // 
             // rtTipTwoBn7
@@ -1097,9 +1159,11 @@ namespace Cane_Tracking
             this.rtTipTwoBn7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipTwoBn7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipTwoBn7.Location = new System.Drawing.Point(493, 91);
+            this.rtTipTwoBn7.Multiline = false;
             this.rtTipTwoBn7.Name = "rtTipTwoBn7";
             this.rtTipTwoBn7.Size = new System.Drawing.Size(85, 42);
             this.rtTipTwoBn7.TabIndex = 24;
+            this.rtTipTwoBn7.TabStop = false;
             this.rtTipTwoBn7.Text = "";
             this.rtTipTwoBn7.TextChanged += new System.EventHandler(this.rtTipTwoBn7_TextChanged);
             this.rtTipTwoBn7.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipTwoBn7_KeyDown);
@@ -1114,6 +1178,7 @@ namespace Cane_Tracking
             this.rtTipTwoBx6.ReadOnly = true;
             this.rtTipTwoBx6.Size = new System.Drawing.Size(85, 42);
             this.rtTipTwoBx6.TabIndex = 23;
+            this.rtTipTwoBx6.TabStop = false;
             this.rtTipTwoBx6.Text = "";
             // 
             // rtTipTwoBn6
@@ -1121,9 +1186,11 @@ namespace Cane_Tracking
             this.rtTipTwoBn6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipTwoBn6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipTwoBn6.Location = new System.Drawing.Point(409, 91);
+            this.rtTipTwoBn6.Multiline = false;
             this.rtTipTwoBn6.Name = "rtTipTwoBn6";
             this.rtTipTwoBn6.Size = new System.Drawing.Size(85, 42);
             this.rtTipTwoBn6.TabIndex = 22;
+            this.rtTipTwoBn6.TabStop = false;
             this.rtTipTwoBn6.Text = "";
             this.rtTipTwoBn6.TextChanged += new System.EventHandler(this.rtTipTwoBn6_TextChanged);
             this.rtTipTwoBn6.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipTwoBn6_KeyDown);
@@ -1138,6 +1205,7 @@ namespace Cane_Tracking
             this.rtTipTwoBx5.ReadOnly = true;
             this.rtTipTwoBx5.Size = new System.Drawing.Size(85, 42);
             this.rtTipTwoBx5.TabIndex = 21;
+            this.rtTipTwoBx5.TabStop = false;
             this.rtTipTwoBx5.Text = "";
             // 
             // rtTipTwoBn5
@@ -1145,9 +1213,11 @@ namespace Cane_Tracking
             this.rtTipTwoBn5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipTwoBn5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipTwoBn5.Location = new System.Drawing.Point(325, 91);
+            this.rtTipTwoBn5.Multiline = false;
             this.rtTipTwoBn5.Name = "rtTipTwoBn5";
             this.rtTipTwoBn5.Size = new System.Drawing.Size(85, 42);
             this.rtTipTwoBn5.TabIndex = 20;
+            this.rtTipTwoBn5.TabStop = false;
             this.rtTipTwoBn5.Text = "";
             this.rtTipTwoBn5.TextChanged += new System.EventHandler(this.rtTipTwoBn5_TextChanged);
             this.rtTipTwoBn5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipTwoBn5_KeyDown);
@@ -1162,6 +1232,7 @@ namespace Cane_Tracking
             this.rtTipTwoBx4.ReadOnly = true;
             this.rtTipTwoBx4.Size = new System.Drawing.Size(85, 44);
             this.rtTipTwoBx4.TabIndex = 19;
+            this.rtTipTwoBx4.TabStop = false;
             this.rtTipTwoBx4.Text = "";
             // 
             // rtTipTwoBn4
@@ -1169,9 +1240,11 @@ namespace Cane_Tracking
             this.rtTipTwoBn4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipTwoBn4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipTwoBn4.Location = new System.Drawing.Point(576, 12);
+            this.rtTipTwoBn4.Multiline = false;
             this.rtTipTwoBn4.Name = "rtTipTwoBn4";
             this.rtTipTwoBn4.Size = new System.Drawing.Size(85, 42);
             this.rtTipTwoBn4.TabIndex = 18;
+            this.rtTipTwoBn4.TabStop = false;
             this.rtTipTwoBn4.Text = "";
             this.rtTipTwoBn4.TextChanged += new System.EventHandler(this.rtTipTwoBn4_TextChanged);
             this.rtTipTwoBn4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipTwoBn4_KeyDown);
@@ -1186,6 +1259,7 @@ namespace Cane_Tracking
             this.rtTipTwoBx3.ReadOnly = true;
             this.rtTipTwoBx3.Size = new System.Drawing.Size(85, 44);
             this.rtTipTwoBx3.TabIndex = 17;
+            this.rtTipTwoBx3.TabStop = false;
             this.rtTipTwoBx3.Text = "";
             // 
             // rtTipTwoBn3
@@ -1193,9 +1267,11 @@ namespace Cane_Tracking
             this.rtTipTwoBn3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipTwoBn3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipTwoBn3.Location = new System.Drawing.Point(493, 12);
+            this.rtTipTwoBn3.Multiline = false;
             this.rtTipTwoBn3.Name = "rtTipTwoBn3";
             this.rtTipTwoBn3.Size = new System.Drawing.Size(85, 42);
             this.rtTipTwoBn3.TabIndex = 16;
+            this.rtTipTwoBn3.TabStop = false;
             this.rtTipTwoBn3.Text = "";
             this.rtTipTwoBn3.TextChanged += new System.EventHandler(this.rtTipTwoBn3_TextChanged);
             this.rtTipTwoBn3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipTwoBn3_KeyDown);
@@ -1210,6 +1286,7 @@ namespace Cane_Tracking
             this.rtTipTwoBx2.ReadOnly = true;
             this.rtTipTwoBx2.Size = new System.Drawing.Size(85, 44);
             this.rtTipTwoBx2.TabIndex = 15;
+            this.rtTipTwoBx2.TabStop = false;
             this.rtTipTwoBx2.Text = "";
             // 
             // rtTipTwoBn2
@@ -1217,9 +1294,11 @@ namespace Cane_Tracking
             this.rtTipTwoBn2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipTwoBn2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipTwoBn2.Location = new System.Drawing.Point(409, 12);
+            this.rtTipTwoBn2.Multiline = false;
             this.rtTipTwoBn2.Name = "rtTipTwoBn2";
             this.rtTipTwoBn2.Size = new System.Drawing.Size(85, 42);
             this.rtTipTwoBn2.TabIndex = 14;
+            this.rtTipTwoBn2.TabStop = false;
             this.rtTipTwoBn2.Text = "";
             this.rtTipTwoBn2.TextChanged += new System.EventHandler(this.rtTipTwoBn2_TextChanged);
             this.rtTipTwoBn2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipTwoBn2_KeyDown);
@@ -1234,6 +1313,7 @@ namespace Cane_Tracking
             this.rtTipTwoBx1.ReadOnly = true;
             this.rtTipTwoBx1.Size = new System.Drawing.Size(85, 44);
             this.rtTipTwoBx1.TabIndex = 13;
+            this.rtTipTwoBx1.TabStop = false;
             this.rtTipTwoBx1.Text = "";
             // 
             // rtTipTwoBn1
@@ -1241,9 +1321,11 @@ namespace Cane_Tracking
             this.rtTipTwoBn1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtTipTwoBn1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTipTwoBn1.Location = new System.Drawing.Point(325, 12);
+            this.rtTipTwoBn1.Multiline = false;
             this.rtTipTwoBn1.Name = "rtTipTwoBn1";
             this.rtTipTwoBn1.Size = new System.Drawing.Size(85, 42);
             this.rtTipTwoBn1.TabIndex = 12;
+            this.rtTipTwoBn1.TabStop = false;
             this.rtTipTwoBn1.Text = "";
             this.rtTipTwoBn1.TextChanged += new System.EventHandler(this.rtTipTwoBn1_TextChanged);
             this.rtTipTwoBn1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtTipTwoBn1_KeyDown);
@@ -1255,10 +1337,11 @@ namespace Cane_Tracking
             this.btnTipperTwo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnTipperTwo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTipperTwo.Font = new System.Drawing.Font("Microsoft Sans Serif", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTipperTwo.Location = new System.Drawing.Point(16, 61);
+            this.btnTipperTwo.Location = new System.Drawing.Point(14, 61);
             this.btnTipperTwo.Name = "btnTipperTwo";
             this.btnTipperTwo.Size = new System.Drawing.Size(303, 110);
             this.btnTipperTwo.TabIndex = 0;
+            this.btnTipperTwo.TabStop = false;
             this.btnTipperTwo.Text = "Tipper 2";
             this.btnTipperTwo.UseVisualStyleBackColor = false;
             this.btnTipperTwo.Click += new System.EventHandler(this.btnTipperTwo_Click);
@@ -1294,7 +1377,8 @@ namespace Cane_Tracking
             // 
             this.rtDumpTruckBn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtDumpTruckBn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtDumpTruckBn.Location = new System.Drawing.Point(16, 13);
+            this.rtDumpTruckBn.Location = new System.Drawing.Point(14, 13);
+            this.rtDumpTruckBn.Multiline = false;
             this.rtDumpTruckBn.Name = "rtDumpTruckBn";
             this.rtDumpTruckBn.Size = new System.Drawing.Size(299, 46);
             this.rtDumpTruckBn.TabIndex = 3;
@@ -1311,6 +1395,7 @@ namespace Cane_Tracking
             this.rtDumpBx8.ReadOnly = true;
             this.rtDumpBx8.Size = new System.Drawing.Size(85, 42);
             this.rtDumpBx8.TabIndex = 27;
+            this.rtDumpBx8.TabStop = false;
             this.rtDumpBx8.Text = "";
             // 
             // rtDumpBn8
@@ -1323,6 +1408,7 @@ namespace Cane_Tracking
             this.rtDumpBn8.ReadOnly = true;
             this.rtDumpBn8.Size = new System.Drawing.Size(85, 42);
             this.rtDumpBn8.TabIndex = 26;
+            this.rtDumpBn8.TabStop = false;
             this.rtDumpBn8.Text = "";
             this.rtDumpBn8.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtDumpBn8_KeyDown);
             // 
@@ -1336,6 +1422,7 @@ namespace Cane_Tracking
             this.rtDumpBx7.ReadOnly = true;
             this.rtDumpBx7.Size = new System.Drawing.Size(85, 42);
             this.rtDumpBx7.TabIndex = 25;
+            this.rtDumpBx7.TabStop = false;
             this.rtDumpBx7.Text = "";
             // 
             // rtDumpBn7
@@ -1348,6 +1435,7 @@ namespace Cane_Tracking
             this.rtDumpBn7.ReadOnly = true;
             this.rtDumpBn7.Size = new System.Drawing.Size(85, 42);
             this.rtDumpBn7.TabIndex = 24;
+            this.rtDumpBn7.TabStop = false;
             this.rtDumpBn7.Text = "";
             this.rtDumpBn7.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtDumpBn7_KeyDown);
             // 
@@ -1361,6 +1449,7 @@ namespace Cane_Tracking
             this.rtDumpBx6.ReadOnly = true;
             this.rtDumpBx6.Size = new System.Drawing.Size(85, 42);
             this.rtDumpBx6.TabIndex = 23;
+            this.rtDumpBx6.TabStop = false;
             this.rtDumpBx6.Text = "";
             // 
             // rtDumpBn6
@@ -1368,9 +1457,11 @@ namespace Cane_Tracking
             this.rtDumpBn6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtDumpBn6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtDumpBn6.Location = new System.Drawing.Point(409, 91);
+            this.rtDumpBn6.Multiline = false;
             this.rtDumpBn6.Name = "rtDumpBn6";
             this.rtDumpBn6.Size = new System.Drawing.Size(85, 42);
             this.rtDumpBn6.TabIndex = 22;
+            this.rtDumpBn6.TabStop = false;
             this.rtDumpBn6.Text = "";
             this.rtDumpBn6.TextChanged += new System.EventHandler(this.rtDumpBn6_TextChanged);
             this.rtDumpBn6.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtDumpBn6_KeyDown);
@@ -1385,6 +1476,7 @@ namespace Cane_Tracking
             this.rtDumpBx5.ReadOnly = true;
             this.rtDumpBx5.Size = new System.Drawing.Size(85, 42);
             this.rtDumpBx5.TabIndex = 21;
+            this.rtDumpBx5.TabStop = false;
             this.rtDumpBx5.Text = "";
             // 
             // rtDumpBn5
@@ -1392,9 +1484,11 @@ namespace Cane_Tracking
             this.rtDumpBn5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtDumpBn5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtDumpBn5.Location = new System.Drawing.Point(325, 91);
+            this.rtDumpBn5.Multiline = false;
             this.rtDumpBn5.Name = "rtDumpBn5";
             this.rtDumpBn5.Size = new System.Drawing.Size(85, 42);
             this.rtDumpBn5.TabIndex = 20;
+            this.rtDumpBn5.TabStop = false;
             this.rtDumpBn5.Text = "";
             this.rtDumpBn5.TextChanged += new System.EventHandler(this.rtDumpBn5_TextChanged);
             this.rtDumpBn5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtDumpBn5_KeyDown);
@@ -1409,6 +1503,7 @@ namespace Cane_Tracking
             this.rtDumpBx4.ReadOnly = true;
             this.rtDumpBx4.Size = new System.Drawing.Size(85, 44);
             this.rtDumpBx4.TabIndex = 19;
+            this.rtDumpBx4.TabStop = false;
             this.rtDumpBx4.Text = "";
             // 
             // rtDumpBn4
@@ -1416,9 +1511,11 @@ namespace Cane_Tracking
             this.rtDumpBn4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtDumpBn4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtDumpBn4.Location = new System.Drawing.Point(576, 12);
+            this.rtDumpBn4.Multiline = false;
             this.rtDumpBn4.Name = "rtDumpBn4";
             this.rtDumpBn4.Size = new System.Drawing.Size(85, 42);
             this.rtDumpBn4.TabIndex = 18;
+            this.rtDumpBn4.TabStop = false;
             this.rtDumpBn4.Text = "";
             this.rtDumpBn4.TextChanged += new System.EventHandler(this.rtDumpBn4_TextChanged);
             this.rtDumpBn4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtDumpBn4_KeyDown);
@@ -1433,6 +1530,7 @@ namespace Cane_Tracking
             this.rtDumpBx3.ReadOnly = true;
             this.rtDumpBx3.Size = new System.Drawing.Size(85, 44);
             this.rtDumpBx3.TabIndex = 17;
+            this.rtDumpBx3.TabStop = false;
             this.rtDumpBx3.Text = "";
             // 
             // rtDumpBn3
@@ -1440,9 +1538,11 @@ namespace Cane_Tracking
             this.rtDumpBn3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtDumpBn3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtDumpBn3.Location = new System.Drawing.Point(493, 12);
+            this.rtDumpBn3.Multiline = false;
             this.rtDumpBn3.Name = "rtDumpBn3";
             this.rtDumpBn3.Size = new System.Drawing.Size(85, 42);
             this.rtDumpBn3.TabIndex = 16;
+            this.rtDumpBn3.TabStop = false;
             this.rtDumpBn3.Text = "";
             this.rtDumpBn3.TextChanged += new System.EventHandler(this.rtDumpBn3_TextChanged);
             this.rtDumpBn3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtDumpBn3_KeyDown);
@@ -1457,6 +1557,7 @@ namespace Cane_Tracking
             this.rtDumpBx2.ReadOnly = true;
             this.rtDumpBx2.Size = new System.Drawing.Size(85, 44);
             this.rtDumpBx2.TabIndex = 15;
+            this.rtDumpBx2.TabStop = false;
             this.rtDumpBx2.Text = "";
             // 
             // rtDumpBn2
@@ -1464,9 +1565,11 @@ namespace Cane_Tracking
             this.rtDumpBn2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtDumpBn2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtDumpBn2.Location = new System.Drawing.Point(409, 12);
+            this.rtDumpBn2.Multiline = false;
             this.rtDumpBn2.Name = "rtDumpBn2";
             this.rtDumpBn2.Size = new System.Drawing.Size(85, 42);
             this.rtDumpBn2.TabIndex = 14;
+            this.rtDumpBn2.TabStop = false;
             this.rtDumpBn2.Text = "";
             this.rtDumpBn2.TextChanged += new System.EventHandler(this.rtDumpBn2_TextChanged);
             this.rtDumpBn2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtDumpBn2_KeyDown);
@@ -1481,6 +1584,7 @@ namespace Cane_Tracking
             this.rtDumpBx1.ReadOnly = true;
             this.rtDumpBx1.Size = new System.Drawing.Size(85, 44);
             this.rtDumpBx1.TabIndex = 13;
+            this.rtDumpBx1.TabStop = false;
             this.rtDumpBx1.Text = "";
             // 
             // rtDumpBn1
@@ -1488,9 +1592,11 @@ namespace Cane_Tracking
             this.rtDumpBn1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtDumpBn1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtDumpBn1.Location = new System.Drawing.Point(325, 12);
+            this.rtDumpBn1.Multiline = false;
             this.rtDumpBn1.Name = "rtDumpBn1";
             this.rtDumpBn1.Size = new System.Drawing.Size(85, 42);
             this.rtDumpBn1.TabIndex = 12;
+            this.rtDumpBn1.TabStop = false;
             this.rtDumpBn1.Text = "";
             this.rtDumpBn1.TextChanged += new System.EventHandler(this.rtDumpBn1_TextChanged);
             this.rtDumpBn1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtDumpBn1_KeyDown);
@@ -1502,10 +1608,11 @@ namespace Cane_Tracking
             this.btnDumpTruck.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnDumpTruck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDumpTruck.Font = new System.Drawing.Font("Microsoft Sans Serif", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDumpTruck.Location = new System.Drawing.Point(16, 61);
+            this.btnDumpTruck.Location = new System.Drawing.Point(14, 61);
             this.btnDumpTruck.Name = "btnDumpTruck";
             this.btnDumpTruck.Size = new System.Drawing.Size(303, 110);
             this.btnDumpTruck.TabIndex = 0;
+            this.btnDumpTruck.TabStop = false;
             this.btnDumpTruck.Text = "Dump Truck";
             this.btnDumpTruck.UseVisualStyleBackColor = false;
             this.btnDumpTruck.Click += new System.EventHandler(this.btnDumpTruck_Click);
@@ -1541,7 +1648,8 @@ namespace Cane_Tracking
             // 
             this.rtStockPileBn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtStockPileBn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtStockPileBn.Location = new System.Drawing.Point(16, 13);
+            this.rtStockPileBn.Location = new System.Drawing.Point(14, 13);
+            this.rtStockPileBn.Multiline = false;
             this.rtStockPileBn.Name = "rtStockPileBn";
             this.rtStockPileBn.Size = new System.Drawing.Size(299, 46);
             this.rtStockPileBn.TabIndex = 4;
@@ -1558,6 +1666,7 @@ namespace Cane_Tracking
             this.rtStockBx8.ReadOnly = true;
             this.rtStockBx8.Size = new System.Drawing.Size(85, 42);
             this.rtStockBx8.TabIndex = 27;
+            this.rtStockBx8.TabStop = false;
             this.rtStockBx8.Text = "";
             // 
             // rtStockBn8
@@ -1570,6 +1679,7 @@ namespace Cane_Tracking
             this.rtStockBn8.ReadOnly = true;
             this.rtStockBn8.Size = new System.Drawing.Size(85, 42);
             this.rtStockBn8.TabIndex = 26;
+            this.rtStockBn8.TabStop = false;
             this.rtStockBn8.Text = "";
             this.rtStockBn8.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtStockBn8_KeyDown);
             // 
@@ -1583,6 +1693,7 @@ namespace Cane_Tracking
             this.rtStockBx7.ReadOnly = true;
             this.rtStockBx7.Size = new System.Drawing.Size(85, 42);
             this.rtStockBx7.TabIndex = 25;
+            this.rtStockBx7.TabStop = false;
             this.rtStockBx7.Text = "";
             // 
             // rtStockBn7
@@ -1595,6 +1706,7 @@ namespace Cane_Tracking
             this.rtStockBn7.ReadOnly = true;
             this.rtStockBn7.Size = new System.Drawing.Size(85, 42);
             this.rtStockBn7.TabIndex = 24;
+            this.rtStockBn7.TabStop = false;
             this.rtStockBn7.Text = "";
             this.rtStockBn7.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtStockBn7_KeyDown);
             // 
@@ -1608,6 +1720,7 @@ namespace Cane_Tracking
             this.rtStockBx6.ReadOnly = true;
             this.rtStockBx6.Size = new System.Drawing.Size(85, 42);
             this.rtStockBx6.TabIndex = 23;
+            this.rtStockBx6.TabStop = false;
             this.rtStockBx6.Text = "";
             // 
             // rtStockBn6
@@ -1615,9 +1728,11 @@ namespace Cane_Tracking
             this.rtStockBn6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtStockBn6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtStockBn6.Location = new System.Drawing.Point(409, 91);
+            this.rtStockBn6.Multiline = false;
             this.rtStockBn6.Name = "rtStockBn6";
             this.rtStockBn6.Size = new System.Drawing.Size(85, 42);
             this.rtStockBn6.TabIndex = 22;
+            this.rtStockBn6.TabStop = false;
             this.rtStockBn6.Text = "";
             this.rtStockBn6.TextChanged += new System.EventHandler(this.rtStockBn6_TextChanged);
             this.rtStockBn6.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtStockBn6_KeyDown);
@@ -1632,6 +1747,7 @@ namespace Cane_Tracking
             this.rtStockBx5.ReadOnly = true;
             this.rtStockBx5.Size = new System.Drawing.Size(85, 42);
             this.rtStockBx5.TabIndex = 21;
+            this.rtStockBx5.TabStop = false;
             this.rtStockBx5.Text = "";
             // 
             // rtStockBn5
@@ -1639,9 +1755,11 @@ namespace Cane_Tracking
             this.rtStockBn5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtStockBn5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtStockBn5.Location = new System.Drawing.Point(325, 91);
+            this.rtStockBn5.Multiline = false;
             this.rtStockBn5.Name = "rtStockBn5";
             this.rtStockBn5.Size = new System.Drawing.Size(85, 42);
             this.rtStockBn5.TabIndex = 20;
+            this.rtStockBn5.TabStop = false;
             this.rtStockBn5.Text = "";
             this.rtStockBn5.TextChanged += new System.EventHandler(this.rtStockBn5_TextChanged);
             this.rtStockBn5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtStockBn5_KeyDown);
@@ -1656,6 +1774,7 @@ namespace Cane_Tracking
             this.rtStockBx4.ReadOnly = true;
             this.rtStockBx4.Size = new System.Drawing.Size(85, 44);
             this.rtStockBx4.TabIndex = 19;
+            this.rtStockBx4.TabStop = false;
             this.rtStockBx4.Text = "";
             // 
             // rtStockBn4
@@ -1663,9 +1782,11 @@ namespace Cane_Tracking
             this.rtStockBn4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtStockBn4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtStockBn4.Location = new System.Drawing.Point(576, 12);
+            this.rtStockBn4.Multiline = false;
             this.rtStockBn4.Name = "rtStockBn4";
             this.rtStockBn4.Size = new System.Drawing.Size(85, 42);
             this.rtStockBn4.TabIndex = 18;
+            this.rtStockBn4.TabStop = false;
             this.rtStockBn4.Text = "";
             this.rtStockBn4.TextChanged += new System.EventHandler(this.rtStockBn4_TextChanged);
             this.rtStockBn4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtStockBn4_KeyDown);
@@ -1680,6 +1801,7 @@ namespace Cane_Tracking
             this.rtStockBx3.ReadOnly = true;
             this.rtStockBx3.Size = new System.Drawing.Size(85, 44);
             this.rtStockBx3.TabIndex = 17;
+            this.rtStockBx3.TabStop = false;
             this.rtStockBx3.Text = "";
             // 
             // rtStockBn3
@@ -1687,9 +1809,11 @@ namespace Cane_Tracking
             this.rtStockBn3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtStockBn3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtStockBn3.Location = new System.Drawing.Point(493, 12);
+            this.rtStockBn3.Multiline = false;
             this.rtStockBn3.Name = "rtStockBn3";
             this.rtStockBn3.Size = new System.Drawing.Size(85, 42);
             this.rtStockBn3.TabIndex = 16;
+            this.rtStockBn3.TabStop = false;
             this.rtStockBn3.Text = "";
             this.rtStockBn3.TextChanged += new System.EventHandler(this.rtStockBn3_TextChanged);
             this.rtStockBn3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtStockBn3_KeyDown);
@@ -1704,6 +1828,7 @@ namespace Cane_Tracking
             this.rtStockBx2.ReadOnly = true;
             this.rtStockBx2.Size = new System.Drawing.Size(85, 44);
             this.rtStockBx2.TabIndex = 15;
+            this.rtStockBx2.TabStop = false;
             this.rtStockBx2.Text = "";
             // 
             // rtStockBn2
@@ -1711,9 +1836,11 @@ namespace Cane_Tracking
             this.rtStockBn2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtStockBn2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtStockBn2.Location = new System.Drawing.Point(409, 12);
+            this.rtStockBn2.Multiline = false;
             this.rtStockBn2.Name = "rtStockBn2";
             this.rtStockBn2.Size = new System.Drawing.Size(85, 42);
             this.rtStockBn2.TabIndex = 14;
+            this.rtStockBn2.TabStop = false;
             this.rtStockBn2.Text = "";
             this.rtStockBn2.TextChanged += new System.EventHandler(this.rtStockBn2_TextChanged);
             this.rtStockBn2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtStockBn2_KeyDown);
@@ -1728,6 +1855,7 @@ namespace Cane_Tracking
             this.rtStockBx1.ReadOnly = true;
             this.rtStockBx1.Size = new System.Drawing.Size(85, 44);
             this.rtStockBx1.TabIndex = 13;
+            this.rtStockBx1.TabStop = false;
             this.rtStockBx1.Text = "";
             // 
             // rtStockBn1
@@ -1735,9 +1863,11 @@ namespace Cane_Tracking
             this.rtStockBn1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtStockBn1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtStockBn1.Location = new System.Drawing.Point(325, 12);
+            this.rtStockBn1.Multiline = false;
             this.rtStockBn1.Name = "rtStockBn1";
             this.rtStockBn1.Size = new System.Drawing.Size(85, 42);
             this.rtStockBn1.TabIndex = 12;
+            this.rtStockBn1.TabStop = false;
             this.rtStockBn1.Text = "";
             this.rtStockBn1.TextChanged += new System.EventHandler(this.rtStockBn1_TextChanged);
             this.rtStockBn1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtStockBn1_KeyDown);
@@ -1749,10 +1879,11 @@ namespace Cane_Tracking
             this.btnStockPile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnStockPile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockPile.Font = new System.Drawing.Font("Microsoft Sans Serif", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStockPile.Location = new System.Drawing.Point(16, 61);
+            this.btnStockPile.Location = new System.Drawing.Point(14, 61);
             this.btnStockPile.Name = "btnStockPile";
             this.btnStockPile.Size = new System.Drawing.Size(303, 110);
             this.btnStockPile.TabIndex = 0;
+            this.btnStockPile.TabStop = false;
             this.btnStockPile.Text = "Stock Pile";
             this.btnStockPile.UseVisualStyleBackColor = false;
             this.btnStockPile.Click += new System.EventHandler(this.btnStockPile_Click);
@@ -1808,27 +1939,13 @@ namespace Cane_Tracking
             // 
             this.panel11.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel11.Controls.Add(this.button4);
+            this.panel11.Controls.Add(this.rtForceScanCnt);
+            this.panel11.Controls.Add(this.btnForceScan);
             this.panel11.Controls.Add(this.rtForceScan);
             this.panel11.Location = new System.Drawing.Point(13, 701);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(367, 118);
             this.panel11.TabIndex = 39;
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.button4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold);
-            this.button4.ForeColor = System.Drawing.Color.White;
-            this.button4.Location = new System.Drawing.Point(11, 53);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(344, 56);
-            this.button4.TabIndex = 29;
-            this.button4.Text = "Force Scan";
-            this.button4.UseVisualStyleBackColor = false;
             // 
             // rtForceScan
             // 
@@ -1836,10 +1953,46 @@ namespace Cane_Tracking
             this.rtForceScan.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtForceScan.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtForceScan.Location = new System.Drawing.Point(12, 8);
+            this.rtForceScan.Multiline = false;
             this.rtForceScan.Name = "rtForceScan";
             this.rtForceScan.Size = new System.Drawing.Size(342, 40);
             this.rtForceScan.TabIndex = 28;
+            this.rtForceScan.TabStop = false;
             this.rtForceScan.Text = "";
+            this.rtForceScan.TextChanged += new System.EventHandler(this.rtForceScan_TextChanged);
+            // 
+            // btnForceScan
+            // 
+            this.btnForceScan.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnForceScan.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnForceScan.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
+            this.btnForceScan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnForceScan.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold);
+            this.btnForceScan.ForeColor = System.Drawing.Color.White;
+            this.btnForceScan.Location = new System.Drawing.Point(11, 53);
+            this.btnForceScan.Name = "btnForceScan";
+            this.btnForceScan.Size = new System.Drawing.Size(344, 56);
+            this.btnForceScan.TabIndex = 29;
+            this.btnForceScan.TabStop = false;
+            this.btnForceScan.Text = "Force Scan";
+            this.btnForceScan.UseVisualStyleBackColor = false;
+            this.btnForceScan.Click += new System.EventHandler(this.btnForceScan_Click);
+            // 
+            // rtForceScanCnt
+            // 
+            this.rtForceScanCnt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.rtForceScanCnt.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtForceScanCnt.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rtForceScanCnt.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtForceScanCnt.ForeColor = System.Drawing.Color.White;
+            this.rtForceScanCnt.Location = new System.Drawing.Point(14, 62);
+            this.rtForceScanCnt.Name = "rtForceScanCnt";
+            this.rtForceScanCnt.ReadOnly = true;
+            this.rtForceScanCnt.Size = new System.Drawing.Size(338, 38);
+            this.rtForceScanCnt.TabIndex = 30;
+            this.rtForceScanCnt.TabStop = false;
+            this.rtForceScanCnt.Text = "";
+            this.rtForceScanCnt.Visible = false;
             // 
             // rtShredderCheck
             // 
@@ -1851,6 +2004,7 @@ namespace Cane_Tracking
             this.rtShredderCheck.ReadOnly = true;
             this.rtShredderCheck.Size = new System.Drawing.Size(85, 60);
             this.rtShredderCheck.TabIndex = 41;
+            this.rtShredderCheck.TabStop = false;
             this.rtShredderCheck.Text = "";
             // 
             // rtCaneKnivesCheck
@@ -1863,6 +2017,7 @@ namespace Cane_Tracking
             this.rtCaneKnivesCheck.ReadOnly = true;
             this.rtCaneKnivesCheck.Size = new System.Drawing.Size(85, 60);
             this.rtCaneKnivesCheck.TabIndex = 40;
+            this.rtCaneKnivesCheck.TabStop = false;
             this.rtCaneKnivesCheck.Text = "";
             // 
             // rtMainCaneCheck
@@ -1875,6 +2030,7 @@ namespace Cane_Tracking
             this.rtMainCaneCheck.ReadOnly = true;
             this.rtMainCaneCheck.Size = new System.Drawing.Size(85, 60);
             this.rtMainCaneCheck.TabIndex = 39;
+            this.rtMainCaneCheck.TabStop = false;
             this.rtMainCaneCheck.Text = "";
             // 
             // rtSideCaneCheck
@@ -1887,6 +2043,7 @@ namespace Cane_Tracking
             this.rtSideCaneCheck.ReadOnly = true;
             this.rtSideCaneCheck.Size = new System.Drawing.Size(85, 60);
             this.rtSideCaneCheck.TabIndex = 36;
+            this.rtSideCaneCheck.TabStop = false;
             this.rtSideCaneCheck.Text = "";
             // 
             // panel12
@@ -1907,7 +2064,7 @@ namespace Cane_Tracking
             this.rtEvents.Location = new System.Drawing.Point(7, 960);
             this.rtEvents.Name = "rtEvents";
             this.rtEvents.ReadOnly = true;
-            this.rtEvents.Size = new System.Drawing.Size(1706, 184);
+            this.rtEvents.Size = new System.Drawing.Size(1708, 184);
             this.rtEvents.TabIndex = 54;
             this.rtEvents.Text = "";
             // 
@@ -1956,7 +2113,7 @@ namespace Cane_Tracking
             this.button1.Location = new System.Drawing.Point(3, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(275, 49);
-            this.button1.TabIndex = 28;
+            this.button1.TabIndex = 14;
             this.button1.Text = "Cancel";
             this.button1.UseVisualStyleBackColor = false;
             // 
@@ -1972,7 +2129,7 @@ namespace Cane_Tracking
             this.button2.Location = new System.Drawing.Point(284, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(274, 49);
-            this.button2.TabIndex = 43;
+            this.button2.TabIndex = 13;
             this.button2.Text = "Save";
             this.button2.UseVisualStyleBackColor = false;
             // 
@@ -2009,9 +2166,10 @@ namespace Cane_Tracking
             this.rtMixedBurned.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtMixedBurned.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtMixedBurned.Location = new System.Drawing.Point(275, 10);
+            this.rtMixedBurned.Multiline = false;
             this.rtMixedBurned.Name = "rtMixedBurned";
             this.rtMixedBurned.Size = new System.Drawing.Size(275, 38);
-            this.rtMixedBurned.TabIndex = 43;
+            this.rtMixedBurned.TabIndex = 10;
             this.rtMixedBurned.Text = "0";
             // 
             // label19
@@ -2041,10 +2199,12 @@ namespace Cane_Tracking
             this.rtTotalTrash.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtTotalTrash.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTotalTrash.Location = new System.Drawing.Point(275, 10);
+            this.rtTotalTrash.Multiline = false;
             this.rtTotalTrash.Name = "rtTotalTrash";
             this.rtTotalTrash.ReadOnly = true;
             this.rtTotalTrash.Size = new System.Drawing.Size(275, 38);
             this.rtTotalTrash.TabIndex = 43;
+            this.rtTotalTrash.TabStop = false;
             this.rtTotalTrash.Text = "0";
             // 
             // label21
@@ -2074,9 +2234,10 @@ namespace Cane_Tracking
             this.rtMud.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtMud.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtMud.Location = new System.Drawing.Point(275, 10);
+            this.rtMud.Multiline = false;
             this.rtMud.Name = "rtMud";
             this.rtMud.Size = new System.Drawing.Size(275, 38);
-            this.rtMud.TabIndex = 43;
+            this.rtMud.TabIndex = 12;
             this.rtMud.Text = "0";
             // 
             // label20
@@ -2106,9 +2267,10 @@ namespace Cane_Tracking
             this.rtDeadStalks.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtDeadStalks.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtDeadStalks.Location = new System.Drawing.Point(275, 10);
+            this.rtDeadStalks.Multiline = false;
             this.rtDeadStalks.Name = "rtDeadStalks";
             this.rtDeadStalks.Size = new System.Drawing.Size(275, 38);
-            this.rtDeadStalks.TabIndex = 43;
+            this.rtDeadStalks.TabIndex = 9;
             this.rtDeadStalks.Text = "0";
             // 
             // label17
@@ -2138,9 +2300,10 @@ namespace Cane_Tracking
             this.rtRoots.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtRoots.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtRoots.Location = new System.Drawing.Point(275, 10);
+            this.rtRoots.Multiline = false;
             this.rtRoots.Name = "rtRoots";
             this.rtRoots.Size = new System.Drawing.Size(275, 38);
-            this.rtRoots.TabIndex = 43;
+            this.rtRoots.TabIndex = 8;
             this.rtRoots.Text = "0";
             // 
             // label16
@@ -2170,9 +2333,10 @@ namespace Cane_Tracking
             this.rtCaneTops.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtCaneTops.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtCaneTops.Location = new System.Drawing.Point(275, 10);
+            this.rtCaneTops.Multiline = false;
             this.rtCaneTops.Name = "rtCaneTops";
             this.rtCaneTops.Size = new System.Drawing.Size(275, 38);
-            this.rtCaneTops.TabIndex = 43;
+            this.rtCaneTops.TabIndex = 7;
             this.rtCaneTops.Text = "0";
             // 
             // label15
@@ -2202,9 +2366,10 @@ namespace Cane_Tracking
             this.rtLeaves.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtLeaves.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtLeaves.Location = new System.Drawing.Point(275, 10);
+            this.rtLeaves.Multiline = false;
             this.rtLeaves.Name = "rtLeaves";
             this.rtLeaves.Size = new System.Drawing.Size(275, 38);
-            this.rtLeaves.TabIndex = 43;
+            this.rtLeaves.TabIndex = 6;
             this.rtLeaves.Text = "0";
             // 
             // label13
@@ -2234,9 +2399,10 @@ namespace Cane_Tracking
             this.rtBurned.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtBurned.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtBurned.Location = new System.Drawing.Point(275, 10);
+            this.rtBurned.Multiline = false;
             this.rtBurned.Name = "rtBurned";
             this.rtBurned.Size = new System.Drawing.Size(275, 38);
-            this.rtBurned.TabIndex = 43;
+            this.rtBurned.TabIndex = 11;
             this.rtBurned.Text = "0";
             // 
             // label18
@@ -2278,6 +2444,7 @@ namespace Cane_Tracking
             this.dataGridView1.RowTemplate.Height = 28;
             this.dataGridView1.Size = new System.Drawing.Size(555, 108);
             this.dataGridView1.TabIndex = 46;
+            this.dataGridView1.TabStop = false;
             // 
             // TransCode
             // 
@@ -2327,6 +2494,7 @@ namespace Cane_Tracking
             this.rtBatchNumID.Name = "rtBatchNumID";
             this.rtBatchNumID.Size = new System.Drawing.Size(63, 38);
             this.rtBatchNumID.TabIndex = 45;
+            this.rtBatchNumID.TabStop = false;
             this.rtBatchNumID.Text = "";
             this.rtBatchNumID.Visible = false;
             // 
@@ -2335,9 +2503,10 @@ namespace Cane_Tracking
             this.rtTrashBatchNum.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtTrashBatchNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtTrashBatchNum.Location = new System.Drawing.Point(275, 10);
+            this.rtTrashBatchNum.Multiline = false;
             this.rtTrashBatchNum.Name = "rtTrashBatchNum";
             this.rtTrashBatchNum.Size = new System.Drawing.Size(275, 38);
-            this.rtTrashBatchNum.TabIndex = 43;
+            this.rtTrashBatchNum.TabIndex = 5;
             this.rtTrashBatchNum.Text = "";
             // 
             // label14
@@ -2372,6 +2541,7 @@ namespace Cane_Tracking
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(275, 39);
             this.dateTimePicker1.TabIndex = 43;
+            this.dateTimePicker1.TabStop = false;
             // 
             // label12
             // 
@@ -2407,6 +2577,7 @@ namespace Cane_Tracking
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(119, 86);
             this.btnPause.TabIndex = 57;
+            this.btnPause.TabStop = false;
             this.btnPause.UseVisualStyleBackColor = false;
             this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             this.btnPause.MouseHover += new System.EventHandler(this.btnPause_MouseHover);
@@ -2421,6 +2592,7 @@ namespace Cane_Tracking
             this.rtSeriesNo.ReadOnly = true;
             this.rtSeriesNo.Size = new System.Drawing.Size(191, 43);
             this.rtSeriesNo.TabIndex = 43;
+            this.rtSeriesNo.TabStop = false;
             this.rtSeriesNo.Text = "";
             // 
             // label5
@@ -2467,6 +2639,7 @@ namespace Cane_Tracking
             this.btnDecrement.Name = "btnDecrement";
             this.btnDecrement.Size = new System.Drawing.Size(119, 86);
             this.btnDecrement.TabIndex = 57;
+            this.btnDecrement.TabStop = false;
             this.btnDecrement.UseVisualStyleBackColor = false;
             this.btnDecrement.Click += new System.EventHandler(this.btnDecrement_Click);
             this.btnDecrement.MouseHover += new System.EventHandler(this.btnDecrement_MouseHover);
@@ -2493,6 +2666,7 @@ namespace Cane_Tracking
             this.btnLoadData.Name = "btnLoadData";
             this.btnLoadData.Size = new System.Drawing.Size(119, 86);
             this.btnLoadData.TabIndex = 57;
+            this.btnLoadData.TabStop = false;
             this.btnLoadData.UseVisualStyleBackColor = false;
             this.btnLoadData.Click += new System.EventHandler(this.btnLoadData_Click);
             this.btnLoadData.MouseHover += new System.EventHandler(this.btnLoadData_MouseHover);
@@ -2519,6 +2693,7 @@ namespace Cane_Tracking
             this.btnUndoEntry.Name = "btnUndoEntry";
             this.btnUndoEntry.Size = new System.Drawing.Size(119, 86);
             this.btnUndoEntry.TabIndex = 57;
+            this.btnUndoEntry.TabStop = false;
             this.btnUndoEntry.UseVisualStyleBackColor = false;
             this.btnUndoEntry.Click += new System.EventHandler(this.btnUndoEntry_Click);
             this.btnUndoEntry.MouseHover += new System.EventHandler(this.btnUndoEntry_MouseHover);
@@ -2545,6 +2720,7 @@ namespace Cane_Tracking
             this.btnEditConfigs.Name = "btnEditConfigs";
             this.btnEditConfigs.Size = new System.Drawing.Size(119, 86);
             this.btnEditConfigs.TabIndex = 57;
+            this.btnEditConfigs.TabStop = false;
             this.btnEditConfigs.Tag = "";
             this.btnEditConfigs.UseVisualStyleBackColor = false;
             this.btnEditConfigs.Click += new System.EventHandler(this.btnEditConfigs_Click);
@@ -2555,7 +2731,7 @@ namespace Cane_Tracking
             this.panel35.BackColor = System.Drawing.Color.CornflowerBlue;
             this.panel35.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel35.Controls.Add(this.btnReset);
-            this.panel35.Location = new System.Drawing.Point(672, 8);
+            this.panel35.Location = new System.Drawing.Point(805, 8);
             this.panel35.Name = "panel35";
             this.panel35.Size = new System.Drawing.Size(127, 94);
             this.panel35.TabIndex = 63;
@@ -2572,173 +2748,51 @@ namespace Cane_Tracking
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(119, 86);
             this.btnReset.TabIndex = 57;
+            this.btnReset.TabStop = false;
             this.btnReset.UseVisualStyleBackColor = false;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             this.btnReset.MouseHover += new System.EventHandler(this.btnReset_MouseHover);
             // 
+            // rtCurrentScannedSample
+            // 
+            this.rtCurrentScannedSample.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtCurrentScannedSample.Enabled = false;
+            this.rtCurrentScannedSample.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtCurrentScannedSample.Location = new System.Drawing.Point(1323, 50);
+            this.rtCurrentScannedSample.Name = "rtCurrentScannedSample";
+            this.rtCurrentScannedSample.ReadOnly = true;
+            this.rtCurrentScannedSample.Size = new System.Drawing.Size(191, 43);
+            this.rtCurrentScannedSample.TabIndex = 65;
+            this.rtCurrentScannedSample.TabStop = false;
+            this.rtCurrentScannedSample.Text = "";
+            this.rtCurrentScannedSample.Visible = false;
+            // 
             // panel28
             // 
-            this.panel28.BackColor = System.Drawing.Color.Transparent;
-            this.panel28.Controls.Add(this.lblNi);
-            this.panel28.Controls.Add(this.lblCk);
-            this.panel28.Controls.Add(this.lblMc);
-            this.panel28.Controls.Add(this.lblDs);
-            this.panel28.Controls.Add(this.lblT2);
-            this.panel28.Controls.Add(this.lblT1);
-            this.panel28.Controls.Add(this.label24);
-            this.panel28.Controls.Add(this.label22);
-            this.panel28.Controls.Add(this.label10);
-            this.panel28.Controls.Add(this.label9);
-            this.panel28.Controls.Add(this.label7);
-            this.panel28.Controls.Add(this.label8);
-            this.panel28.Location = new System.Drawing.Point(833, 8);
+            this.panel28.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.panel28.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel28.Controls.Add(this.btnEventLogs);
+            this.panel28.Location = new System.Drawing.Point(672, 8);
             this.panel28.Name = "panel28";
-            this.panel28.Size = new System.Drawing.Size(484, 94);
-            this.panel28.TabIndex = 64;
+            this.panel28.Size = new System.Drawing.Size(127, 94);
+            this.panel28.TabIndex = 66;
             // 
-            // lblNi
+            // btnEventLogs
             // 
-            this.lblNi.AutoSize = true;
-            this.lblNi.BackColor = System.Drawing.Color.Transparent;
-            this.lblNi.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNi.ForeColor = System.Drawing.Color.White;
-            this.lblNi.Location = new System.Drawing.Point(271, 67);
-            this.lblNi.Name = "lblNi";
-            this.lblNi.Size = new System.Drawing.Size(25, 20);
-            this.lblNi.TabIndex = 78;
-            this.lblNi.Text = "NI";
-            // 
-            // lblCk
-            // 
-            this.lblCk.AutoSize = true;
-            this.lblCk.BackColor = System.Drawing.Color.Transparent;
-            this.lblCk.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCk.ForeColor = System.Drawing.Color.White;
-            this.lblCk.Location = new System.Drawing.Point(438, 37);
-            this.lblCk.Name = "lblCk";
-            this.lblCk.Size = new System.Drawing.Size(30, 20);
-            this.lblCk.TabIndex = 76;
-            this.lblCk.Text = "CK";
-            // 
-            // lblMc
-            // 
-            this.lblMc.AutoSize = true;
-            this.lblMc.BackColor = System.Drawing.Color.Transparent;
-            this.lblMc.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMc.ForeColor = System.Drawing.Color.White;
-            this.lblMc.Location = new System.Drawing.Point(366, 7);
-            this.lblMc.Name = "lblMc";
-            this.lblMc.Size = new System.Drawing.Size(33, 20);
-            this.lblMc.TabIndex = 74;
-            this.lblMc.Text = "MC";
-            // 
-            // lblDs
-            // 
-            this.lblDs.AutoSize = true;
-            this.lblDs.BackColor = System.Drawing.Color.Transparent;
-            this.lblDs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDs.ForeColor = System.Drawing.Color.White;
-            this.lblDs.Location = new System.Drawing.Point(142, 67);
-            this.lblDs.Name = "lblDs";
-            this.lblDs.Size = new System.Drawing.Size(32, 20);
-            this.lblDs.TabIndex = 75;
-            this.lblDs.Text = "DS";
-            // 
-            // lblT2
-            // 
-            this.lblT2.AutoSize = true;
-            this.lblT2.BackColor = System.Drawing.Color.Transparent;
-            this.lblT2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblT2.ForeColor = System.Drawing.Color.White;
-            this.lblT2.Location = new System.Drawing.Point(142, 37);
-            this.lblT2.Name = "lblT2";
-            this.lblT2.Size = new System.Drawing.Size(27, 20);
-            this.lblT2.TabIndex = 74;
-            this.lblT2.Text = "T2";
-            // 
-            // lblT1
-            // 
-            this.lblT1.AutoSize = true;
-            this.lblT1.BackColor = System.Drawing.Color.Transparent;
-            this.lblT1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblT1.ForeColor = System.Drawing.Color.White;
-            this.lblT1.Location = new System.Drawing.Point(142, 7);
-            this.lblT1.Name = "lblT1";
-            this.lblT1.Size = new System.Drawing.Size(27, 20);
-            this.lblT1.TabIndex = 73;
-            this.lblT1.Text = "T1";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.BackColor = System.Drawing.Color.Transparent;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.ForeColor = System.Drawing.Color.White;
-            this.label24.Location = new System.Drawing.Point(224, 67);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(41, 20);
-            this.label24.TabIndex = 72;
-            this.label24.Text = "NIR:";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.BackColor = System.Drawing.Color.Transparent;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.ForeColor = System.Drawing.Color.White;
-            this.label22.Location = new System.Drawing.Point(224, 37);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(207, 20);
-            this.label22.TabIndex = 70;
-            this.label22.Text = "Knives and Shredder Count:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.Transparent;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(224, 7);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(136, 20);
-            this.label10.TabIndex = 69;
-            this.label10.Text = "Main Cane Count:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(-1, 67);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(132, 20);
-            this.label9.TabIndex = 68;
-            this.label9.Text = "Dump and Stock:";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(-1, 37);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(137, 20);
-            this.label7.TabIndex = 67;
-            this.label7.Text = "Tipper Two Count:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(-1, 7);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(138, 20);
-            this.label8.TabIndex = 66;
-            this.label8.Text = "Tipper One Count:";
+            this.btnEventLogs.BackColor = System.Drawing.Color.White;
+            this.btnEventLogs.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnEventLogs.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnEventLogs.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnEventLogs.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.btnEventLogs.Image = ((System.Drawing.Image)(resources.GetObject("btnEventLogs.Image")));
+            this.btnEventLogs.Location = new System.Drawing.Point(3, 3);
+            this.btnEventLogs.Name = "btnEventLogs";
+            this.btnEventLogs.Size = new System.Drawing.Size(119, 86);
+            this.btnEventLogs.TabIndex = 57;
+            this.btnEventLogs.TabStop = false;
+            this.btnEventLogs.UseVisualStyleBackColor = false;
+            this.btnEventLogs.Click += new System.EventHandler(this.btnEventLogs_Click);
+            this.btnEventLogs.MouseHover += new System.EventHandler(this.btnEventLogs_MouseHover);
             // 
             // frmMain
             // 
@@ -2747,8 +2801,9 @@ namespace Cane_Tracking
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.ClientSize = new System.Drawing.Size(1725, 1152);
+            this.ClientSize = new System.Drawing.Size(1733, 1152);
             this.Controls.Add(this.panel28);
+            this.Controls.Add(this.rtCurrentScannedSample);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.panel35);
             this.Controls.Add(this.rtSeriesNo);
@@ -2766,7 +2821,8 @@ namespace Cane_Tracking
             this.MinimizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Consolidated Cane Tracking System";
+            this.Text = "CASA Consolidated Cane Tracking System";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.panel6.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
@@ -2815,7 +2871,6 @@ namespace Cane_Tracking
             this.panel34.ResumeLayout(false);
             this.panel35.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
-            this.panel28.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2942,7 +2997,7 @@ namespace Cane_Tracking
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnForceScan;
         private System.Windows.Forms.RichTextBox rtForceScan;
         private System.Windows.Forms.RichTextBox rtShredderCheck;
         private System.Windows.Forms.RichTextBox rtCaneKnivesCheck;
@@ -3007,20 +3062,11 @@ namespace Cane_Tracking
         private System.Windows.Forms.Button btnEditConfigs;
         private System.Windows.Forms.Panel panel35;
         private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.Panel panel28;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label lblNi;
-        private System.Windows.Forms.Label lblCk;
-        private System.Windows.Forms.Label lblMc;
-        private System.Windows.Forms.Label lblDs;
-        private System.Windows.Forms.Label lblT2;
-        private System.Windows.Forms.Label lblT1;
         private System.Windows.Forms.RichTextBox rtBatchNumID;
+        private System.Windows.Forms.RichTextBox rtCurrentScannedSample;
+        private System.Windows.Forms.RichTextBox rtForceScanCnt;
+        private System.Windows.Forms.Panel panel28;
+        private System.Windows.Forms.Button btnEventLogs;
     }
 }
 

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.IO.Ports;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Cane_Tracking.Classes;
 
@@ -12,21 +15,27 @@ namespace Cane_Tracking
         CrossThreadingCheck ctcc = new CrossThreadingCheck();
         TrackingList bnlist = new TrackingList();
         NirTimer nirTimer = new NirTimer();
+        LoadingValues appLoading = new LoadingValues();
+        AppLogging log = new AppLogging();
         ToolTip toolTip = new ToolTip();
-
+        NirUDP nirUdp = new NirUDP();
 
         private static SerialPort serialPort;
 
         private Timer checkConfigsTimer;
+        private Timer savingStateTimer;
 
         private static int seriesNo = 0;
+        private static int savedCount = 0;
 
         private static bool decrementing = false;
         private static bool pause = false;
+        private static bool forceScan = false;
 
         private static string logTextOutput;
         private static string batch;
 
+        readonly char pad = '0'; //For adding zeroes to the left
 
         public frmMain()
         {
@@ -36,54 +45,14 @@ namespace Cane_Tracking
             DefaultValues();
             CheckConfigStart();
             RegisterTextboxes();
-            /*TextboxKeyDown();
-            TextboxTextChange();*/
+            CheckDatabaseConnection();
+            CheckUdpConnection();
+            SaveStateStart();
         }
 
 
 
         /*+============================================= RICHTEXTBOX FORMATS ==================================================+*/
-
-        /* private void TextboxKeyDown()
-         {
-             for (int i = 0; i < bnlist.lTbox.Count; i++)
-             {
-                 bnlist.lTbox[i].Item1.KeyDown += (object sender, KeyEventArgs e) => KeyPressed(sender, e, bnlist.lTbox[i].Item1);
-             }
-         }
-
-         private void KeyPressed(object sender, KeyEventArgs e, RichTextBox rt)
-         {
-             if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-             {
-                 MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                 rt.Text = "";
-             }
-         }
-
-         private void TextboxTextChange()
-         {
-             for (int i = 0; i < bnlist.lTbox.Count; i++)
-             {
-                 if (bnlist.lTbox[i].Item3 == "TipOne" || bnlist.lTbox[i].Item3 == "TipTwo" || bnlist.lTbox[i].Item3 == "DumpTruck" || bnlist.lTbox[i].Item3 == "StockPile")
-                 {
-                     bnlist.lTbox[i].Item1.TextChanged += (object sender, EventArgs e) => BoxesTextChanged(sender, e, bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2, bnlist.lTbox[i].Item3);
-                 }
-             }
-         }
-
-         private void BoxesTextChanged(object sender, EventArgs e, RichTextBox rtbn, RichTextBox rtcnt, string area)
-         {
-             if (rtbn.Text != "" && rtcnt.Text != "")
-             {
-                 if (rtbn.Text != batch)
-                 {
-                     logTextOutput = DateTime.Now.ToString() + " : " + area + " Changed Batch #" + batch + " to " + rtbn.Text + " @ count " + rtcnt.Text;
-                     batch = rtbn.Text;
-                     LogOutput(logTextOutput);
-                 }
-             }
-         }*/
 
         private void rtTipperOneBn_KeyDown(object sender, KeyEventArgs e)
         {
@@ -773,9 +742,96 @@ namespace Cane_Tracking
             }
         }
 
+        private void rtMainBn1_TextChanged(object sender, EventArgs e)
+        {
+            if (rtMainBn1.Text != "")
+            {
+                logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtMainBn1.Text + " is already in the main cane area. ";
+                LogOutput(logTextOutput);
+
+                log.AppEventLog(logTextOutput);
+            }
+        }
+
+        private void rtMainBn2_TextChanged(object sender, EventArgs e)
+        {
+            if (rtMainBn2.Text != "")
+            {
+                logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtMainBn2.Text + " is already in the main cane area. ";
+                LogOutput(logTextOutput);
+
+                log.AppEventLog(logTextOutput);
+            }
+        }
+
+        private void rtMainBn3_TextChanged(object sender, EventArgs e)
+        {
+            if (rtMainBn3.Text != "")
+            {
+                logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtMainBn3.Text + " is already in the main cane area. ";
+                LogOutput(logTextOutput);
+
+                log.AppEventLog(logTextOutput);
+            }
+        }
+
+        private void rtMainBn4_TextChanged(object sender, EventArgs e)
+        {
+            if (rtMainBn4.Text != "")
+            {
+                logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtMainBn4.Text + " is already in the main cane area. ";
+                LogOutput(logTextOutput);
+
+                log.AppEventLog(logTextOutput);
+            }
+        }
+
+        private void rtKnivesBn1_TextChanged(object sender, EventArgs e)
+        {
+            if (rtKnivesBn1.Text != "")
+            {
+                logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtKnivesBn1.Text + " is already in the cane knives area. ";
+                LogOutput(logTextOutput);
+
+                log.AppEventLog(logTextOutput);
+            }
+        }
+
+        private void rtKnivesBn2_TextChanged(object sender, EventArgs e)
+        {
+            if (rtKnivesBn2.Text != "")
+            {
+                logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtKnivesBn2.Text + " is already in the cane knives area. ";
+                LogOutput(logTextOutput);
+
+                log.AppEventLog(logTextOutput);
+            }
+        }
+
+        private void rtShredBn1_TextChanged(object sender, EventArgs e)
+        {
+            if (rtShredBn1.Text != "")
+            {
+                logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtShredBn1.Text + " is already in the shredder area. ";
+                LogOutput(logTextOutput);
+
+                log.AppEventLog(logTextOutput);
+            }
+        }
+
+        private void rtShredBn2_TextChanged(object sender, EventArgs e)
+        {
+            if (rtShredBn2.Text != "")
+            {
+                logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtShredBn2.Text + " is already in the shredder area. ";
+                LogOutput(logTextOutput);
+
+                log.AppEventLog(logTextOutput);
+            }
+        }
+
         private void rtNirWashing_TextChanged(object sender, EventArgs e)
         {
-            int c = 0;
             if (this.rtNirWashing.Text != "")
             {
                 if (nirTimer.washingTimerList.Count > 0)
@@ -785,37 +841,91 @@ namespace Cane_Tracking
                         nirTimer.washingTimerList[i].Stop();
                         nirTimer.washingTimerList.RemoveAt(i);
                     }
-                    nirTimer.SetWashingTimer(ref c, rtNirScanning, rtNirCount, rtNirWashing, rtWashingCount);
+
+                    nirTimer.SetWashingTimer(rtNirScanning, rtNirCount, rtNirWashing, rtWashingCount);
+                    logTextOutput = DateTime.Now.ToString() + " : Preparing Batch #" + rtNirWashing.Text + " for scanning";
+
+                    LogOutput(logTextOutput);
+                    log.AppEventLog(logTextOutput);
                 }
                 else
                 {
-                    nirTimer.SetWashingTimer(ref c, rtNirScanning, rtNirCount, rtNirWashing, rtWashingCount);
+                    nirTimer.SetWashingTimer(rtNirScanning, rtNirCount, rtNirWashing, rtWashingCount);
+                    logTextOutput = DateTime.Now.ToString() + " : Preparing Batch #" + rtNirWashing.Text + " for scanning";
+
+                    LogOutput(logTextOutput);
+                    log.AppEventLog(logTextOutput);
+
+                    if (rtNirScanning.Text != "")
+                    {
+                        for (int i = 0; i < nirTimer.nirTimerList.Count;)
+                        {
+                            nirTimer.nirTimerList[i].Stop();
+                            nirTimer.nirTimerList.RemoveAt(i);
+                        }
+
+                        ctcc.ChangeText(rtNirScanning, "");
+                        ctcc.ChangeText(rtNirCount, "");
+                        ctcc.ChangeColorTextBox(rtNirCount, Color.CornflowerBlue);
+                    }
                 }
             }
         }
 
         private void rtNirScanning_TextChanged(object sender, EventArgs e)
         {
-            int c = 0;
-            if (this.rtNirScanning.Text != "")
+            if (rtNirScanning.Text != "")
             {
-                if (nirTimer.nirTimerList.Count > 0)
+                nirTimer.SetNirTimer(rtNirScanning, rtNirCount);
+
+                IncrementSeriesNo();
+
+                rtCurrentScannedSample.Text = rtNirScanning.Text + rtSeriesNo.Text.PadLeft(3, pad);
+
+                nirUdp.SendMessage(rtCurrentScannedSample.Text);
+
+                logTextOutput = DateTime.Now.ToString() + " : Scanning Sample #" + rtCurrentScannedSample.Text;
+
+                LogOutput(logTextOutput);
+                log.AppEventLog(logTextOutput);
+            }
+            else
+            {
+                if (seriesNo > 0)
                 {
-                    for (int i = 0; i < nirTimer.nirTimerList.Count;)
-                    {
-                        nirTimer.nirTimerList[i].Stop();
-                        nirTimer.nirTimerList.RemoveAt(i);
-                    }
-                    nirTimer.SetNirTimer(ref c, rtNirScanning, rtNirCount);
+                    logTextOutput = DateTime.Now.ToString() + " : Finished Scanning Sample #" + rtCurrentScannedSample.Text; //currentScannedSeries;
+
+                    nirUdp.EndMessage(rtCurrentScannedSample.Text);
+
+                    LogOutput(logTextOutput);
+                    log.AppEventLog(logTextOutput);
                 }
-                else
+            }
+
+        }
+
+        private void rtForceScan_TextChanged(object sender, EventArgs e)
+        {
+            if(rtForceScan.Text == "")
+            {
+                if (forceScan)
                 {
-                    nirTimer.SetNirTimer(ref c, rtNirScanning, rtNirCount);
+                    logTextOutput = DateTime.Now.ToString() + " : Finished Forced Scanning Sample #" + rtCurrentScannedSample.Text; //currentScannedSeries;
+
+                    nirUdp.EndMessage(rtCurrentScannedSample.Text);
+
+                    LogOutput(logTextOutput);
+                    log.AppEventLog(logTextOutput);
+
+                    rtForceScan.Enabled = true;
+                    rtForceScanCnt.Visible = false;
+                    btnForceScan.Enabled = true;
+                    btnForceScan.Text = "Force Scan";
+                    forceScan = false;
                 }
             }
         }
-
-
+        
 
 
         /*+=============================================== MOUSE HOVERS ====================================================+*/
@@ -845,10 +955,16 @@ namespace Cane_Tracking
             toolTip.SetToolTip(this.btnLoadData, "Load Saved Data");
         }
 
+        private void btnEventLogs_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(this.btnEventLogs, "Event Logs");
+        }
+
         private void btnReset_MouseHover(object sender, EventArgs e)
         {
             toolTip.SetToolTip(this.btnReset, "Restart Application");
         }
+
 
 
 
@@ -864,8 +980,9 @@ namespace Cane_Tracking
             }
             else
             {
-                batch = rtTipperOneBn.Text;
-                for (int i = 0; i < bnlist.lTbox.Count; i++)
+                batch = rtTipperOneBn.Text.PadLeft(3, pad);
+
+                /*for (int i = 0; i < bnlist.lTbox.Count; i++)
                 {
                     if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "TipOne")
                     {
@@ -879,13 +996,20 @@ namespace Cane_Tracking
 
                         logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Tipper One Area";
                         LogOutput(logTextOutput);
+                        appLogging.CaneDumpLog(logTextOutput);
 
                         rtTipperOneBn.Text = "";
-                        IncrementSeriesNo();
                         break;
                     }
-                }
+                }*/
+
+                rtNirWashing.Text = batch;
+                rtWashingCount.Text = "0";
+                rtWashingCount.ForeColor = Color.White;
+                rtWashingCount.BackColor = Color.Maroon;
             }
+
+
 
         }
 
@@ -898,7 +1022,7 @@ namespace Cane_Tracking
             }
             else
             {
-                batch = rtTipperTwoBn.Text;
+                batch = rtTipperTwoBn.Text.PadLeft(3, pad);
                 for (int i = 0; i < bnlist.lTbox.Count; i++)
                 {
                     if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "TipTwo")
@@ -913,9 +1037,9 @@ namespace Cane_Tracking
 
                         logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Tipper Two Area";
                         LogOutput(logTextOutput);
+                        log.AppEventLog(logTextOutput);
 
                         rtTipperTwoBn.Text = "";
-                        IncrementSeriesNo();
                         break;
                     }
                 }
@@ -928,11 +1052,11 @@ namespace Cane_Tracking
 
             if (rtDumpTruckBn.Text == "")
             {
-                MessageBox.Show("Tipper Two Batch Number Field is blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Dump Truck Batch Number Field is blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                batch = rtDumpTruckBn.Text;
+                batch = rtDumpTruckBn.Text.PadLeft(3, pad);
                 for (int i = 0; i < bnlist.lTbox.Count; i++)
                 {
                     if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "DumpTruck")
@@ -947,9 +1071,9 @@ namespace Cane_Tracking
 
                         logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Dump Truck Area";
                         LogOutput(logTextOutput);
+                        log.AppEventLog(logTextOutput);
 
                         rtDumpTruckBn.Text = "";
-                        IncrementSeriesNo();
                         break;
                     }
                 }
@@ -962,11 +1086,11 @@ namespace Cane_Tracking
 
             if (rtStockPileBn.Text == "")
             {
-                MessageBox.Show("Tipper Two Batch Number Field is blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Stock Pile Batch Number Field is blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                batch = rtStockPileBn.Text;
+                batch = rtStockPileBn.Text.PadLeft(3, pad);
                 for (int i = 0; i < bnlist.lTbox.Count; i++)
                 {
                     if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "StockPile")
@@ -981,9 +1105,9 @@ namespace Cane_Tracking
 
                         logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Stock Pile Area";
                         LogOutput(logTextOutput);
+                        log.AppEventLog(logTextOutput);
 
                         rtStockPileBn.Text = "";
-                        IncrementSeriesNo();
                         break;
                     }
                 }
@@ -1014,6 +1138,7 @@ namespace Cane_Tracking
             }
 
             LogOutput(t);
+            log.AppEventLog(t);
         }
 
         private void btnUndoEntry_Click(object sender, EventArgs e)
@@ -1071,6 +1196,7 @@ namespace Cane_Tracking
                     string t = DateTime.Now.ToString() + " : " + "Removed Batch #" + bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item1.Text
                                                        + " at " + bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item3;
                     LogOutput(t);
+                    log.AppEventLog(t);
 
                     ctcc.ChangeText(bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item1, "");
                     ctcc.ChangeText(bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item2, "");
@@ -1078,7 +1204,6 @@ namespace Cane_Tracking
 
                     bnlist.dumpCanesHistory.RemoveAt(bnlist.dumpCanesHistory.Count - 1);
 
-                    DecrementSeriesNo();
                 }
             }
             else
@@ -1090,21 +1215,27 @@ namespace Cane_Tracking
         private void btnPause_Click(object sender, EventArgs e)
         {
             string t;
+
             if (pause)
             {
                 pause = false;
+
+                nirTimer.PauseNir(pause);
                 t = DateTime.Now.ToString() + " : " + "Resuming countings";
                 btnPause.BackColor = Color.White;
             }
             else
             {
                 pause = true;
-                t = DateTime.Now.ToString() + " : " + "Pause countings";
+
+                nirTimer.PauseNir(pause);
+                t = DateTime.Now.ToString() + " : " + "Countings Paused";
                 btnPause.BackColor = Color.Red;
+
             }
 
             LogOutput(t);
-            nirTimer.PauseNirCount(pause);
+            log.AppEventLog(t);
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -1113,6 +1244,8 @@ namespace Cane_Tracking
 
             if (dialog == DialogResult.Yes)
             {
+                string t = DateTime.Now + " : " + "Restarted Application";
+                log.AppEventLog(t);
                 Application.Restart();
             }
         }
@@ -1123,12 +1256,56 @@ namespace Cane_Tracking
             frm.Show();
         }
 
+        private void btnEventLogs_Click(object sender, EventArgs e)
+        {
+            frmEventLogs frm = new frmEventLogs();
+            frm.Show();
+        }
+
+        private void btnForceScan_Click(object sender, EventArgs e)
+        {
+            if(rtForceScan.Text != "")
+            {
+                if (Regex.IsMatch(rtForceScan.Text, @"^\d+$"))
+                {
+                    rtForceScan.Text = rtForceScan.Text.PadLeft(3, pad);
+                    rtForceScanCnt.Text = "0";
+
+                    nirTimer.SetNirTimer(rtForceScan, rtForceScanCnt);
+
+                    IncrementSeriesNo();
+
+                    rtCurrentScannedSample.Text = rtForceScan.Text + rtSeriesNo.Text.PadLeft(3, pad);
+
+                    nirUdp.SendMessage(rtCurrentScannedSample.Text);
+
+                    logTextOutput = DateTime.Now.ToString() + " : Force Scanning Sample #" + rtCurrentScannedSample.Text;
+
+                    LogOutput(logTextOutput);
+                    log.AppEventLog(logTextOutput);
+
+                    rtForceScan.Enabled = false;
+                    rtForceScanCnt.Visible = true;
+                    btnForceScan.Enabled = false;
+                    btnForceScan.Text = "";
+                    forceScan = true;
+                }
+                else
+                {
+                    MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    rtForceScan.Text = "";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nothing to scan", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
 
+        /*+============================================== SERIAL / DATABASE / UDP CONNECTION ===============================================+*/
 
-        /*+============================================== SERIAL CONNECTION ===============================================+*/
-
-        //Serial Connection
+        //Serial Connection (Transfer Com port to textfile)
         private void InitializeSerialConnections()
         {
             try
@@ -1144,12 +1321,13 @@ namespace Cane_Tracking
 
                 string t = DateTime.Now.ToString() + " : " + "Ports Activated";
                 LogOutput(t);
+                log.AppEventLog(t);
             }
             catch (Exception)
             {
                 string t = DateTime.Now.ToString() + " : " + "Port Connections does not exist or is disconnected";
-                //MessageBox.Show(t);
                 LogOutput(t);
+                log.AppEventLog(t);
             }
         }
 
@@ -1166,123 +1344,54 @@ namespace Cane_Tracking
 
         }
 
+        //Database (WeighBridge, App's own Database)
+        private void CheckDatabaseConnection()
+        {
+            if (log.DbConnected())
+            {
+                logTextOutput = DateTime.Now + " : Successfully connected to App Database";
+                LogOutput(logTextOutput);
+                log.AppEventLog(logTextOutput);
+            }
+            else
+            {
+                logTextOutput = DateTime.Now + " : Connection to App Database unsuccessful";
+                LogOutput(logTextOutput);
+                log.AppEventLog(logTextOutput);
+            }
+        }
+
+        //NIR UDP Connection
+        private void CheckUdpConnection()
+        {
+            if (nirUdp.UdpConnected())
+            {
+                logTextOutput = DateTime.Now + " : UDP Connection Established";
+                LogOutput(logTextOutput);
+                log.AppEventLog(logTextOutput);
+            }
+            else
+            {
+                logTextOutput = DateTime.Now + " : UDP Connection unsuccesful";
+                LogOutput(logTextOutput);
+                log.AppEventLog(logTextOutput);
+            }
+        }
 
 
 
-        /*+======================================== SERIES NO. INCREMENT-DECREMENT===============================================+*/
+        /*+======================================== SERIES NO. INCREMENT===============================================+*/
 
         /*
-         * Increment Series No. during Side Cane Dumpings
-         * Tipper One click
-         * Tipper Two click
-         * Dump Truck click
-         * Stock Pile click
-         * 
-         * 
-         * Decrement Series No. during Undo Inputs
-         * Undo Entry click
+         * Increment Series No. on NIR Scan
          */
         private void IncrementSeriesNo()
         {
             rtSeriesNo.Text = (seriesNo += 1).ToString();
         }
 
-        private void DecrementSeriesNo()
-        {
-            rtSeriesNo.Text = (seriesNo -= 1).ToString();
-        }
 
-
-
-
-        /*+================================== APP STATE DATABASE SAVING AND CONNECTION =====================================+*/
-
-        /*SqlConnection con = new SqlConnection(File.ReadAllText(Path.GetFullPath("Configurations/DbConnection.txt")));
-        private Timer savingStateTimer;
-        private static int stateBatchNum;*/
-
-        /*private void ConnectToDB()
-        {
-            try
-            {
-                con.Open();
-                LogOutput(DateTime.Now.ToString() + " : Successfuly Connected to Application's Database");
-                con.Close();
-
-                SaveStateStart();
-            }
-            catch (Exception e)
-            {
-                LogOutput(e.ToString());
-            }
-        }
-
-        private void ListBox()
-        {
-
-            try
-            {
-                foreach (var i in bnlist.lTbox)
-                {
-                    if (i.Item1.Text != "")
-                    {
-                        SaveState(i.Item1.Rtf, i.Item2.Rtf, int.Parse(i.Item1.Text), int.Parse(i.Item2.Text), i.Item3);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                LogOutput(e.ToString());
-            }
-            finally
-            {
-                LogOutput(DateTime.Now.ToString() + " : State save");
-
-                stateBatchNum++;
-            }
-
-        }
-
-        private void SaveState(string batchNum, string numCount, int num, int count, string areaName)
-        {
-            int bNumber = 0;
-            int bCount = 0;
-
-            if (batchNum != "" && numCount != "")
-            {
-                bNumber = num;
-                bCount = count;
-            }
-
-            string saveState = @"INSERT INTO app_state_record
-                                 (batchNumBox, batchNum, countBox, currentCount, areaName, stateBatch, batchDate)
-                               VALUES
-                                 (@bNumBox, @bNum, @cntBox, @cCount, @aName, @sBatch, @bDate)";
-
-            SqlCommand cmd = new SqlCommand(saveState, con);
-
-            cmd.Parameters.AddWithValue("@bNumBox", batchNum);
-            cmd.Parameters.AddWithValue("@bNum", bNumber);
-            cmd.Parameters.AddWithValue("@cntBox", numCount);
-            cmd.Parameters.AddWithValue("@cCount", bCount);
-            cmd.Parameters.AddWithValue("@aName", areaName);
-            cmd.Parameters.AddWithValue("@sBatch", stateBatchNum);
-            cmd.Parameters.AddWithValue("@bDate", DateTime.Now);
-
-            try
-            {
-                con.Open();
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception e)
-            {
-                LogOutput(e.ToString());
-            }
-            finally
-            {
-                con.Close();
-            }
-        }
+        /*+================================== APP STATE SAVING =====================================+*/
 
         private void SaveStateStart()
         {
@@ -1294,9 +1403,30 @@ namespace Cane_Tracking
 
         private void SaveState_Tick(object sender, EventArgs e)
         {
-            ListBox();
-        }*/
+            log.SavingState(bnlist, seriesNo.ToString().PadLeft(3, pad));
 
+            if(savedCount == 5)
+            {
+                log.TruncateSavedStateLogs();
+                log.SavingState(bnlist, seriesNo.ToString().PadLeft(3, pad));
+
+                savedCount = 0;
+            }
+
+            if (log.StateSaved())
+            {
+                logTextOutput = DateTime.Now.ToString() + " : State Saved";
+                LogOutput(logTextOutput);
+                log.AppEventLog(logTextOutput);
+                savedCount++;
+            }
+            else
+            {
+                logTextOutput = DateTime.Now.ToString() + " : Error saving";
+                LogOutput(logTextOutput);
+                log.AppEventLog(logTextOutput);
+            }
+        }
 
 
 
@@ -1317,6 +1447,7 @@ namespace Cane_Tracking
         private void CheckConfig_Tick(object sender, EventArgs e)
         {
             DefaultValues();
+            CheckStatus();
         }
 
 
@@ -1469,6 +1600,7 @@ namespace Cane_Tracking
             rtFossBx4.SelectionAlignment = HorizontalAlignment.Center;*/
 
             rtForceScan.SelectionAlignment = HorizontalAlignment.Center;
+            rtForceScanCnt.SelectionAlignment = HorizontalAlignment.Center;
             rtSeriesNo.SelectionAlignment = HorizontalAlignment.Center;
 
             rtTrashBatchNum.SelectionAlignment = HorizontalAlignment.Center;
@@ -1485,15 +1617,7 @@ namespace Cane_Tracking
         //Counting default values
         private void DefaultValues()
         {
-            CountInterval cnt = new CountInterval();
-            lblT1.Text = cnt.TipperOneMaxCount.ToString();
-            lblT2.Text = cnt.TipperTwoMaxCount.ToString();
-            lblDs.Text = cnt.DumpAndPileMaxCount.ToString();
-            lblMc.Text = cnt.MainCaneMaxCount.ToString();
-            lblCk.Text = cnt.KnivesAndShredderMaxCount.ToString();
-            lblNi.Text = cnt.NirTime.ToString();
-
-            rtSeriesNo.Text = (seriesNo).ToString();
+            rtSeriesNo.Text = seriesNo.ToString().PadLeft(3, pad);
         }
 
         //Add textboxes for tracking on program start
@@ -1550,14 +1674,35 @@ namespace Cane_Tracking
             bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtShredBn2, rtShredBx2, "Shredder"));
 
             //Foss NIR
-            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtNirWashing, rtWashingCount, "Nir"));
-            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtNirScanning, rtNirCount, "Nir"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtNirWashing, rtWashingCount, "NirWashing"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtNirScanning, rtNirCount, "NirScanning"));
 
             //Sensor Indicators
             bnlist.sensorIndicators.Add(new Tuple<RichTextBox, string>(rtSideCaneCheck, "Side Cane"));
             bnlist.sensorIndicators.Add(new Tuple<RichTextBox, string>(rtMainCaneCheck, "Main Cane"));
             bnlist.sensorIndicators.Add(new Tuple<RichTextBox, string>(rtCaneKnivesCheck, "Cane Knives"));
             bnlist.sensorIndicators.Add(new Tuple<RichTextBox, string>(rtShredderCheck, "Shredder"));
+
+        }
+
+        //App checked if the user loads saved state values
+        private void CheckStatus()
+        {
+            appLoading.LoadSavedValues(bnlist);
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to close the application?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dialogResult == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                log.AppEventLog(DateTime.Now + " : " + "Application was closed");
+            }
         }
     }
 }
