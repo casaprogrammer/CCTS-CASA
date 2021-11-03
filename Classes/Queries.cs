@@ -52,7 +52,7 @@ namespace Cane_Tracking.Classes
 
         public string ListStatusLog()
         {
-            this.query = "SELECT CONVERT(varchar,date_saved,20) as [Date and Time] FROM saved_state_logs GROUP BY date_saved ORDER BY date_saved ASC";
+            this.query = "SELECT CONVERT(varchar,date_saved,20) as [Date and Time] FROM saved_state_logs GROUP BY dateSaved ORDER BY dateSaved ASC";
 
             return this.query;
         }
