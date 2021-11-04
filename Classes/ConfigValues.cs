@@ -23,7 +23,7 @@ namespace Cane_Tracking.Classes
         private static string endMessageFormat = File.ReadAllText(Path.GetFullPath("Configurations/NIR/endMessageFormat.txt"));
 
         private static string dbAddress = File.ReadAllText(Path.GetFullPath("Configurations/DB Config/DbConnection.txt"));
-
+        private static string wbAddress = File.ReadAllText(Path.GetFullPath("Configurations/DB Config/WeighBridgeDB.txt"));
 
         public int TipperOneMaxCount
         {
@@ -118,6 +118,14 @@ namespace Cane_Tracking.Classes
             get
             {
                 return dbAddress;
+            }
+        }
+
+        public string WbAdress
+        {
+            get
+            {
+                return wbAddress;
             }
         }
 
