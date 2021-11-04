@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
@@ -14,9 +13,6 @@ namespace Cane_Tracking
     {
 
         CrossThreadingCheck ctcc = new CrossThreadingCheck();
-        ConfigValues cnf = new ConfigValues();
-        Queries query = new Queries();
-        CaneDataUpdate cdu = new CaneDataUpdate();
         TrackingList bnlist = new TrackingList();
         NirTimer nirTimer = new NirTimer();
         LoadingValues appLoading = new LoadingValues();
@@ -31,7 +27,6 @@ namespace Cane_Tracking
 
         private static int seriesNo = 0;
         private static int savedCount = 0;
-        private static double trashTotal = 0;
 
         private static bool decrementing = false;
         private static bool pause = false;
@@ -380,76 +375,6 @@ namespace Cane_Tracking
             {
                 MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 rtStockBn8.Text = "";
-            }
-        }
-
-        private void rtLeaves_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtLeaves.Text = "";
-                rtLeaves.SelectionAlignment = HorizontalAlignment.Right;
-            }
-        }
-
-        private void rtCaneTops_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtCaneTops.Text = "";
-                rtCaneTops.SelectionAlignment = HorizontalAlignment.Right;
-            }
-        }
-
-        private void rtRoots_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtRoots.Text = "";
-                rtRoots.SelectionAlignment = HorizontalAlignment.Right;
-            }
-        }
-
-        private void rtDeadStalks_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtDeadStalks.Text = "";
-                rtDeadStalks.SelectionAlignment = HorizontalAlignment.Right;
-            }
-        }
-
-        private void rtMixedBurned_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtMixedBurned.Text = "";
-                rtMixedBurned.SelectionAlignment = HorizontalAlignment.Right;
-            }
-        }
-
-        private void rtBurned_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtBurned.Text = "";
-                rtBurned.SelectionAlignment = HorizontalAlignment.Right;
-            }
-        }
-
-        private void rtMud_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtMud.Text = "";
-                rtMud.SelectionAlignment = HorizontalAlignment.Right;
             }
         }
 
@@ -981,7 +906,7 @@ namespace Cane_Tracking
 
         private void rtForceScan_TextChanged(object sender, EventArgs e)
         {
-            if (rtForceScan.Text == "")
+            if(rtForceScan.Text == "")
             {
                 if (forceScan)
                 {
@@ -993,165 +918,14 @@ namespace Cane_Tracking
                     log.AppEventLog(logTextOutput);
 
                     rtForceScan.Enabled = true;
-                    rtForceScanCnt.SendToBack();
+                    rtForceScanCnt.Visible = false;
                     btnForceScan.Enabled = true;
                     btnForceScan.Text = "Force Scan";
-                    btnForceScan.Enabled = false;
                     forceScan = false;
                 }
             }
-            else
-            {
-                btnForceScan.Enabled = true;
-            }
         }
-
-        private void rtTrashBatchNum_TextChanged(object sender, EventArgs e)
-        {
-            btnSaveTrash.Enabled = false;
-            btnCancelTrash.Enabled = false;
-
-            trashTotal = 0;
-
-            rtTotalTrash.Text = "0";
-            rtLeaves.Text = "0";
-            rtCaneTops.Text = "0";
-            rtRoots.Text = "0";
-            rtDeadStalks.Text = "0";
-            rtMixedBurned.Text = "0";
-            rtBurned.Text = "0";
-            rtMud.Text = "0";
-
-            rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-            rtLeaves.SelectionAlignment = HorizontalAlignment.Right;
-            rtCaneTops.SelectionAlignment = HorizontalAlignment.Right;
-            rtRoots.SelectionAlignment = HorizontalAlignment.Right;
-            rtDeadStalks.SelectionAlignment = HorizontalAlignment.Right;
-            rtMixedBurned.SelectionAlignment = HorizontalAlignment.Right;
-            rtBurned.SelectionAlignment = HorizontalAlignment.Right;
-            rtMud.SelectionAlignment = HorizontalAlignment.Right;
-
-            dgvTrash.DataSource = null;
-
-            if (rtTrashBatchNum.Text != "")
-            {
-                btnSaveTrash.Enabled = true;
-                btnCancelTrash.Enabled = true;
-            }
-        }
-
-        private void rtTrashBatchNum_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                if (Regex.IsMatch(rtTrashBatchNum.Text, @"^\d+$"))
-                {
-                    cdu.GetCaneData(dgvTrash, dtpCurrentDate, rtTrashBatchNum, rtLeaves);
-                }
-                else
-                {
-                    MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    rtTrashBatchNum.Text = "";
-                }
-            }
-        }
-
-        private void rtLeaves_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if(e.KeyChar == 13)
-            {
-                trashTotal += double.Parse(rtLeaves.Text);
-
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-
-                rtCaneTops.Focus();
-                rtCaneTops.SelectAll();
-            }
-        }
-
-        private void rtCaneTops_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                trashTotal += double.Parse(rtCaneTops.Text);
-
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-
-                rtRoots.Focus();
-                rtRoots.SelectAll();
-            }
-        }
-
-        private void rtRoots_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                trashTotal += double.Parse(rtRoots.Text);
-
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-
-                rtDeadStalks.Focus();
-                rtDeadStalks.SelectAll();
-            }
-        }
-
-        private void rtDeadStalks_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                trashTotal += double.Parse(rtDeadStalks.Text);
-
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-
-                rtMixedBurned.Focus();
-                rtMixedBurned.SelectAll();
-            }
-        }
-
-        private void rtMixedBurned_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                trashTotal += double.Parse(rtMixedBurned.Text);
-
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-
-                rtBurned.Focus();
-                rtBurned.SelectAll();
-            }
-        }
-
-        private void rtBurned_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                trashTotal += double.Parse(rtBurned.Text);
-
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-
-                rtMud.Focus();
-                rtMud.SelectAll();
-            }
-        }
-
-        private void rtMud_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                trashTotal += double.Parse(rtMud.Text);
-
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-
-                btnSaveTrash.Focus();
-            }
-        }
+        
 
 
         /*+=============================================== MOUSE HOVERS ====================================================+*/
@@ -1511,7 +1285,7 @@ namespace Cane_Tracking
                     log.AppEventLog(logTextOutput);
 
                     rtForceScan.Enabled = false;
-                    rtForceScanCnt.BringToFront();
+                    rtForceScanCnt.Visible = true;
                     btnForceScan.Enabled = false;
                     btnForceScan.Text = "";
                     forceScan = true;
@@ -1526,39 +1300,6 @@ namespace Cane_Tracking
             {
                 MessageBox.Show("Nothing to scan", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void btnSaveTrash_Click(object sender, EventArgs e)
-        {
-            if (dgvTrash.RowCount > 0)
-            {
-                cdu.UpdateCaneData(dgvTrash, rtTotalTrash, rtLeaves, rtCaneTops,
-                                   rtRoots, rtDeadStalks, rtMixedBurned, rtBurned, rtMud, rtTrashBatchNum);
-            }
-        }
-
-        private void btnCancelTrash_Click(object sender, EventArgs e)
-        {
-            dgvTrash.DataSource = null;
-
-            rtTrashBatchNum.Text = "";
-            rtTotalTrash.Text = "0";
-            rtLeaves.Text = "0";
-            rtCaneTops.Text = "0";
-            rtRoots.Text = "0";
-            rtDeadStalks.Text = "0";
-            rtMixedBurned.Text = "0";
-            rtBurned.Text = "0";
-            rtMud.Text = "0";
-
-            rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-            rtLeaves.SelectionAlignment = HorizontalAlignment.Right;
-            rtCaneTops.SelectionAlignment = HorizontalAlignment.Right;
-            rtRoots.SelectionAlignment = HorizontalAlignment.Right;
-            rtDeadStalks.SelectionAlignment = HorizontalAlignment.Right;
-            rtMixedBurned.SelectionAlignment = HorizontalAlignment.Right;
-            rtBurned.SelectionAlignment = HorizontalAlignment.Right;
-            rtMud.SelectionAlignment = HorizontalAlignment.Right;
         }
 
 
@@ -1582,9 +1323,9 @@ namespace Cane_Tracking
                 LogOutput(t);
                 log.AppEventLog(t);
             }
-            catch (IOException ex)
+            catch (Exception)
             {
-                string t = DateTime.Now.ToString() + " : " + ex.Message.ToString();
+                string t = DateTime.Now.ToString() + " : " + "Port Connections does not exist or is disconnected";
                 LogOutput(t);
                 log.AppEventLog(t);
             }
@@ -1963,6 +1704,5 @@ namespace Cane_Tracking
                 log.AppEventLog(DateTime.Now + " : " + "Application was closed");
             }
         }
-
     }
 }

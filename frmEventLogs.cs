@@ -16,7 +16,6 @@ namespace Cane_Tracking
 
         Queries query = new Queries();
         ConfigValues cnf = new ConfigValues();
-        AppLogging log = new AppLogging();
         SqlConnection con;
 
 
@@ -47,10 +46,9 @@ namespace Cane_Tracking
                     dgvEventLogs.DataSource = dt;
                 }
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                log.AppEventLog(DateTime.Now + " : " + ex.Message.ToString());
             }
             finally
             {

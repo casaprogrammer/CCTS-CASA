@@ -79,10 +79,9 @@ namespace Cane_Tracking
                         string t = DateTime.Now + " : " + "Loaded saved state data";
                         log.AppEventLog(t);
                     }
-                    catch(SqlException ex)
+                    catch(Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        log.AppEventLog(DateTime.Now + " : " + ex.Message.ToString());
                     }
                     finally
                     {

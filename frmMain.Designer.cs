@@ -162,8 +162,8 @@ namespace Cane_Tracking
             this.panel13 = new System.Windows.Forms.Panel();
             this.panel14 = new System.Windows.Forms.Panel();
             this.panel27 = new System.Windows.Forms.Panel();
-            this.btnCancelTrash = new System.Windows.Forms.Button();
-            this.btnSaveTrash = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.panel16 = new System.Windows.Forms.Panel();
             this.panel24 = new System.Windows.Forms.Panel();
             this.rtMixedBurned = new System.Windows.Forms.RichTextBox();
@@ -190,12 +190,16 @@ namespace Cane_Tracking
             this.rtBurned = new System.Windows.Forms.RichTextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.panel17 = new System.Windows.Forms.Panel();
-            this.dgvTrash = new System.Windows.Forms.DataGridView();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.TransCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BatchNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PlateNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel18 = new System.Windows.Forms.Panel();
+            this.rtBatchNumID = new System.Windows.Forms.RichTextBox();
             this.rtTrashBatchNum = new System.Windows.Forms.RichTextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.panel15 = new System.Windows.Forms.Panel();
-            this.dtpCurrentDate = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.btnPause = new System.Windows.Forms.Button();
@@ -240,7 +244,7 @@ namespace Cane_Tracking
             this.panel19.SuspendLayout();
             this.panel23.SuspendLayout();
             this.panel17.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTrash)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel18.SuspendLayout();
             this.panel15.SuspendLayout();
             this.panel29.SuspendLayout();
@@ -1935,9 +1939,9 @@ namespace Cane_Tracking
             // 
             this.panel11.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel11.Controls.Add(this.rtForceScan);
-            this.panel11.Controls.Add(this.btnForceScan);
             this.panel11.Controls.Add(this.rtForceScanCnt);
+            this.panel11.Controls.Add(this.btnForceScan);
+            this.panel11.Controls.Add(this.rtForceScan);
             this.panel11.Location = new System.Drawing.Point(13, 701);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(367, 118);
@@ -1961,7 +1965,6 @@ namespace Cane_Tracking
             // 
             this.btnForceScan.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnForceScan.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnForceScan.Enabled = false;
             this.btnForceScan.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.btnForceScan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnForceScan.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold);
@@ -1989,6 +1992,7 @@ namespace Cane_Tracking
             this.rtForceScanCnt.TabIndex = 30;
             this.rtForceScanCnt.TabStop = false;
             this.rtForceScanCnt.Text = "";
+            this.rtForceScanCnt.Visible = false;
             // 
             // rtShredderCheck
             // 
@@ -2090,46 +2094,44 @@ namespace Cane_Tracking
             // 
             this.panel27.BackColor = System.Drawing.Color.White;
             this.panel27.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel27.Controls.Add(this.btnCancelTrash);
-            this.panel27.Controls.Add(this.btnSaveTrash);
-            this.panel27.Location = new System.Drawing.Point(9, 762);
+            this.panel27.Controls.Add(this.button1);
+            this.panel27.Controls.Add(this.button2);
+            this.panel27.Location = new System.Drawing.Point(9, 768);
             this.panel27.Name = "panel27";
             this.panel27.Size = new System.Drawing.Size(563, 57);
             this.panel27.TabIndex = 48;
             // 
-            // btnCancelTrash
+            // button1
             // 
-            this.btnCancelTrash.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.btnCancelTrash.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelTrash.FlatAppearance.BorderColor = System.Drawing.Color.Green;
-            this.btnCancelTrash.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.btnCancelTrash.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnCancelTrash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelTrash.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelTrash.Location = new System.Drawing.Point(3, 3);
-            this.btnCancelTrash.Name = "btnCancelTrash";
-            this.btnCancelTrash.Size = new System.Drawing.Size(275, 49);
-            this.btnCancelTrash.TabIndex = 14;
-            this.btnCancelTrash.Text = "Cancel";
-            this.btnCancelTrash.UseVisualStyleBackColor = false;
-            this.btnCancelTrash.Click += new System.EventHandler(this.btnCancelTrash_Click);
+            this.button1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(3, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(275, 49);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "Cancel";
+            this.button1.UseVisualStyleBackColor = false;
             // 
-            // btnSaveTrash
+            // button2
             // 
-            this.btnSaveTrash.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.btnSaveTrash.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSaveTrash.FlatAppearance.BorderColor = System.Drawing.Color.Green;
-            this.btnSaveTrash.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.btnSaveTrash.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
-            this.btnSaveTrash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveTrash.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSaveTrash.Location = new System.Drawing.Point(284, 3);
-            this.btnSaveTrash.Name = "btnSaveTrash";
-            this.btnSaveTrash.Size = new System.Drawing.Size(274, 49);
-            this.btnSaveTrash.TabIndex = 13;
-            this.btnSaveTrash.Text = "Save";
-            this.btnSaveTrash.UseVisualStyleBackColor = false;
-            this.btnSaveTrash.Click += new System.EventHandler(this.btnSaveTrash_Click);
+            this.button2.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.Green;
+            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Yellow;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(284, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(274, 49);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "Save";
+            this.button2.UseVisualStyleBackColor = false;
             // 
             // panel16
             // 
@@ -2143,7 +2145,7 @@ namespace Cane_Tracking
             this.panel16.Controls.Add(this.panel20);
             this.panel16.Controls.Add(this.panel19);
             this.panel16.Controls.Add(this.panel23);
-            this.panel16.Location = new System.Drawing.Point(9, 274);
+            this.panel16.Location = new System.Drawing.Point(9, 280);
             this.panel16.Name = "panel16";
             this.panel16.Size = new System.Drawing.Size(563, 486);
             this.panel16.TabIndex = 48;
@@ -2169,8 +2171,6 @@ namespace Cane_Tracking
             this.rtMixedBurned.Size = new System.Drawing.Size(275, 38);
             this.rtMixedBurned.TabIndex = 10;
             this.rtMixedBurned.Text = "0";
-            this.rtMixedBurned.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtMixedBurned_KeyDown);
-            this.rtMixedBurned.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtMixedBurned_KeyPress);
             // 
             // label19
             // 
@@ -2239,8 +2239,6 @@ namespace Cane_Tracking
             this.rtMud.Size = new System.Drawing.Size(275, 38);
             this.rtMud.TabIndex = 12;
             this.rtMud.Text = "0";
-            this.rtMud.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtMud_KeyDown);
-            this.rtMud.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtMud_KeyPress);
             // 
             // label20
             // 
@@ -2274,8 +2272,6 @@ namespace Cane_Tracking
             this.rtDeadStalks.Size = new System.Drawing.Size(275, 38);
             this.rtDeadStalks.TabIndex = 9;
             this.rtDeadStalks.Text = "0";
-            this.rtDeadStalks.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtDeadStalks_KeyDown);
-            this.rtDeadStalks.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtDeadStalks_KeyPress);
             // 
             // label17
             // 
@@ -2309,8 +2305,6 @@ namespace Cane_Tracking
             this.rtRoots.Size = new System.Drawing.Size(275, 38);
             this.rtRoots.TabIndex = 8;
             this.rtRoots.Text = "0";
-            this.rtRoots.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtRoots_KeyDown);
-            this.rtRoots.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtRoots_KeyPress);
             // 
             // label16
             // 
@@ -2344,8 +2338,6 @@ namespace Cane_Tracking
             this.rtCaneTops.Size = new System.Drawing.Size(275, 38);
             this.rtCaneTops.TabIndex = 7;
             this.rtCaneTops.Text = "0";
-            this.rtCaneTops.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtCaneTops_KeyDown);
-            this.rtCaneTops.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtCaneTops_KeyPress);
             // 
             // label15
             // 
@@ -2379,8 +2371,6 @@ namespace Cane_Tracking
             this.rtLeaves.Size = new System.Drawing.Size(275, 38);
             this.rtLeaves.TabIndex = 6;
             this.rtLeaves.Text = "0";
-            this.rtLeaves.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtLeaves_KeyDown);
-            this.rtLeaves.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtLeaves_KeyPress);
             // 
             // label13
             // 
@@ -2414,8 +2404,6 @@ namespace Cane_Tracking
             this.rtBurned.Size = new System.Drawing.Size(275, 38);
             this.rtBurned.TabIndex = 11;
             this.rtBurned.Text = "0";
-            this.rtBurned.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtBurned_KeyDown);
-            this.rtBurned.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtBurned_KeyPress);
             // 
             // label18
             // 
@@ -2432,40 +2420,83 @@ namespace Cane_Tracking
             // 
             this.panel17.BackColor = System.Drawing.Color.White;
             this.panel17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel17.Controls.Add(this.dgvTrash);
+            this.panel17.Controls.Add(this.dataGridView1);
             this.panel17.Controls.Add(this.panel18);
             this.panel17.Controls.Add(this.panel15);
-            this.panel17.Location = new System.Drawing.Point(9, 53);
+            this.panel17.Location = new System.Drawing.Point(9, 44);
             this.panel17.Name = "panel17";
-            this.panel17.Size = new System.Drawing.Size(563, 219);
+            this.panel17.Size = new System.Drawing.Size(563, 237);
             this.panel17.TabIndex = 47;
             // 
-            // dgvTrash
+            // dataGridView1
             // 
-            this.dgvTrash.AllowUserToAddRows = false;
-            this.dgvTrash.AllowUserToDeleteRows = false;
-            this.dgvTrash.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvTrash.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            this.dgvTrash.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTrash.Location = new System.Drawing.Point(3, 128);
-            this.dgvTrash.Name = "dgvTrash";
-            this.dgvTrash.ReadOnly = true;
-            this.dgvTrash.RowHeadersWidth = 62;
-            this.dgvTrash.RowTemplate.Height = 28;
-            this.dgvTrash.Size = new System.Drawing.Size(555, 86);
-            this.dgvTrash.TabIndex = 46;
-            this.dgvTrash.TabStop = false;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.TransCode,
+            this.BatchNo,
+            this.PlateNo});
+            this.dataGridView1.Location = new System.Drawing.Point(3, 124);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersWidth = 62;
+            this.dataGridView1.RowTemplate.Height = 28;
+            this.dataGridView1.Size = new System.Drawing.Size(555, 108);
+            this.dataGridView1.TabIndex = 46;
+            this.dataGridView1.TabStop = false;
+            // 
+            // TransCode
+            // 
+            this.TransCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.TransCode.HeaderText = "Trans Code";
+            this.TransCode.MinimumWidth = 8;
+            this.TransCode.Name = "TransCode";
+            this.TransCode.ReadOnly = true;
+            this.TransCode.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.TransCode.Width = 127;
+            // 
+            // BatchNo
+            // 
+            this.BatchNo.HeaderText = "Batch No.";
+            this.BatchNo.MinimumWidth = 8;
+            this.BatchNo.Name = "BatchNo";
+            this.BatchNo.ReadOnly = true;
+            this.BatchNo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.BatchNo.Width = 108;
+            // 
+            // PlateNo
+            // 
+            this.PlateNo.HeaderText = "Plate No.";
+            this.PlateNo.MinimumWidth = 8;
+            this.PlateNo.Name = "PlateNo";
+            this.PlateNo.ReadOnly = true;
+            this.PlateNo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.PlateNo.Width = 111;
             // 
             // panel18
             // 
             this.panel18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.panel18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel18.Controls.Add(this.rtBatchNumID);
             this.panel18.Controls.Add(this.rtTrashBatchNum);
             this.panel18.Controls.Add(this.label14);
             this.panel18.Location = new System.Drawing.Point(3, 63);
             this.panel18.Name = "panel18";
             this.panel18.Size = new System.Drawing.Size(555, 60);
             this.panel18.TabIndex = 45;
+            // 
+            // rtBatchNumID
+            // 
+            this.rtBatchNumID.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtBatchNumID.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtBatchNumID.Location = new System.Drawing.Point(206, 10);
+            this.rtBatchNumID.Name = "rtBatchNumID";
+            this.rtBatchNumID.Size = new System.Drawing.Size(63, 38);
+            this.rtBatchNumID.TabIndex = 45;
+            this.rtBatchNumID.TabStop = false;
+            this.rtBatchNumID.Text = "";
+            this.rtBatchNumID.Visible = false;
             // 
             // rtTrashBatchNum
             // 
@@ -2477,8 +2508,6 @@ namespace Cane_Tracking
             this.rtTrashBatchNum.Size = new System.Drawing.Size(275, 38);
             this.rtTrashBatchNum.TabIndex = 5;
             this.rtTrashBatchNum.Text = "";
-            this.rtTrashBatchNum.TextChanged += new System.EventHandler(this.rtTrashBatchNum_TextChanged);
-            this.rtTrashBatchNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtTrashBatchNum_KeyPress);
             // 
             // label14
             // 
@@ -2495,23 +2524,24 @@ namespace Cane_Tracking
             // 
             this.panel15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.panel15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel15.Controls.Add(this.dtpCurrentDate);
+            this.panel15.Controls.Add(this.dateTimePicker1);
             this.panel15.Controls.Add(this.label12);
             this.panel15.Location = new System.Drawing.Point(3, 3);
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(555, 60);
             this.panel15.TabIndex = 44;
             // 
-            // dtpCurrentDate
+            // dateTimePicker1
             // 
-            this.dtpCurrentDate.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpCurrentDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpCurrentDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpCurrentDate.Location = new System.Drawing.Point(275, 10);
-            this.dtpCurrentDate.Name = "dtpCurrentDate";
-            this.dtpCurrentDate.Size = new System.Drawing.Size(275, 39);
-            this.dtpCurrentDate.TabIndex = 43;
-            this.dtpCurrentDate.TabStop = false;
+            this.dateTimePicker1.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePicker1.Enabled = false;
+            this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePicker1.Location = new System.Drawing.Point(275, 10);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(275, 39);
+            this.dateTimePicker1.TabIndex = 43;
+            this.dateTimePicker1.TabStop = false;
             // 
             // label12
             // 
@@ -2529,7 +2559,7 @@ namespace Cane_Tracking
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.Yellow;
-            this.label11.Location = new System.Drawing.Point(2, 16);
+            this.label11.Location = new System.Drawing.Point(3, 7);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(299, 32);
             this.label11.TabIndex = 42;
@@ -2771,7 +2801,7 @@ namespace Cane_Tracking
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.ClientSize = new System.Drawing.Size(1733, 1156);
+            this.ClientSize = new System.Drawing.Size(1733, 1152);
             this.Controls.Add(this.panel28);
             this.Controls.Add(this.rtCurrentScannedSample);
             this.Controls.Add(this.label5);
@@ -2829,7 +2859,7 @@ namespace Cane_Tracking
             this.panel23.ResumeLayout(false);
             this.panel23.PerformLayout();
             this.panel17.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTrash)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel18.ResumeLayout(false);
             this.panel18.PerformLayout();
             this.panel15.ResumeLayout(false);
@@ -2979,8 +3009,8 @@ namespace Cane_Tracking
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button btnSaveTrash;
-        private System.Windows.Forms.Button btnCancelTrash;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel27;
         private System.Windows.Forms.Panel panel16;
         private System.Windows.Forms.Panel panel26;
@@ -3008,13 +3038,16 @@ namespace Cane_Tracking
         private System.Windows.Forms.RichTextBox rtBurned;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Panel panel17;
-        private System.Windows.Forms.DataGridView dgvTrash;
+        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.RichTextBox rtTrashBatchNum;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel15;
-        private System.Windows.Forms.DateTimePicker dtpCurrentDate;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TransCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BatchNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PlateNo;
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox rtSeriesNo;
@@ -3029,6 +3062,7 @@ namespace Cane_Tracking
         private System.Windows.Forms.Button btnEditConfigs;
         private System.Windows.Forms.Panel panel35;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.RichTextBox rtBatchNumID;
         private System.Windows.Forms.RichTextBox rtCurrentScannedSample;
         private System.Windows.Forms.RichTextBox rtForceScanCnt;
         private System.Windows.Forms.Panel panel28;

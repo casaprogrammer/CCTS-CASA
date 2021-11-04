@@ -17,8 +17,7 @@ namespace Cane_Tracking.Classes
                            (log_description)
                            VALUES
                            ('{0}')";
-
-            this.query = this.query.Replace("{0}", data.Replace("'", ""));
+            this.query = this.query.Replace("{0}", data);
 
             return this.query;
         }
@@ -96,49 +95,6 @@ namespace Cane_Tracking.Classes
         public string TruncateSavedStateLogs()
         {
             this.query = "TRUNCATE TABLE saved_state_logs";
-
-            return this.query;
-        }
-
-        public string GetBatchNumberData(string date, string batchNumber)
-        {
-            this.query = @"SELECT ID, DateIn, GatePass as [Trans Code], PlateNo as [Plate No]
-                           FROM tblData
-                           WHERE DateIn = '{0}'
-                           AND BatchNo = '{1}'";
-
-            this.query = this.query.Replace("{0}", date);
-            this.query = this.query.Replace("{1}", batchNumber);
-
-            return this.query;
-        }
-
-        public string UpdateCaneData(int id, double trash, 
-                                     double bitLeaves, double bitCaneTops, 
-                                     double bitRoots, double bitDeadStsalks,
-                                     double bitMixedBurned, double bitBurned, 
-                                     double bitMud)
-        {
-            this.query = @"UPDATE tblData
-                           SET Trash = '{0}',
-                               bitLeaves = '{1}',
-                               bitCaneTops = '{2}',
-                               bitRoots = '{3}',
-                               bitDeadStalks = '{4}',
-                               bitMixedBurned = '{5}',
-                               bitBurned = '{6}',
-                               bitMud = '{7}'
-                           WHERE ID = '{8}'";
-
-            this.query = this.query.Replace("{0}", trash.ToString());
-            this.query = this.query.Replace("{1}", bitLeaves.ToString());
-            this.query = this.query.Replace("{2}", bitCaneTops.ToString());
-            this.query = this.query.Replace("{3}", bitRoots.ToString());
-            this.query = this.query.Replace("{4}", bitDeadStsalks.ToString());
-            this.query = this.query.Replace("{5}", bitMixedBurned.ToString());
-            this.query = this.query.Replace("{6}", bitBurned.ToString());
-            this.query = this.query.Replace("{7}", bitMud.ToString());
-            this.query = this.query.Replace("{8}", id.ToString());
 
             return this.query;
         }
