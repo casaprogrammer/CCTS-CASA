@@ -33,9 +33,9 @@ namespace Cane_Tracking.Classes
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                Console.WriteLine(ex.ToString());
+                MessageBox.Show(ex.Message);
             }
             finally
             {
@@ -61,9 +61,10 @@ namespace Cane_Tracking.Classes
                     cmd.ExecuteNonQuery();
                     State_is_saved = true;
                 }
-                catch (Exception)
+                catch (SqlException ex)
                 {
                     State_is_saved = false;
+                    MessageBox.Show(ex.Message);
                 }
                 finally
                 {
@@ -84,7 +85,7 @@ namespace Cane_Tracking.Classes
                 con.Open();
                 Db_Connected = true;
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -105,9 +106,9 @@ namespace Cane_Tracking.Classes
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                Console.WriteLine(ex.ToString());
+                MessageBox.Show(ex.Message);
             }
             finally
             {
