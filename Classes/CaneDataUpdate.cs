@@ -82,7 +82,7 @@ namespace Cane_Tracking.Classes
                 con.Open();
 
                 cmd.ExecuteNonQuery();
-                MessageBox.Show("Cane Details Updated", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Trash Discount Saved", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 log.AppEventLog("");
                 log.AppEventLog("+===============TRASH UPDATE===============+");
