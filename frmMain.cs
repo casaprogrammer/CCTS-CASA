@@ -51,6 +51,7 @@ namespace Cane_Tracking
             CheckConfigStart();
             RegisterTextboxes();
             CheckDatabaseConnection();
+            CheckWBConnection();
             CheckUdpConnection();
             SaveStateStart();
         }
@@ -380,76 +381,6 @@ namespace Cane_Tracking
             {
                 MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 rtStockBn8.Text = "";
-            }
-        }
-
-        private void rtLeaves_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtLeaves.Text = "";
-                rtLeaves.SelectionAlignment = HorizontalAlignment.Right;
-            }
-        }
-
-        private void rtCaneTops_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtCaneTops.Text = "";
-                rtCaneTops.SelectionAlignment = HorizontalAlignment.Right;
-            }
-        }
-
-        private void rtRoots_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtRoots.Text = "";
-                rtRoots.SelectionAlignment = HorizontalAlignment.Right;
-            }
-        }
-
-        private void rtDeadStalks_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtDeadStalks.Text = "";
-                rtDeadStalks.SelectionAlignment = HorizontalAlignment.Right;
-            }
-        }
-
-        private void rtMixedBurned_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtMixedBurned.Text = "";
-                rtMixedBurned.SelectionAlignment = HorizontalAlignment.Right;
-            }
-        }
-
-        private void rtBurned_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtBurned.Text = "";
-                rtBurned.SelectionAlignment = HorizontalAlignment.Right;
-            }
-        }
-
-        private void rtMud_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
-            {
-                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtMud.Text = "";
-                rtMud.SelectionAlignment = HorizontalAlignment.Right;
             }
         }
 
@@ -996,9 +927,10 @@ namespace Cane_Tracking
                     rtForceScanCnt.SendToBack();
                     btnForceScan.Enabled = true;
                     btnForceScan.Text = "Force Scan";
-                    btnForceScan.Enabled = false;
                     forceScan = false;
                 }
+
+                btnForceScan.Enabled = false;
             }
             else
             {
@@ -1060,13 +992,22 @@ namespace Cane_Tracking
         {
             if(e.KeyChar == 13)
             {
-                trashTotal += double.Parse(rtLeaves.Text);
+                if (Regex.IsMatch(rtLeaves.Text, @"^[0-9]*\.?[0-9]+$"))
+                {
+                    trashTotal += double.Parse(rtLeaves.Text);
 
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+                    rtTotalTrash.Text = trashTotal.ToString();
+                    rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
 
-                rtCaneTops.Focus();
-                rtCaneTops.SelectAll();
+                    rtCaneTops.Focus();
+                    rtCaneTops.SelectAll();
+                }
+                else
+                {
+                    rtLeaves.Text = "0";
+                    rtLeaves.Focus();
+                    rtLeaves.SelectionAlignment = HorizontalAlignment.Right;
+                }
             }
         }
 
@@ -1074,13 +1015,22 @@ namespace Cane_Tracking
         {
             if (e.KeyChar == 13)
             {
-                trashTotal += double.Parse(rtCaneTops.Text);
+                if (Regex.IsMatch(rtCaneTops.Text, @"^[0-9]*\.?[0-9]+$"))
+                {
+                    trashTotal += double.Parse(rtCaneTops.Text);
 
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+                    rtTotalTrash.Text = trashTotal.ToString();
+                    rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
 
-                rtRoots.Focus();
-                rtRoots.SelectAll();
+                    rtRoots.Focus();
+                    rtRoots.SelectAll();
+                }
+                else
+                {
+                    rtCaneTops.Text = "0";
+                    rtCaneTops.Focus();
+                    rtCaneTops.SelectionAlignment = HorizontalAlignment.Right;
+                }
             }
         }
 
@@ -1088,13 +1038,23 @@ namespace Cane_Tracking
         {
             if (e.KeyChar == 13)
             {
-                trashTotal += double.Parse(rtRoots.Text);
+                if (Regex.IsMatch(rtRoots.Text, @"^[0-9]*\.?[0-9]+$"))
+                {
+                    trashTotal += double.Parse(rtRoots.Text);
 
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+                    rtTotalTrash.Text = trashTotal.ToString();
+                    rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
 
-                rtDeadStalks.Focus();
-                rtDeadStalks.SelectAll();
+                    rtDeadStalks.Focus();
+                    rtDeadStalks.SelectAll();
+                }
+                else
+                {
+                    rtRoots.Text = "0";
+                    rtRoots.Focus();
+                    rtRoots.SelectionAlignment = HorizontalAlignment.Right;
+                }
+
             }
         }
 
@@ -1102,13 +1062,22 @@ namespace Cane_Tracking
         {
             if (e.KeyChar == 13)
             {
-                trashTotal += double.Parse(rtDeadStalks.Text);
+                if (Regex.IsMatch(rtDeadStalks.Text, @"^[0-9]*\.?[0-9]+$"))
+                {
+                    trashTotal += double.Parse(rtDeadStalks.Text);
 
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+                    rtTotalTrash.Text = trashTotal.ToString();
+                    rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
 
-                rtMixedBurned.Focus();
-                rtMixedBurned.SelectAll();
+                    rtMixedBurned.Focus();
+                    rtMixedBurned.SelectAll();
+                }
+                else
+                {
+                    rtDeadStalks.Text = "0";
+                    rtDeadStalks.Focus();
+                    rtDeadStalks.SelectionAlignment = HorizontalAlignment.Right;
+                }
             }
         }
 
@@ -1116,13 +1085,22 @@ namespace Cane_Tracking
         {
             if (e.KeyChar == 13)
             {
-                trashTotal += double.Parse(rtMixedBurned.Text);
+                if (Regex.IsMatch(rtMixedBurned.Text, @"^[0-9]*\.?[0-9]+$"))
+                {
+                    trashTotal += double.Parse(rtMixedBurned.Text);
 
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+                    rtTotalTrash.Text = trashTotal.ToString();
+                    rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
 
-                rtBurned.Focus();
-                rtBurned.SelectAll();
+                    rtBurned.Focus();
+                    rtBurned.SelectAll();
+                }
+                else
+                {
+                    rtMixedBurned.Text = "0";
+                    rtMixedBurned.Focus();
+                    rtDeadStalks.SelectionAlignment = HorizontalAlignment.Right;
+                }
             }
         }
 
@@ -1130,13 +1108,22 @@ namespace Cane_Tracking
         {
             if (e.KeyChar == 13)
             {
-                trashTotal += double.Parse(rtBurned.Text);
+                if (Regex.IsMatch(rtBurned.Text, @"^[0-9]*\.?[0-9]+$"))
+                {
+                    trashTotal += double.Parse(rtBurned.Text);
 
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+                    rtTotalTrash.Text = trashTotal.ToString();
+                    rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
 
-                rtMud.Focus();
-                rtMud.SelectAll();
+                    rtMud.Focus();
+                    rtMud.SelectAll();
+                }
+                else
+                {
+                    rtBurned.Text = "0";
+                    rtBurned.Focus();
+                    rtBurned.SelectionAlignment = HorizontalAlignment.Right;
+                }
             }
         }
 
@@ -1144,12 +1131,21 @@ namespace Cane_Tracking
         {
             if (e.KeyChar == 13)
             {
-                trashTotal += double.Parse(rtMud.Text);
+                if (Regex.IsMatch(rtMud.Text, @"^[0-9]*\.?[0-9]+$"))
+                {
+                    trashTotal += double.Parse(rtMud.Text);
 
-                rtTotalTrash.Text = trashTotal.ToString();
-                rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+                    rtTotalTrash.Text = trashTotal.ToString();
+                    rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
 
-                btnSaveTrash.Focus();
+                    btnSaveTrash.Focus();
+                }
+                else
+                {
+                    rtMud.Text = "0";
+                    rtMud.Focus();
+                    rtMud.SelectionAlignment = HorizontalAlignment.Right;
+                }
             }
         }
 
@@ -1208,7 +1204,7 @@ namespace Cane_Tracking
             {
                 batch = rtTipperOneBn.Text.PadLeft(3, pad);
 
-                /*for (int i = 0; i < bnlist.lTbox.Count; i++)
+                for (int i = 0; i < bnlist.lTbox.Count; i++)
                 {
                     if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "TipOne")
                     {
@@ -1222,21 +1218,13 @@ namespace Cane_Tracking
 
                         logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Tipper One Area";
                         LogOutput(logTextOutput);
-                        appLogging.CaneDumpLog(logTextOutput);
+                        log.AppEventLog(logTextOutput);
 
                         rtTipperOneBn.Text = "";
                         break;
                     }
-                }*/
-
-                rtNirWashing.Text = batch;
-                rtWashingCount.Text = "0";
-                rtWashingCount.ForeColor = Color.White;
-                rtWashingCount.BackColor = Color.Maroon;
+                }
             }
-
-
-
         }
 
         private void btnTipperTwo_Click(object sender, EventArgs e)
@@ -1608,13 +1596,30 @@ namespace Cane_Tracking
         {
             if (log.DbConnected())
             {
-                logTextOutput = DateTime.Now + " : Successfully connected to App Database";
+                logTextOutput = DateTime.Now + " : Successfully connected to Application's System Database";
                 LogOutput(logTextOutput);
                 log.AppEventLog(logTextOutput);
             }
             else
             {
-                logTextOutput = DateTime.Now + " : Connection to App Database unsuccessful";
+                logTextOutput = DateTime.Now + " : Connection to Application's System Database unsuccessful";
+                LogOutput(logTextOutput);
+                log.AppEventLog(logTextOutput);
+            }
+        }
+
+        private void CheckWBConnection()
+        {
+
+            if (log.WbDBConnected())
+            {
+                logTextOutput = DateTime.Now + " : Successfully connected to WeighBridge Database";
+                LogOutput(logTextOutput);
+                log.AppEventLog(logTextOutput);
+            }
+            else
+            {
+                logTextOutput = DateTime.Now + " : Connection to WeighBridge Database unsuccessful";
                 LogOutput(logTextOutput);
                 log.AppEventLog(logTextOutput);
             }

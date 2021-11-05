@@ -2169,7 +2169,6 @@ namespace Cane_Tracking
             this.rtMixedBurned.Size = new System.Drawing.Size(275, 38);
             this.rtMixedBurned.TabIndex = 10;
             this.rtMixedBurned.Text = "0";
-            this.rtMixedBurned.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtMixedBurned_KeyDown);
             this.rtMixedBurned.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtMixedBurned_KeyPress);
             // 
             // label19
@@ -2239,7 +2238,6 @@ namespace Cane_Tracking
             this.rtMud.Size = new System.Drawing.Size(275, 38);
             this.rtMud.TabIndex = 12;
             this.rtMud.Text = "0";
-            this.rtMud.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtMud_KeyDown);
             this.rtMud.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtMud_KeyPress);
             // 
             // label20
@@ -2274,7 +2272,6 @@ namespace Cane_Tracking
             this.rtDeadStalks.Size = new System.Drawing.Size(275, 38);
             this.rtDeadStalks.TabIndex = 9;
             this.rtDeadStalks.Text = "0";
-            this.rtDeadStalks.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtDeadStalks_KeyDown);
             this.rtDeadStalks.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtDeadStalks_KeyPress);
             // 
             // label17
@@ -2309,7 +2306,6 @@ namespace Cane_Tracking
             this.rtRoots.Size = new System.Drawing.Size(275, 38);
             this.rtRoots.TabIndex = 8;
             this.rtRoots.Text = "0";
-            this.rtRoots.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtRoots_KeyDown);
             this.rtRoots.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtRoots_KeyPress);
             // 
             // label16
@@ -2344,7 +2340,6 @@ namespace Cane_Tracking
             this.rtCaneTops.Size = new System.Drawing.Size(275, 38);
             this.rtCaneTops.TabIndex = 7;
             this.rtCaneTops.Text = "0";
-            this.rtCaneTops.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtCaneTops_KeyDown);
             this.rtCaneTops.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtCaneTops_KeyPress);
             // 
             // label15
@@ -2379,7 +2374,6 @@ namespace Cane_Tracking
             this.rtLeaves.Size = new System.Drawing.Size(275, 38);
             this.rtLeaves.TabIndex = 6;
             this.rtLeaves.Text = "0";
-            this.rtLeaves.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtLeaves_KeyDown);
             this.rtLeaves.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtLeaves_KeyPress);
             // 
             // label13
@@ -2414,7 +2408,6 @@ namespace Cane_Tracking
             this.rtBurned.Size = new System.Drawing.Size(275, 38);
             this.rtBurned.TabIndex = 11;
             this.rtBurned.Text = "0";
-            this.rtBurned.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtBurned_KeyDown);
             this.rtBurned.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtBurned_KeyPress);
             // 
             // label18
