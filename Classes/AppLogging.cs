@@ -17,7 +17,8 @@ namespace Cane_Tracking.Classes
         SqlConnection con;
 
         private static bool State_is_saved { get; set; }
-        private static bool Db_Connected { get; set; }
+        private static bool App_Db_Connected { get; set; }
+        private static bool Wb_Db_Connected { get; set; }
 
         public AppLogging()
         {
@@ -80,10 +81,12 @@ namespace Cane_Tracking.Classes
 
         public bool DbConnected()
         {
+            SqlConnection appCon = new SqlConnection(cnf.DbAddress);
+
             try
             {
-                con.Open();
-                Db_Connected = true;
+                appCon.Open();
+                App_Db_Connected = true;
             }
             catch (SqlException ex)
             {
@@ -91,10 +94,31 @@ namespace Cane_Tracking.Classes
             }
             finally
             {
-                con.Close();
+                appCon.Close();
             }
 
-            return Db_Connected;
+            return App_Db_Connected;
+        }
+
+        public bool WbDBConnected()
+        {
+            SqlConnection appCon = new SqlConnection(cnf.DbAddress);
+
+            try
+            {
+                appCon.Open();
+                Wb_Db_Connected = true;
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                appCon.Close();
+            }
+
+            return Wb_Db_Connected;
         }
 
         public void TruncateSavedStateLogs()
