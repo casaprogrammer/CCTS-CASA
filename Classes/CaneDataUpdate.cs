@@ -20,7 +20,7 @@ namespace Cane_Tracking.Classes
             con = new SqlConnection(cnf.WbAdress);
         }
 
-        public void GetCaneData(DataGridView dgv, DateTimePicker dtp, RichTextBox rt, RichTextBox rtLeaves)
+        public void GetCaneData(DataGridView dgv, DateTimePicker dtp, RichTextBox rt, RichTextBox rtLeaves, Button btnSave, Button btnCancel)
         {
             SqlCommand cmd = new SqlCommand(query.GetBatchNumberData(dtp.Value.ToString("yyyy-MM-dd"), rt.Text), con);
 
@@ -41,6 +41,9 @@ namespace Cane_Tracking.Classes
                     da.Fill(dt);
                     dgv.DataSource = dt;
                     dgv.Columns[0].Visible = false;
+
+                    btnSave.Enabled = true;
+                    btnCancel.Enabled = true;
 
                     rtLeaves.Focus();
                     rtLeaves.SelectAll();
