@@ -15,6 +15,7 @@ namespace Cane_Tracking.Classes
         private static int knivesAndShredderMaxCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/Cane Prep/knivesAndShredderMaxCount.txt")));
         private static int nirWashingTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirWashingTime.txt")));
         private static int nirTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirTimerCount.txt")));
+        private static int forceScanTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/forceScanTime.txt")));
 
         private static string nirAddress = File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirAddress.txt"));
         private static int nirPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirPort.txt")));
@@ -24,6 +25,7 @@ namespace Cane_Tracking.Classes
 
         private static string dbAddress = File.ReadAllText(Path.GetFullPath("Configurations/DB Config/DbConnection.txt"));
         private static string wbAddress = File.ReadAllText(Path.GetFullPath("Configurations/DB Config/WeighBridgeDB.txt"));
+        private static string defaultDbAddress = File.ReadAllText(Path.GetFullPath("Configurations/DB Config/DefaultDBConnection.txt"));
 
         public int TipperOneMaxCount
         {
@@ -80,6 +82,13 @@ namespace Cane_Tracking.Classes
                 return nirTime;
             }
         }
+        public int ForceScanTime
+        {
+            get
+            {
+                return forceScanTime;
+            }
+        }
 
         public string NirAddress
         {
@@ -126,6 +135,14 @@ namespace Cane_Tracking.Classes
             get
             {
                 return wbAddress;
+            }
+        }
+
+        public string DefaultConnection
+        {
+            get
+            {
+                return defaultDbAddress;
             }
         }
 
