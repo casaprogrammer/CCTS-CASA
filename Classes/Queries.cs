@@ -142,5 +142,49 @@ namespace Cane_Tracking.Classes
 
             return this.query;
         }
+
+        public string CreateAppDB()
+        {
+            this.query = "CREATE DATABASE canetracking;";
+
+            return this.query;
+        }
+
+        public string CreateTable()
+        {
+            this.query = @"USE canetracking;
+
+                           CREATE TABLE app_logs
+                           (
+                                id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+                                log_description nvarchar(max) 
+                           );
+
+                           CREATE TABLE app_status
+                           (
+                                id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+                                current_status smallint,
+                                status_value datetime  
+                           );
+
+                           CREATE TABLE saved_state_logs
+                           (
+                                id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+                                batch_number nvarchar(max),
+                                current_count nvarchar(max),
+                                area_name nvarchar(max),
+                                series_no nvarchar(max),
+                                date_saved datetime
+                           );
+
+                           INSERT INTO app_status
+                           (current_status)
+                           VALUES
+                           ('0');
+
+                            ";
+
+            return this.query;
+        }
     }
 }
