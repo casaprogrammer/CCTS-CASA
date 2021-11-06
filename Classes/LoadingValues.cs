@@ -89,9 +89,8 @@ namespace Cane_Tracking.Classes
 
         private void LoadBatchNumber(TrackingList bnlist)
         {
-            string queryString = @"SELECT batchNumber, currentCount, areaName, 
-                                   (SELECT MAX(seriesNo) FROM saved_state_logs WHERE dateSaved = @dateSaved) as [series_no]
-                                   FROM saved_state_logs WHERE dateSaved = @dateSaved";
+            string queryString = @"SELECT batch_number, current_count, area_name
+                                   FROM saved_state_logs WHERE date_saved = @dateSaved";
 
             try
             {
@@ -126,12 +125,12 @@ namespace Cane_Tracking.Classes
                     for (int i = 0; i < bnlist.lTbox.Count; i++)
                     {
                         if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "TipOne"
-                            && rdr["areaName"].ToString() == "TipOne")
+                            && rdr["area_name"].ToString() == "TipOne")
                         {
                             bnlist.tipperOne.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2));
                             bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2, "Tipper One"));
-                            bnlist.lTbox[i].Item1.Text = rdr["batchNumber"].ToString();
-                            bnlist.lTbox[i].Item2.Text = rdr["currentCount"].ToString();
+                            bnlist.lTbox[i].Item1.Text = rdr["batch_number"].ToString();
+                            bnlist.lTbox[i].Item2.Text = rdr["current_count"].ToString();
 
                             if (bnlist.lTbox[i].Item1.Text != "")
                             {
@@ -142,13 +141,13 @@ namespace Cane_Tracking.Classes
                         }
 
                         if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "TipTwo"
-                            && rdr["areaName"].ToString() == "TipTwo")
+                            && rdr["area_name"].ToString() == "TipTwo")
                         {
                             bnlist.tipperTwo.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2));
                             bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2, "Tipper Two"));
 
-                            bnlist.lTbox[i].Item1.Text = rdr["batchNumber"].ToString();
-                            bnlist.lTbox[i].Item2.Text = rdr["currentCount"].ToString();
+                            bnlist.lTbox[i].Item1.Text = rdr["batch_number"].ToString();
+                            bnlist.lTbox[i].Item2.Text = rdr["current_count"].ToString();
 
                             if (bnlist.lTbox[i].Item1.Text != "")
                             {
@@ -159,12 +158,12 @@ namespace Cane_Tracking.Classes
                         }
 
                         if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "DumpTruck"
-                            && rdr["areaName"].ToString() == "DumpTruck")
+                            && rdr["area_name"].ToString() == "DumpTruck")
                         {
                             bnlist.dumpTruck.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2));
                             bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2, "Dump Truck"));
-                            bnlist.lTbox[i].Item1.Text = rdr["batchNumber"].ToString();
-                            bnlist.lTbox[i].Item2.Text = rdr["currentCount"].ToString();
+                            bnlist.lTbox[i].Item1.Text = rdr["batch_number"].ToString();
+                            bnlist.lTbox[i].Item2.Text = rdr["current_count"].ToString();
 
                             if (bnlist.lTbox[i].Item1.Text != "")
                             {
@@ -175,12 +174,12 @@ namespace Cane_Tracking.Classes
                         }
 
                         if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "StockPile"
-                            && rdr["areaName"].ToString() == "StockPile")
+                            && rdr["area_name"].ToString() == "StockPile")
                         {
                             bnlist.stockPile.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2));
                             bnlist.dumpCanesHistory.Add(new Tuple<RichTextBox, RichTextBox, string>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2, "Stock Pile"));
-                            bnlist.lTbox[i].Item1.Text = rdr["batchNumber"].ToString();
-                            bnlist.lTbox[i].Item2.Text = rdr["currentCount"].ToString();
+                            bnlist.lTbox[i].Item1.Text = rdr["batch_number"].ToString();
+                            bnlist.lTbox[i].Item2.Text = rdr["current_count"].ToString();
 
                             if (bnlist.lTbox[i].Item1.Text != "")
                             {
@@ -191,11 +190,11 @@ namespace Cane_Tracking.Classes
                         }
 
                         if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "MainCane"
-                           && rdr["areaName"].ToString() == "MaineCane")
+                           && rdr["area_name"].ToString() == "MainCane")
                         {
                             bnlist.mainCane.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2));
-                            bnlist.lTbox[i].Item1.Text = rdr["batchNumber"].ToString();
-                            bnlist.lTbox[i].Item2.Text = rdr["currentCount"].ToString();
+                            bnlist.lTbox[i].Item1.Text = rdr["batch_number"].ToString();
+                            bnlist.lTbox[i].Item2.Text = rdr["current_count"].ToString();
 
                             if (bnlist.lTbox[i].Item1.Text != "")
                             {
@@ -207,11 +206,11 @@ namespace Cane_Tracking.Classes
 
 
                         if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "CaneKnives"
-                          && rdr["areaName"].ToString() == "CaneKnives")
+                          && rdr["area_name"].ToString() == "CaneKnives")
                         {
                             bnlist.caneKnives.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2));
-                            bnlist.lTbox[i].Item1.Text = rdr["batchNumber"].ToString();
-                            bnlist.lTbox[i].Item2.Text = rdr["currentCount"].ToString();
+                            bnlist.lTbox[i].Item1.Text = rdr["batch_number"].ToString();
+                            bnlist.lTbox[i].Item2.Text = rdr["current_count"].ToString();
 
                             if (bnlist.lTbox[i].Item1.Text != "")
                             {
@@ -222,11 +221,11 @@ namespace Cane_Tracking.Classes
                         }
 
                         if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "Shredder"
-                          && rdr["areaName"].ToString() == "Shredder")
+                          && rdr["area_name"].ToString() == "Shredder")
                         {
                             bnlist.shreddedCane.Add(new Tuple<RichTextBox, RichTextBox>(bnlist.lTbox[i].Item1, bnlist.lTbox[i].Item2));
-                            bnlist.lTbox[i].Item1.Text = rdr["batchNumber"].ToString();
-                            bnlist.lTbox[i].Item2.Text = rdr["currentCount"].ToString();
+                            bnlist.lTbox[i].Item1.Text = rdr["batch_number"].ToString();
+                            bnlist.lTbox[i].Item2.Text = rdr["current_count"].ToString();
 
                             if (bnlist.lTbox[i].Item1.Text != "")
                             {
@@ -236,10 +235,10 @@ namespace Cane_Tracking.Classes
                             break;
                         }
 
-                        if (bnlist.lTbox[i].Item3 == "NirWashing" && rdr["areaName"].ToString() == "NirWashing")
+                        if (bnlist.lTbox[i].Item3 == "NirWashing" && rdr["area_name"].ToString() == "NirWashing")
                         {
-                            bnlist.lTbox[i].Item1.Text = rdr["batchNumber"].ToString();
-                            bnlist.lTbox[i].Item2.Text = rdr["currentCount"].ToString();
+                            bnlist.lTbox[i].Item1.Text = rdr["batch_number"].ToString();
+                            bnlist.lTbox[i].Item2.Text = rdr["current_count"].ToString();
 
                             if (bnlist.lTbox[i].Item1.Text != "")
                             {
@@ -249,10 +248,10 @@ namespace Cane_Tracking.Classes
                             break;
                         }
 
-                        if (bnlist.lTbox[i].Item3 == "NirScanning" && rdr["areaName"].ToString() == "NirScanning")
+                        if (bnlist.lTbox[i].Item3 == "NirScanning" && rdr["area_name"].ToString() == "NirScanning")
                         {
-                            bnlist.lTbox[i].Item1.Text = rdr["batchNumber"].ToString();
-                            bnlist.lTbox[i].Item2.Text = rdr["currentCount"].ToString();
+                            bnlist.lTbox[i].Item1.Text = rdr["batch_number"].ToString();
+                            bnlist.lTbox[i].Item2.Text = rdr["current_count"].ToString();
 
                             if (bnlist.lTbox[i].Item1.Text != "")
                             {
