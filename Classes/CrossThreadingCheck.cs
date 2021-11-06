@@ -12,6 +12,7 @@ namespace Cane_Tracking.Classes
 
         private delegate void SetColorCallBack(RichTextBox rt, Color color);
         private delegate void SetTextCallBack(RichTextBox rt, string text);
+        private delegate void SetTextButton(Button btn, string text);
         private delegate void GetTextCallBack(RichTextBox rt);
 
         public void ChangeColorTextBox(RichTextBox rt, Color color)
@@ -64,6 +65,19 @@ namespace Cane_Tracking.Classes
             {
                 string text = control.Text;
                 return text;
+            }
+        }
+
+        public void ChangeButtonText(Button btn, string text)
+        {
+            if (btn.InvokeRequired)
+            {
+                var d = new SetTextButton(ChangeButtonText);
+                btn.Invoke(d, new object[] { btn, text });
+            }
+            else
+            {
+                btn.Text = text;
             }
         }
     }
