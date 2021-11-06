@@ -152,7 +152,6 @@ namespace Cane_Tracking
             this.panel11 = new System.Windows.Forms.Panel();
             this.rtForceScan = new System.Windows.Forms.RichTextBox();
             this.btnForceScan = new System.Windows.Forms.Button();
-            this.rtForceScanCnt = new System.Windows.Forms.RichTextBox();
             this.rtShredderCheck = new System.Windows.Forms.RichTextBox();
             this.rtCaneKnivesCheck = new System.Windows.Forms.RichTextBox();
             this.rtMainCaneCheck = new System.Windows.Forms.RichTextBox();
@@ -1937,7 +1936,6 @@ namespace Cane_Tracking
             this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel11.Controls.Add(this.rtForceScan);
             this.panel11.Controls.Add(this.btnForceScan);
-            this.panel11.Controls.Add(this.rtForceScanCnt);
             this.panel11.Location = new System.Drawing.Point(13, 701);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(367, 118);
@@ -1974,21 +1972,6 @@ namespace Cane_Tracking
             this.btnForceScan.Text = "Force Scan";
             this.btnForceScan.UseVisualStyleBackColor = false;
             this.btnForceScan.Click += new System.EventHandler(this.btnForceScan_Click);
-            // 
-            // rtForceScanCnt
-            // 
-            this.rtForceScanCnt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rtForceScanCnt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtForceScanCnt.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rtForceScanCnt.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtForceScanCnt.ForeColor = System.Drawing.Color.White;
-            this.rtForceScanCnt.Location = new System.Drawing.Point(14, 62);
-            this.rtForceScanCnt.Name = "rtForceScanCnt";
-            this.rtForceScanCnt.ReadOnly = true;
-            this.rtForceScanCnt.Size = new System.Drawing.Size(338, 38);
-            this.rtForceScanCnt.TabIndex = 30;
-            this.rtForceScanCnt.TabStop = false;
-            this.rtForceScanCnt.Text = "";
             // 
             // rtShredderCheck
             // 
@@ -2786,6 +2769,7 @@ namespace Cane_Tracking
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CASA Consolidated Cane Tracking System";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.panel6.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
@@ -3023,7 +3007,6 @@ namespace Cane_Tracking
         private System.Windows.Forms.Panel panel35;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.RichTextBox rtCurrentScannedSample;
-        private System.Windows.Forms.RichTextBox rtForceScanCnt;
         private System.Windows.Forms.Panel panel28;
         private System.Windows.Forms.Button btnEventLogs;
     }
