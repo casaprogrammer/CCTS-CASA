@@ -14,8 +14,6 @@ namespace Cane_Tracking
     {
 
         CrossThreadingCheck ctcc = new CrossThreadingCheck();
-        ConfigValues cnf = new ConfigValues();
-        Queries query = new Queries();
         CaneDataUpdate cdu = new CaneDataUpdate();
         TrackingList bnlist = new TrackingList();
         NirTimer nirTimer = new NirTimer();
@@ -36,6 +34,7 @@ namespace Cane_Tracking
         private static bool decrementing = false;
         private static bool pause = false;
         private static bool forceScan = false;
+        private static bool noConnection;
 
         private static string logTextOutput;
         private static string batch;
@@ -45,15 +44,6 @@ namespace Cane_Tracking
         public frmMain()
         {
             InitializeComponent();
-            TextAlignment();
-            InitializeSerialConnections();
-            DefaultValues();
-            CheckConfigStart();
-            RegisterTextboxes();
-            CheckDatabaseConnection();
-            CheckWBConnection();
-            CheckUdpConnection();
-            SaveStateStart();
         }
 
 
@@ -924,9 +914,7 @@ namespace Cane_Tracking
                     log.AppEventLog(logTextOutput);
 
                     rtForceScan.Enabled = true;
-                    rtForceScanCnt.SendToBack();
                     btnForceScan.Enabled = true;
-                    btnForceScan.Text = "Force Scan";
                     forceScan = false;
                 }
 
@@ -965,11 +953,6 @@ namespace Cane_Tracking
 
             dgvTrash.DataSource = null;
 
-            if (rtTrashBatchNum.Text != "")
-            {
-                btnSaveTrash.Enabled = true;
-                btnCancelTrash.Enabled = true;
-            }
         }
 
         private void rtTrashBatchNum_KeyPress(object sender, KeyPressEventArgs e)
@@ -978,7 +961,7 @@ namespace Cane_Tracking
             {
                 if (Regex.IsMatch(rtTrashBatchNum.Text, @"^\d+$"))
                 {
-                    cdu.GetCaneData(dgvTrash, dtpCurrentDate, rtTrashBatchNum, rtLeaves);
+                    cdu.GetCaneData(dgvTrash, dtpCurrentDate, rtTrashBatchNum, rtLeaves, btnSaveTrash, btnCancelTrash);
                 }
                 else
                 {
@@ -990,7 +973,7 @@ namespace Cane_Tracking
 
         private void rtLeaves_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if(e.KeyChar == 13)
+            if (e.KeyChar == 13)
             {
                 if (Regex.IsMatch(rtLeaves.Text, @"^[0-9]*\.?[0-9]+$"))
                 {
@@ -1478,14 +1461,14 @@ namespace Cane_Tracking
 
         private void btnForceScan_Click(object sender, EventArgs e)
         {
-            if(rtForceScan.Text != "")
+            if (rtForceScan.Text != "")
             {
                 if (Regex.IsMatch(rtForceScan.Text, @"^\d+$"))
                 {
                     rtForceScan.Text = rtForceScan.Text.PadLeft(3, pad);
-                    rtForceScanCnt.Text = "0";
+                    //rtForceScanCnt.Text = "0";
 
-                    nirTimer.SetNirTimer(rtForceScan, rtForceScanCnt);
+                    nirTimer.SetForceScanTimer(rtForceScan, btnForceScan);
 
                     IncrementSeriesNo();
 
@@ -1499,9 +1482,8 @@ namespace Cane_Tracking
                     log.AppEventLog(logTextOutput);
 
                     rtForceScan.Enabled = false;
-                    rtForceScanCnt.BringToFront();
                     btnForceScan.Enabled = false;
-                    btnForceScan.Text = "";
+                    btnForceScan.Text = "0";
                     forceScan = true;
                 }
                 else
@@ -1594,17 +1576,26 @@ namespace Cane_Tracking
         //Database (WeighBridge, App's own Database)
         private void CheckDatabaseConnection()
         {
-            if (log.DbConnected())
+            if (log.DbConnectionExist())
             {
-                logTextOutput = DateTime.Now + " : Successfully connected to Application's System Database";
-                LogOutput(logTextOutput);
-                log.AppEventLog(logTextOutput);
+                if (log.DbConnect())
+                {
+                    InitializeSerialConnections();
+                    CheckUdpConnection();
+
+                    logTextOutput = DateTime.Now + " : Successfully connected to Application's System Database";
+                    LogOutput(logTextOutput);
+                    log.AppEventLog(logTextOutput);
+
+                    SaveStateStart();
+                    CheckConfigStart();
+                }
             }
             else
             {
-                logTextOutput = DateTime.Now + " : Connection to Application's System Database unsuccessful";
-                LogOutput(logTextOutput);
-                log.AppEventLog(logTextOutput);
+                MessageBox.Show("Please check manual for correct database connection string", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                noConnection = true;
+                Application.Exit();
             }
         }
 
@@ -1622,6 +1613,8 @@ namespace Cane_Tracking
                 logTextOutput = DateTime.Now + " : Connection to WeighBridge Database unsuccessful";
                 LogOutput(logTextOutput);
                 log.AppEventLog(logTextOutput);
+
+                rtTrashBatchNum.Enabled = false;
             }
         }
 
@@ -1651,7 +1644,7 @@ namespace Cane_Tracking
          */
         private void IncrementSeriesNo()
         {
-            rtSeriesNo.Text = (seriesNo += 1).ToString();
+            rtSeriesNo.Text = (seriesNo += 1).ToString().PadLeft(3, pad);
         }
 
 
@@ -1669,7 +1662,7 @@ namespace Cane_Tracking
         {
             log.SavingState(bnlist, seriesNo.ToString().PadLeft(3, pad));
 
-            if(savedCount == 5)
+            if (savedCount == 5)
             {
                 log.TruncateSavedStateLogs();
                 log.SavingState(bnlist, seriesNo.ToString().PadLeft(3, pad));
@@ -1710,8 +1703,7 @@ namespace Cane_Tracking
 
         private void CheckConfig_Tick(object sender, EventArgs e)
         {
-            DefaultValues();
-            CheckStatus();
+            appLoading.LoadSavedValues(bnlist);
         }
 
 
@@ -1864,7 +1856,6 @@ namespace Cane_Tracking
             rtFossBx4.SelectionAlignment = HorizontalAlignment.Center;*/
 
             rtForceScan.SelectionAlignment = HorizontalAlignment.Center;
-            rtForceScanCnt.SelectionAlignment = HorizontalAlignment.Center;
             rtSeriesNo.SelectionAlignment = HorizontalAlignment.Center;
 
             rtTrashBatchNum.SelectionAlignment = HorizontalAlignment.Center;
@@ -1876,12 +1867,6 @@ namespace Cane_Tracking
             rtBurned.SelectionAlignment = HorizontalAlignment.Right;
             rtMud.SelectionAlignment = HorizontalAlignment.Right;
             rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-        }
-
-        //Counting default values
-        private void DefaultValues()
-        {
-            rtSeriesNo.Text = seriesNo.ToString().PadLeft(3, pad);
         }
 
         //Add textboxes for tracking on program start
@@ -1949,25 +1934,42 @@ namespace Cane_Tracking
 
         }
 
-        //App checked if the user loads saved state values
-        private void CheckStatus()
+        //Series default value
+        private void DefaultValues()
         {
-            appLoading.LoadSavedValues(bnlist);
+            rtSeriesNo.Text = seriesNo.ToString().PadLeft(3, pad);
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to close the application?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (!noConnection)
+            {
+                DialogResult dialogResult = MessageBox.Show("Application is closing. Continue?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
-            if (dialogResult == DialogResult.No)
-            {
-                e.Cancel = true;
-            }
-            else
-            {
-                log.AppEventLog(DateTime.Now + " : " + "Application was closed");
+                if (dialogResult == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    log.AppEventLog(DateTime.Now + " : " + "Application was closed");
+                    appLoading.ResetLoadValues();
+                }
             }
         }
 
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            MessageBox.Show("Checking database connection, Click ok to continue", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            //RichTextbox UI positions and values
+            TextAlignment();
+            DefaultValues();
+            RegisterTextboxes();
+
+            //Connections
+            CheckDatabaseConnection();
+            CheckWBConnection();
+        }
     }
 }
