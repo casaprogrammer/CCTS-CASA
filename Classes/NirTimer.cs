@@ -14,6 +14,7 @@ namespace Cane_Tracking.Classes
 
         private Timer washingTimer;
         private Timer nirTimer;
+        private Timer forceScanTimer;
 
         public List<Timer> washingTimerList = new List<Timer>();
         public List<Timer> nirTimerList = new List<Timer>();
@@ -85,6 +86,32 @@ namespace Cane_Tracking.Classes
                 ctcc.ChangeColorTextBox(rtCnt, Color.CornflowerBlue);
 
                 nirTimerList.Clear();
+            }
+        }
+
+        public void SetForceScanTimer(RichTextBox rtBn, Button btn)
+        {
+            forceScanTimer = new Timer();
+            forceScanTimer.Interval = 1000;
+            forceScanTimer.Enabled = true;
+            forceScanTimer.Tick += (object sender, EventArgs e) => ForceScanTimer_Tick(sender, e, rtBn, btn);
+        }
+
+        private void ForceScanTimer_Tick(object sender, EventArgs e, RichTextBox rtBn, Button btn)
+        {
+            forceScanTimer = (Timer)sender;
+
+            fossNirTime = ci.ForceScanTime;
+
+            int count = int.Parse(btn.Text);
+
+            ctcc.ChangeButtonText(btn, (count += 1).ToString());
+
+            if (count > fossNirTime)
+            {
+                forceScanTimer.Stop();
+                ctcc.ChangeText(rtBn, "");
+                ctcc.ChangeButtonText(btn, "Force Scan");
             }
         }
 
