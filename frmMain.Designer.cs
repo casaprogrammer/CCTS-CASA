@@ -1382,7 +1382,7 @@ namespace Cane_Tracking
             // 
             // rtDumpBx8
             // 
-            this.rtDumpBx8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.rtDumpBx8.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtDumpBx8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtDumpBx8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtDumpBx8.Location = new System.Drawing.Point(576, 129);
@@ -1395,7 +1395,7 @@ namespace Cane_Tracking
             // 
             // rtDumpBn8
             // 
-            this.rtDumpBn8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.rtDumpBn8.BackColor = System.Drawing.SystemColors.Window;
             this.rtDumpBn8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtDumpBn8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtDumpBn8.Location = new System.Drawing.Point(576, 91);
@@ -1409,7 +1409,7 @@ namespace Cane_Tracking
             // 
             // rtDumpBx7
             // 
-            this.rtDumpBx7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.rtDumpBx7.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtDumpBx7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtDumpBx7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtDumpBx7.Location = new System.Drawing.Point(493, 129);
@@ -1422,7 +1422,7 @@ namespace Cane_Tracking
             // 
             // rtDumpBn7
             // 
-            this.rtDumpBn7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.rtDumpBn7.BackColor = System.Drawing.SystemColors.Window;
             this.rtDumpBn7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtDumpBn7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtDumpBn7.Location = new System.Drawing.Point(493, 91);
@@ -1653,7 +1653,7 @@ namespace Cane_Tracking
             // 
             // rtStockBx8
             // 
-            this.rtStockBx8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.rtStockBx8.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtStockBx8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtStockBx8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtStockBx8.Location = new System.Drawing.Point(576, 129);
@@ -1666,7 +1666,7 @@ namespace Cane_Tracking
             // 
             // rtStockBn8
             // 
-            this.rtStockBn8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.rtStockBn8.BackColor = System.Drawing.SystemColors.Window;
             this.rtStockBn8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtStockBn8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtStockBn8.Location = new System.Drawing.Point(576, 91);
@@ -1680,7 +1680,7 @@ namespace Cane_Tracking
             // 
             // rtStockBx7
             // 
-            this.rtStockBx7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.rtStockBx7.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtStockBx7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtStockBx7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtStockBx7.Location = new System.Drawing.Point(493, 129);
@@ -1693,7 +1693,7 @@ namespace Cane_Tracking
             // 
             // rtStockBn7
             // 
-            this.rtStockBn7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.rtStockBn7.BackColor = System.Drawing.SystemColors.Window;
             this.rtStockBn7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtStockBn7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtStockBn7.Location = new System.Drawing.Point(493, 91);

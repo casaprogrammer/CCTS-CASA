@@ -1775,8 +1775,8 @@ namespace Cane_Tracking
             rtDumpBn4.SelectionAlignment = HorizontalAlignment.Center;
             rtDumpBn5.SelectionAlignment = HorizontalAlignment.Center;
             rtDumpBn6.SelectionAlignment = HorizontalAlignment.Center;
-            /*rtDumpBn7.SelectionAlignment = HorizontalAlignment.Center;
-            rtDumpBn8.SelectionAlignment = HorizontalAlignment.Center;*/
+            rtDumpBn7.SelectionAlignment = HorizontalAlignment.Center;
+            rtDumpBn8.SelectionAlignment = HorizontalAlignment.Center;
 
             rtDumpBx1.SelectionAlignment = HorizontalAlignment.Center;
             rtDumpBx2.SelectionAlignment = HorizontalAlignment.Center;
@@ -1784,8 +1784,8 @@ namespace Cane_Tracking
             rtDumpBx4.SelectionAlignment = HorizontalAlignment.Center;
             rtDumpBx5.SelectionAlignment = HorizontalAlignment.Center;
             rtDumpBx6.SelectionAlignment = HorizontalAlignment.Center;
-            /*rtDumpBx7.SelectionAlignment = HorizontalAlignment.Center;
-            rtDumpBx8.SelectionAlignment = HorizontalAlignment.Center;*/
+            rtDumpBx7.SelectionAlignment = HorizontalAlignment.Center;
+            rtDumpBx8.SelectionAlignment = HorizontalAlignment.Center;
 
             rtStockBn1.SelectionAlignment = HorizontalAlignment.Center;
             rtStockBn2.SelectionAlignment = HorizontalAlignment.Center;
@@ -1793,8 +1793,8 @@ namespace Cane_Tracking
             rtStockBn4.SelectionAlignment = HorizontalAlignment.Center;
             rtStockBn5.SelectionAlignment = HorizontalAlignment.Center;
             rtStockBn6.SelectionAlignment = HorizontalAlignment.Center;
-            /* rtStockBn7.SelectionAlignment = HorizontalAlignment.Center;
-             rtStockBn8.SelectionAlignment = HorizontalAlignment.Center;*/
+            rtStockBn7.SelectionAlignment = HorizontalAlignment.Center;
+            rtStockBn8.SelectionAlignment = HorizontalAlignment.Center;
 
             rtStockBx1.SelectionAlignment = HorizontalAlignment.Center;
             rtStockBx2.SelectionAlignment = HorizontalAlignment.Center;
@@ -1802,8 +1802,8 @@ namespace Cane_Tracking
             rtStockBx4.SelectionAlignment = HorizontalAlignment.Center;
             rtStockBx5.SelectionAlignment = HorizontalAlignment.Center;
             rtStockBx6.SelectionAlignment = HorizontalAlignment.Center;
-            /*rtStockBx7.SelectionAlignment = HorizontalAlignment.Center;
-            rtStockBx8.SelectionAlignment = HorizontalAlignment.Center;*/
+            rtStockBx7.SelectionAlignment = HorizontalAlignment.Center;
+            rtStockBx8.SelectionAlignment = HorizontalAlignment.Center;
 
             rtMainBn1.SelectionAlignment = HorizontalAlignment.Center;
             rtMainBn2.SelectionAlignment = HorizontalAlignment.Center;
@@ -1899,6 +1899,8 @@ namespace Cane_Tracking
             bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn4, rtDumpBx4, "DumpTruck"));
             bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn5, rtDumpBx5, "DumpTruck"));
             bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn6, rtDumpBx6, "DumpTruck"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn7, rtDumpBx7, "DumpTruck"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtDumpBn8, rtDumpBx8, "DumpTruck"));
 
             //Stock Pile
             bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn1, rtStockBx1, "StockPile"));
@@ -1907,6 +1909,8 @@ namespace Cane_Tracking
             bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn4, rtStockBx4, "StockPile"));
             bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn5, rtStockBx5, "StockPile"));
             bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn6, rtStockBx6, "StockPile"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn7, rtStockBx7, "StockPile"));
+            bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtStockBn8, rtStockBx8, "StockPile"));
 
             //Main Cane
             bnlist.lTbox.Add(new Tuple<RichTextBox, RichTextBox, string>(rtMainBn1, rtMainBx1, "MainCane"));
