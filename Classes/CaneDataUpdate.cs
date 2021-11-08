@@ -30,7 +30,7 @@ namespace Cane_Tracking.Classes
 
                 if (cmd.ExecuteScalar() == null)
                 {
-                    MessageBox.Show("No record to show", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Batch #" + rt.Text + " data not found", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     rt.Text = "";
                     dgv.DataSource = null;
                 }
@@ -47,8 +47,6 @@ namespace Cane_Tracking.Classes
 
                     rtLeaves.Focus();
                     rtLeaves.SelectAll();
-
-                    //MessageBox.Show(dgv.Rows[dgv.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString());
                 }
             }
             catch (SqlException ex)
