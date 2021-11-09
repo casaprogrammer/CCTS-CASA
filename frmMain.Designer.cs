@@ -211,9 +211,11 @@ namespace Cane_Tracking
             this.btnEditConfigs = new System.Windows.Forms.Button();
             this.panel35 = new System.Windows.Forms.Panel();
             this.btnReset = new System.Windows.Forms.Button();
-            this.rtCurrentScannedSample = new System.Windows.Forms.RichTextBox();
             this.panel28 = new System.Windows.Forms.Panel();
             this.btnEventLogs = new System.Windows.Forms.Button();
+            this.panel33 = new System.Windows.Forms.Panel();
+            this.btnConnections = new System.Windows.Forms.Button();
+            this.panel36 = new System.Windows.Forms.Panel();
             this.panel6.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -249,6 +251,8 @@ namespace Cane_Tracking
             this.panel34.SuspendLayout();
             this.panel35.SuspendLayout();
             this.panel28.SuspendLayout();
+            this.panel33.SuspendLayout();
+            this.panel36.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnTipperOne
@@ -2030,7 +2034,7 @@ namespace Cane_Tracking
             this.panel12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.panel12.Controls.Add(this.panel9);
             this.panel12.Controls.Add(this.panel10);
-            this.panel12.Location = new System.Drawing.Point(7, 109);
+            this.panel12.Location = new System.Drawing.Point(7, 108);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(1120, 846);
             this.panel12.TabIndex = 44;
@@ -2038,12 +2042,12 @@ namespace Cane_Tracking
             // rtEvents
             // 
             this.rtEvents.BackColor = System.Drawing.SystemColors.MenuText;
-            this.rtEvents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtEvents.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtEvents.ForeColor = System.Drawing.SystemColors.Window;
-            this.rtEvents.Location = new System.Drawing.Point(7, 960);
+            this.rtEvents.Location = new System.Drawing.Point(3, 3);
             this.rtEvents.Name = "rtEvents";
             this.rtEvents.ReadOnly = true;
-            this.rtEvents.Size = new System.Drawing.Size(1708, 184);
+            this.rtEvents.Size = new System.Drawing.Size(1703, 173);
             this.rtEvents.TabIndex = 54;
             this.rtEvents.Text = "";
             // 
@@ -2051,9 +2055,9 @@ namespace Cane_Tracking
             // 
             this.panel13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.panel13.Controls.Add(this.panel14);
-            this.panel13.Location = new System.Drawing.Point(1127, 109);
+            this.panel13.Location = new System.Drawing.Point(1133, 108);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(594, 846);
+            this.panel13.Size = new System.Drawing.Size(590, 846);
             this.panel13.TabIndex = 45;
             // 
             // panel14
@@ -2152,6 +2156,7 @@ namespace Cane_Tracking
             this.rtMixedBurned.Size = new System.Drawing.Size(275, 38);
             this.rtMixedBurned.TabIndex = 10;
             this.rtMixedBurned.Text = "0";
+            this.rtMixedBurned.TextChanged += new System.EventHandler(this.rtMixedBurned_TextChanged);
             this.rtMixedBurned.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtMixedBurned_KeyPress);
             // 
             // label19
@@ -2188,6 +2193,7 @@ namespace Cane_Tracking
             this.rtTotalTrash.TabIndex = 43;
             this.rtTotalTrash.TabStop = false;
             this.rtTotalTrash.Text = "0";
+            this.rtTotalTrash.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtTotalTrash_KeyPress);
             // 
             // label21
             // 
@@ -2221,6 +2227,7 @@ namespace Cane_Tracking
             this.rtMud.Size = new System.Drawing.Size(275, 38);
             this.rtMud.TabIndex = 12;
             this.rtMud.Text = "0";
+            this.rtMud.TextChanged += new System.EventHandler(this.rtMud_TextChanged);
             this.rtMud.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtMud_KeyPress);
             // 
             // label20
@@ -2255,6 +2262,7 @@ namespace Cane_Tracking
             this.rtDeadStalks.Size = new System.Drawing.Size(275, 38);
             this.rtDeadStalks.TabIndex = 9;
             this.rtDeadStalks.Text = "0";
+            this.rtDeadStalks.TextChanged += new System.EventHandler(this.rtDeadStalks_TextChanged);
             this.rtDeadStalks.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtDeadStalks_KeyPress);
             // 
             // label17
@@ -2289,6 +2297,7 @@ namespace Cane_Tracking
             this.rtRoots.Size = new System.Drawing.Size(275, 38);
             this.rtRoots.TabIndex = 8;
             this.rtRoots.Text = "0";
+            this.rtRoots.TextChanged += new System.EventHandler(this.rtRoots_TextChanged);
             this.rtRoots.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtRoots_KeyPress);
             // 
             // label16
@@ -2323,6 +2332,7 @@ namespace Cane_Tracking
             this.rtCaneTops.Size = new System.Drawing.Size(275, 38);
             this.rtCaneTops.TabIndex = 7;
             this.rtCaneTops.Text = "0";
+            this.rtCaneTops.TextChanged += new System.EventHandler(this.rtCaneTops_TextChanged);
             this.rtCaneTops.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtCaneTops_KeyPress);
             // 
             // label15
@@ -2357,6 +2367,7 @@ namespace Cane_Tracking
             this.rtLeaves.Size = new System.Drawing.Size(275, 38);
             this.rtLeaves.TabIndex = 6;
             this.rtLeaves.Text = "0";
+            this.rtLeaves.TextChanged += new System.EventHandler(this.rtLeaves_TextChanged);
             this.rtLeaves.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtLeaves_KeyPress);
             // 
             // label13
@@ -2391,6 +2402,7 @@ namespace Cane_Tracking
             this.rtBurned.Size = new System.Drawing.Size(275, 38);
             this.rtBurned.TabIndex = 11;
             this.rtBurned.Text = "0";
+            this.rtBurned.TextChanged += new System.EventHandler(this.rtBurned_TextChanged);
             this.rtBurned.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtBurned_KeyPress);
             // 
             // label18
@@ -2517,26 +2529,28 @@ namespace Cane_Tracking
             this.btnPause.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPause.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnPause.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.btnPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
             this.btnPause.Image = ((System.Drawing.Image)(resources.GetObject("btnPause.Image")));
             this.btnPause.Location = new System.Drawing.Point(3, 3);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(119, 86);
             this.btnPause.TabIndex = 57;
             this.btnPause.TabStop = false;
+            this.btnPause.Text = "Pause";
+            this.btnPause.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnPause.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnPause.UseVisualStyleBackColor = false;
             this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             this.btnPause.MouseHover += new System.EventHandler(this.btnPause_MouseHover);
             // 
             // rtSeriesNo
             // 
-            this.rtSeriesNo.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtSeriesNo.Enabled = false;
             this.rtSeriesNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtSeriesNo.Location = new System.Drawing.Point(1524, 50);
+            this.rtSeriesNo.Location = new System.Drawing.Point(1528, 56);
             this.rtSeriesNo.Name = "rtSeriesNo";
             this.rtSeriesNo.ReadOnly = true;
-            this.rtSeriesNo.Size = new System.Drawing.Size(191, 43);
+            this.rtSeriesNo.Size = new System.Drawing.Size(191, 42);
             this.rtSeriesNo.TabIndex = 43;
             this.rtSeriesNo.TabStop = false;
             this.rtSeriesNo.Text = "";
@@ -2547,7 +2561,7 @@ namespace Cane_Tracking
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(1544, 12);
+            this.label5.Location = new System.Drawing.Point(1552, 17);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(157, 32);
             this.label5.TabIndex = 44;
@@ -2558,7 +2572,7 @@ namespace Cane_Tracking
             this.panel29.BackColor = System.Drawing.Color.CornflowerBlue;
             this.panel29.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel29.Controls.Add(this.btnPause);
-            this.panel29.Location = new System.Drawing.Point(273, 8);
+            this.panel29.Location = new System.Drawing.Point(406, 8);
             this.panel29.Name = "panel29";
             this.panel29.Size = new System.Drawing.Size(127, 94);
             this.panel29.TabIndex = 47;
@@ -2568,7 +2582,7 @@ namespace Cane_Tracking
             this.panel30.BackColor = System.Drawing.Color.CornflowerBlue;
             this.panel30.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel30.Controls.Add(this.btnDecrement);
-            this.panel30.Location = new System.Drawing.Point(406, 8);
+            this.panel30.Location = new System.Drawing.Point(539, 8);
             this.panel30.Name = "panel30";
             this.panel30.Size = new System.Drawing.Size(127, 94);
             this.panel30.TabIndex = 58;
@@ -2579,13 +2593,16 @@ namespace Cane_Tracking
             this.btnDecrement.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDecrement.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnDecrement.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDecrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.btnDecrement.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
             this.btnDecrement.Image = ((System.Drawing.Image)(resources.GetObject("btnDecrement.Image")));
             this.btnDecrement.Location = new System.Drawing.Point(3, 3);
             this.btnDecrement.Name = "btnDecrement";
             this.btnDecrement.Size = new System.Drawing.Size(119, 86);
             this.btnDecrement.TabIndex = 57;
             this.btnDecrement.TabStop = false;
+            this.btnDecrement.Text = "Decrement";
+            this.btnDecrement.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnDecrement.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnDecrement.UseVisualStyleBackColor = false;
             this.btnDecrement.Click += new System.EventHandler(this.btnDecrement_Click);
             this.btnDecrement.MouseHover += new System.EventHandler(this.btnDecrement_MouseHover);
@@ -2595,7 +2612,7 @@ namespace Cane_Tracking
             this.panel31.BackColor = System.Drawing.Color.CornflowerBlue;
             this.panel31.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel31.Controls.Add(this.btnLoadData);
-            this.panel31.Location = new System.Drawing.Point(539, 8);
+            this.panel31.Location = new System.Drawing.Point(672, 8);
             this.panel31.Name = "panel31";
             this.panel31.Size = new System.Drawing.Size(127, 94);
             this.panel31.TabIndex = 59;
@@ -2606,13 +2623,16 @@ namespace Cane_Tracking
             this.btnLoadData.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLoadData.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnLoadData.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnLoadData.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.btnLoadData.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
             this.btnLoadData.Image = ((System.Drawing.Image)(resources.GetObject("btnLoadData.Image")));
             this.btnLoadData.Location = new System.Drawing.Point(3, 3);
             this.btnLoadData.Name = "btnLoadData";
             this.btnLoadData.Size = new System.Drawing.Size(119, 86);
             this.btnLoadData.TabIndex = 57;
             this.btnLoadData.TabStop = false;
+            this.btnLoadData.Text = "Load State";
+            this.btnLoadData.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnLoadData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnLoadData.UseVisualStyleBackColor = false;
             this.btnLoadData.Click += new System.EventHandler(this.btnLoadData_Click);
             this.btnLoadData.MouseHover += new System.EventHandler(this.btnLoadData_MouseHover);
@@ -2622,7 +2642,7 @@ namespace Cane_Tracking
             this.panel32.BackColor = System.Drawing.Color.CornflowerBlue;
             this.panel32.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel32.Controls.Add(this.btnUndoEntry);
-            this.panel32.Location = new System.Drawing.Point(140, 8);
+            this.panel32.Location = new System.Drawing.Point(273, 8);
             this.panel32.Name = "panel32";
             this.panel32.Size = new System.Drawing.Size(127, 94);
             this.panel32.TabIndex = 60;
@@ -2633,13 +2653,16 @@ namespace Cane_Tracking
             this.btnUndoEntry.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnUndoEntry.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnUndoEntry.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnUndoEntry.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.btnUndoEntry.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
             this.btnUndoEntry.Image = ((System.Drawing.Image)(resources.GetObject("btnUndoEntry.Image")));
             this.btnUndoEntry.Location = new System.Drawing.Point(3, 3);
             this.btnUndoEntry.Name = "btnUndoEntry";
             this.btnUndoEntry.Size = new System.Drawing.Size(119, 86);
             this.btnUndoEntry.TabIndex = 57;
             this.btnUndoEntry.TabStop = false;
+            this.btnUndoEntry.Text = "Undo Entry";
+            this.btnUndoEntry.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnUndoEntry.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnUndoEntry.UseVisualStyleBackColor = false;
             this.btnUndoEntry.Click += new System.EventHandler(this.btnUndoEntry_Click);
             this.btnUndoEntry.MouseHover += new System.EventHandler(this.btnUndoEntry_MouseHover);
@@ -2660,7 +2683,7 @@ namespace Cane_Tracking
             this.btnEditConfigs.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEditConfigs.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnEditConfigs.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnEditConfigs.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.btnEditConfigs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
             this.btnEditConfigs.Image = ((System.Drawing.Image)(resources.GetObject("btnEditConfigs.Image")));
             this.btnEditConfigs.Location = new System.Drawing.Point(3, 3);
             this.btnEditConfigs.Name = "btnEditConfigs";
@@ -2668,6 +2691,9 @@ namespace Cane_Tracking
             this.btnEditConfigs.TabIndex = 57;
             this.btnEditConfigs.TabStop = false;
             this.btnEditConfigs.Tag = "";
+            this.btnEditConfigs.Text = "Settings";
+            this.btnEditConfigs.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnEditConfigs.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnEditConfigs.UseVisualStyleBackColor = false;
             this.btnEditConfigs.Click += new System.EventHandler(this.btnEditConfigs_Click);
             this.btnEditConfigs.MouseHover += new System.EventHandler(this.btnEditConfigs_MouseHover);
@@ -2677,7 +2703,7 @@ namespace Cane_Tracking
             this.panel35.BackColor = System.Drawing.Color.CornflowerBlue;
             this.panel35.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel35.Controls.Add(this.btnReset);
-            this.panel35.Location = new System.Drawing.Point(805, 8);
+            this.panel35.Location = new System.Drawing.Point(938, 8);
             this.panel35.Name = "panel35";
             this.panel35.Size = new System.Drawing.Size(127, 94);
             this.panel35.TabIndex = 63;
@@ -2688,37 +2714,26 @@ namespace Cane_Tracking
             this.btnReset.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnReset.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
             this.btnReset.Image = ((System.Drawing.Image)(resources.GetObject("btnReset.Image")));
             this.btnReset.Location = new System.Drawing.Point(3, 3);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(119, 86);
             this.btnReset.TabIndex = 57;
             this.btnReset.TabStop = false;
+            this.btnReset.Text = "Reset App";
+            this.btnReset.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnReset.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnReset.UseVisualStyleBackColor = false;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             this.btnReset.MouseHover += new System.EventHandler(this.btnReset_MouseHover);
-            // 
-            // rtCurrentScannedSample
-            // 
-            this.rtCurrentScannedSample.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtCurrentScannedSample.Enabled = false;
-            this.rtCurrentScannedSample.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtCurrentScannedSample.Location = new System.Drawing.Point(1323, 50);
-            this.rtCurrentScannedSample.Name = "rtCurrentScannedSample";
-            this.rtCurrentScannedSample.ReadOnly = true;
-            this.rtCurrentScannedSample.Size = new System.Drawing.Size(191, 43);
-            this.rtCurrentScannedSample.TabIndex = 65;
-            this.rtCurrentScannedSample.TabStop = false;
-            this.rtCurrentScannedSample.Text = "";
-            this.rtCurrentScannedSample.Visible = false;
             // 
             // panel28
             // 
             this.panel28.BackColor = System.Drawing.Color.CornflowerBlue;
             this.panel28.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel28.Controls.Add(this.btnEventLogs);
-            this.panel28.Location = new System.Drawing.Point(672, 8);
+            this.panel28.Location = new System.Drawing.Point(805, 8);
             this.panel28.Name = "panel28";
             this.panel28.Size = new System.Drawing.Size(127, 94);
             this.panel28.TabIndex = 66;
@@ -2729,27 +2744,69 @@ namespace Cane_Tracking
             this.btnEventLogs.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEventLogs.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnEventLogs.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnEventLogs.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.btnEventLogs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
             this.btnEventLogs.Image = ((System.Drawing.Image)(resources.GetObject("btnEventLogs.Image")));
             this.btnEventLogs.Location = new System.Drawing.Point(3, 3);
             this.btnEventLogs.Name = "btnEventLogs";
             this.btnEventLogs.Size = new System.Drawing.Size(119, 86);
             this.btnEventLogs.TabIndex = 57;
             this.btnEventLogs.TabStop = false;
+            this.btnEventLogs.Text = "Event Logs";
+            this.btnEventLogs.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnEventLogs.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnEventLogs.UseVisualStyleBackColor = false;
             this.btnEventLogs.Click += new System.EventHandler(this.btnEventLogs_Click);
             this.btnEventLogs.MouseHover += new System.EventHandler(this.btnEventLogs_MouseHover);
+            // 
+            // panel33
+            // 
+            this.panel33.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.panel33.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel33.Controls.Add(this.btnConnections);
+            this.panel33.Location = new System.Drawing.Point(140, 8);
+            this.panel33.Name = "panel33";
+            this.panel33.Size = new System.Drawing.Size(127, 94);
+            this.panel33.TabIndex = 64;
+            // 
+            // btnConnections
+            // 
+            this.btnConnections.BackColor = System.Drawing.Color.White;
+            this.btnConnections.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnConnections.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnConnections.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnConnections.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
+            this.btnConnections.Image = ((System.Drawing.Image)(resources.GetObject("btnConnections.Image")));
+            this.btnConnections.Location = new System.Drawing.Point(3, 3);
+            this.btnConnections.Name = "btnConnections";
+            this.btnConnections.Size = new System.Drawing.Size(119, 86);
+            this.btnConnections.TabIndex = 57;
+            this.btnConnections.TabStop = false;
+            this.btnConnections.Text = "App Links";
+            this.btnConnections.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnConnections.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnConnections.UseVisualStyleBackColor = false;
+            this.btnConnections.MouseHover += new System.EventHandler(this.btnConnections_MouseHover);
+            // 
+            // panel36
+            // 
+            this.panel36.BackColor = System.Drawing.Color.White;
+            this.panel36.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel36.Controls.Add(this.rtEvents);
+            this.panel36.Location = new System.Drawing.Point(10, 956);
+            this.panel36.Name = "panel36";
+            this.panel36.Size = new System.Drawing.Size(1711, 180);
+            this.panel36.TabIndex = 67;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.ClientSize = new System.Drawing.Size(1733, 1156);
+            this.ClientSize = new System.Drawing.Size(1732, 1144);
+            this.Controls.Add(this.panel36);
+            this.Controls.Add(this.panel33);
             this.Controls.Add(this.panel28);
-            this.Controls.Add(this.rtCurrentScannedSample);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.panel35);
             this.Controls.Add(this.rtSeriesNo);
@@ -2759,7 +2816,6 @@ namespace Cane_Tracking
             this.Controls.Add(this.panel30);
             this.Controls.Add(this.panel29);
             this.Controls.Add(this.panel13);
-            this.Controls.Add(this.rtEvents);
             this.Controls.Add(this.panel12);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -2767,7 +2823,7 @@ namespace Cane_Tracking
             this.MinimizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CASA Consolidated Cane Tracking System";
+            this.Text = "Consolidated Cane Tracking System";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.panel6.ResumeLayout(false);
@@ -2818,6 +2874,8 @@ namespace Cane_Tracking
             this.panel34.ResumeLayout(false);
             this.panel35.ResumeLayout(false);
             this.panel28.ResumeLayout(false);
+            this.panel33.ResumeLayout(false);
+            this.panel36.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3006,9 +3064,11 @@ namespace Cane_Tracking
         private System.Windows.Forms.Button btnEditConfigs;
         private System.Windows.Forms.Panel panel35;
         private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.RichTextBox rtCurrentScannedSample;
         private System.Windows.Forms.Panel panel28;
         private System.Windows.Forms.Button btnEventLogs;
+        private System.Windows.Forms.Panel panel33;
+        private System.Windows.Forms.Button btnConnections;
+        private System.Windows.Forms.Panel panel36;
     }
 }
 

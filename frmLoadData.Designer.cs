@@ -45,7 +45,7 @@ namespace Cane_Tracking
             this.dgvStateLogs.AllowUserToOrderColumns = true;
             this.dgvStateLogs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvStateLogs.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -54,6 +54,7 @@ namespace Cane_Tracking
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvStateLogs.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvStateLogs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStateLogs.ColumnHeadersVisible = false;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
@@ -76,7 +77,7 @@ namespace Cane_Tracking
             this.dgvStateLogs.RowHeadersWidth = 62;
             this.dgvStateLogs.RowTemplate.Height = 28;
             this.dgvStateLogs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvStateLogs.Size = new System.Drawing.Size(442, 404);
+            this.dgvStateLogs.Size = new System.Drawing.Size(442, 190);
             this.dgvStateLogs.TabIndex = 0;
             this.dgvStateLogs.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStateLogs_CellClick);
             // 
@@ -94,7 +95,7 @@ namespace Cane_Tracking
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(466, 462);
+            this.ClientSize = new System.Drawing.Size(466, 248);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dgvStateLogs);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

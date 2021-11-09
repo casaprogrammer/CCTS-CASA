@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Cane_Tracking.Classes
 {
@@ -16,6 +13,7 @@ namespace Cane_Tracking.Classes
         private static int nirWashingTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirWashingTime.txt")));
         private static int nirTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirTimerCount.txt")));
         private static int forceScanTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/forceScanTime.txt")));
+        private static int sampleCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/sampleCount.txt")));
 
         private static string nirAddress = File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirAddress.txt"));
         private static int nirPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirPort.txt")));
@@ -103,6 +101,14 @@ namespace Cane_Tracking.Classes
             get
             {
                 return nirPort;
+            }
+        }
+
+        public int ScanLimit
+        {
+            get
+            {
+                return sampleCount;
             }
         }
 
@@ -250,6 +256,19 @@ namespace Cane_Tracking.Classes
             {
                 File.WriteAllText(Path.GetFullPath("Configurations/NIR/nirPort.txt"), port);
                 nirPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirPort.txt")));
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        public void ScannedSample(string count)
+        {
+            try
+            {
+                File.WriteAllText(Path.GetFullPath("Configurations/NIR/sampleCount.txt"), count);
+                sampleCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/sampleCount.txt")));
             }
             catch (Exception)
             {

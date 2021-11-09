@@ -1,12 +1,10 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
+﻿using Cane_Tracking.Classes;
+using System;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Cane_Tracking.Classes;
 
 namespace Cane_Tracking
 {
@@ -14,6 +12,7 @@ namespace Cane_Tracking
     {
 
         CrossThreadingCheck ctcc = new CrossThreadingCheck();
+        ConfigValues cnf = new ConfigValues();
         CaneDataUpdate cdu = new CaneDataUpdate();
         TrackingList bnlist = new TrackingList();
         NirTimer nirTimer = new NirTimer();
@@ -34,8 +33,10 @@ namespace Cane_Tracking
         private static bool decrementing = false;
         private static bool pause = false;
         private static bool forceScan = false;
-        private static bool noConnection;
+        private static bool connected = false;
+        private static bool restarting = false;
 
+        private static string currentScannedSample;
         private static string logTextOutput;
         private static string batch;
 
@@ -745,7 +746,7 @@ namespace Cane_Tracking
                 logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtMainBn1.Text + " is already in the main cane area. ";
                 LogOutput(logTextOutput);
 
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
             }
         }
 
@@ -756,7 +757,7 @@ namespace Cane_Tracking
                 logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtMainBn2.Text + " is already in the main cane area. ";
                 LogOutput(logTextOutput);
 
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
             }
         }
 
@@ -767,7 +768,7 @@ namespace Cane_Tracking
                 logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtMainBn3.Text + " is already in the main cane area. ";
                 LogOutput(logTextOutput);
 
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
             }
         }
 
@@ -778,7 +779,7 @@ namespace Cane_Tracking
                 logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtMainBn4.Text + " is already in the main cane area. ";
                 LogOutput(logTextOutput);
 
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
             }
         }
 
@@ -789,7 +790,7 @@ namespace Cane_Tracking
                 logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtKnivesBn1.Text + " is already in the cane knives area. ";
                 LogOutput(logTextOutput);
 
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
             }
         }
 
@@ -800,7 +801,7 @@ namespace Cane_Tracking
                 logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtKnivesBn2.Text + " is already in the cane knives area. ";
                 LogOutput(logTextOutput);
 
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
             }
         }
 
@@ -811,7 +812,7 @@ namespace Cane_Tracking
                 logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtShredBn1.Text + " is already in the shredder area. ";
                 LogOutput(logTextOutput);
 
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
             }
         }
 
@@ -822,7 +823,7 @@ namespace Cane_Tracking
                 logTextOutput = DateTime.Now.ToString() + " : Batch #" + rtShredBn2.Text + " is already in the shredder area. ";
                 LogOutput(logTextOutput);
 
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
             }
         }
 
@@ -842,7 +843,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : Preparing Batch #" + rtNirWashing.Text + " for scanning";
 
                     LogOutput(logTextOutput);
-                    log.AppEventLog(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
                 else
                 {
@@ -850,7 +851,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : Preparing Batch #" + rtNirWashing.Text + " for scanning";
 
                     LogOutput(logTextOutput);
-                    log.AppEventLog(logTextOutput);
+                    log.LogEvent(logTextOutput);
 
                     if (rtNirScanning.Text != "")
                     {
@@ -866,6 +867,18 @@ namespace Cane_Tracking
                     }
                 }
             }
+            else
+            {
+                //Stop countings during Loading of state values
+                if (nirTimer.washingTimerList.Count > 0)
+                {
+                    for (int i = 0; i < nirTimer.washingTimerList.Count;)
+                    {
+                        nirTimer.washingTimerList[i].Stop();
+                        nirTimer.washingTimerList.RemoveAt(i);
+                    }
+                }
+            }
         }
 
         private void rtNirScanning_TextChanged(object sender, EventArgs e)
@@ -876,25 +889,36 @@ namespace Cane_Tracking
 
                 IncrementSeriesNo();
 
-                rtCurrentScannedSample.Text = rtNirScanning.Text + rtSeriesNo.Text.PadLeft(3, pad);
+                currentScannedSample = rtNirScanning.Text + rtSeriesNo.Text.PadLeft(3, pad);
 
-                nirUdp.SendMessage(rtCurrentScannedSample.Text);
+                nirUdp.SendMessage(currentScannedSample);
 
-                logTextOutput = DateTime.Now.ToString() + " : Scanning Sample #" + rtCurrentScannedSample.Text;
+                logTextOutput = DateTime.Now.ToString() + " : Scanning Sample #" + currentScannedSample;
 
                 LogOutput(logTextOutput);
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
+
             }
             else
             {
                 if (seriesNo > 0)
                 {
-                    logTextOutput = DateTime.Now.ToString() + " : Finished Scanning Sample #" + rtCurrentScannedSample.Text; //currentScannedSeries;
+                    logTextOutput = DateTime.Now.ToString() + " : Finished Scanning Sample #" + currentScannedSample; //currentScannedSeries;
 
-                    nirUdp.EndMessage(rtCurrentScannedSample.Text);
+                    nirUdp.EndMessage(currentScannedSample);
 
                     LogOutput(logTextOutput);
-                    log.AppEventLog(logTextOutput);
+                    log.LogEvent(logTextOutput);
+                }
+
+                //Stop countings during Loading of state values
+                if (nirTimer.nirTimerList.Count > 0)
+                {
+                    for (int i = 0; i < nirTimer.nirTimerList.Count;)
+                    {
+                        nirTimer.nirTimerList[i].Stop();
+                        nirTimer.nirTimerList.RemoveAt(i);
+                    }
                 }
             }
 
@@ -906,12 +930,12 @@ namespace Cane_Tracking
             {
                 if (forceScan)
                 {
-                    logTextOutput = DateTime.Now.ToString() + " : Finished Forced Scanning Sample #" + rtCurrentScannedSample.Text; //currentScannedSeries;
+                    logTextOutput = DateTime.Now.ToString() + " : Finished Forced Scanning Sample #" + currentScannedSample; //currentScannedSeries;
 
-                    nirUdp.EndMessage(rtCurrentScannedSample.Text);
+                    nirUdp.EndMessage(currentScannedSample);
 
                     LogOutput(logTextOutput);
-                    log.AppEventLog(logTextOutput);
+                    log.LogEvent(logTextOutput);
 
                     rtForceScan.Enabled = true;
                     btnForceScan.Enabled = true;
@@ -925,6 +949,10 @@ namespace Cane_Tracking
                 btnForceScan.Enabled = true;
             }
         }
+
+
+
+        /*+======================================= TRASH CHECKER PANEL RICHTEXT BOX =======================================+*/
 
         private void rtTrashBatchNum_TextChanged(object sender, EventArgs e)
         {
@@ -961,7 +989,7 @@ namespace Cane_Tracking
             {
                 if (Regex.IsMatch(rtTrashBatchNum.Text, @"^\d+$"))
                 {
-                    cdu.GetCaneData(dgvTrash, dtpCurrentDate, rtTrashBatchNum, rtLeaves, btnSaveTrash, btnCancelTrash);
+                    cdu.GetCaneData(dgvTrash, dtpCurrentDate, rtTrashBatchNum, rtLeaves);
                 }
                 else
                 {
@@ -977,11 +1005,6 @@ namespace Cane_Tracking
             {
                 if (Regex.IsMatch(rtLeaves.Text, @"^[0-9]*\.?[0-9]+$"))
                 {
-                    trashTotal += double.Parse(rtLeaves.Text);
-
-                    rtTotalTrash.Text = trashTotal.ToString();
-                    rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-
                     rtCaneTops.Focus();
                     rtCaneTops.SelectAll();
                 }
@@ -1000,8 +1023,6 @@ namespace Cane_Tracking
             {
                 if (Regex.IsMatch(rtCaneTops.Text, @"^[0-9]*\.?[0-9]+$"))
                 {
-                    trashTotal += double.Parse(rtCaneTops.Text);
-
                     rtTotalTrash.Text = trashTotal.ToString();
                     rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
 
@@ -1023,11 +1044,6 @@ namespace Cane_Tracking
             {
                 if (Regex.IsMatch(rtRoots.Text, @"^[0-9]*\.?[0-9]+$"))
                 {
-                    trashTotal += double.Parse(rtRoots.Text);
-
-                    rtTotalTrash.Text = trashTotal.ToString();
-                    rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-
                     rtDeadStalks.Focus();
                     rtDeadStalks.SelectAll();
                 }
@@ -1047,11 +1063,6 @@ namespace Cane_Tracking
             {
                 if (Regex.IsMatch(rtDeadStalks.Text, @"^[0-9]*\.?[0-9]+$"))
                 {
-                    trashTotal += double.Parse(rtDeadStalks.Text);
-
-                    rtTotalTrash.Text = trashTotal.ToString();
-                    rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-
                     rtMixedBurned.Focus();
                     rtMixedBurned.SelectAll();
                 }
@@ -1070,11 +1081,6 @@ namespace Cane_Tracking
             {
                 if (Regex.IsMatch(rtMixedBurned.Text, @"^[0-9]*\.?[0-9]+$"))
                 {
-                    trashTotal += double.Parse(rtMixedBurned.Text);
-
-                    rtTotalTrash.Text = trashTotal.ToString();
-                    rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-
                     rtBurned.Focus();
                     rtBurned.SelectAll();
                 }
@@ -1093,11 +1099,6 @@ namespace Cane_Tracking
             {
                 if (Regex.IsMatch(rtBurned.Text, @"^[0-9]*\.?[0-9]+$"))
                 {
-                    trashTotal += double.Parse(rtBurned.Text);
-
-                    rtTotalTrash.Text = trashTotal.ToString();
-                    rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
-
                     rtMud.Focus();
                     rtMud.SelectAll();
                 }
@@ -1116,12 +1117,15 @@ namespace Cane_Tracking
             {
                 if (Regex.IsMatch(rtMud.Text, @"^[0-9]*\.?[0-9]+$"))
                 {
-                    trashTotal += double.Parse(rtMud.Text);
+                    trashTotal = double.Parse(rtLeaves.Text) + double.Parse(rtCaneTops.Text) + double.Parse(rtRoots.Text) + double.Parse(rtDeadStalks.Text) +
+                                 double.Parse(rtMixedBurned.Text) + double.Parse(rtBurned.Text) + double.Parse(rtMud.Text);
+
 
                     rtTotalTrash.Text = trashTotal.ToString();
                     rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
 
-                    btnSaveTrash.Focus();
+
+                    rtTotalTrash.Focus();
                 }
                 else
                 {
@@ -1131,6 +1135,70 @@ namespace Cane_Tracking
                 }
             }
         }
+
+        private void rtTotalTrash_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                if (dgvTrash.RowCount > 0)
+                {
+                    btnSaveTrash.Enabled = true;
+                    btnCancelTrash.Enabled = true;
+
+                    btnSaveTrash.Focus();
+                }
+            }
+        }
+
+        private void rtLeaves_TextChanged(object sender, EventArgs e)
+        {
+            trashTotal = 0;
+            rtTotalTrash.Text = "0";
+            rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+        }
+
+        private void rtCaneTops_TextChanged(object sender, EventArgs e)
+        {
+            trashTotal = 0;
+            rtTotalTrash.Text = "0";
+            rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+        }
+
+        private void rtRoots_TextChanged(object sender, EventArgs e)
+        {
+            trashTotal = 0;
+            rtTotalTrash.Text = "0";
+            rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+        }
+
+        private void rtDeadStalks_TextChanged(object sender, EventArgs e)
+        {
+            trashTotal = 0;
+            rtTotalTrash.Text = "0";
+            rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+        }
+
+        private void rtMixedBurned_TextChanged(object sender, EventArgs e)
+        {
+            trashTotal = 0;
+            rtTotalTrash.Text = "0";
+            rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+        }
+
+        private void rtBurned_TextChanged(object sender, EventArgs e)
+        {
+            trashTotal = 0;
+            rtTotalTrash.Text = "0";
+            rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+        }
+
+        private void rtMud_TextChanged(object sender, EventArgs e)
+        {
+            trashTotal = 0;
+            rtTotalTrash.Text = "0";
+            rtTotalTrash.SelectionAlignment = HorizontalAlignment.Right;
+        }
+
 
 
         /*+=============================================== MOUSE HOVERS ====================================================+*/
@@ -1170,6 +1238,10 @@ namespace Cane_Tracking
             toolTip.SetToolTip(this.btnReset, "Restart Application");
         }
 
+        private void btnConnections_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(this.btnConnections, "Check Connections");
+        }
 
 
 
@@ -1201,7 +1273,7 @@ namespace Cane_Tracking
 
                         logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Tipper One Area";
                         LogOutput(logTextOutput);
-                        log.AppEventLog(logTextOutput);
+                        log.LogEvent(logTextOutput);
 
                         rtTipperOneBn.Text = "";
                         break;
@@ -1234,7 +1306,7 @@ namespace Cane_Tracking
 
                         logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Tipper Two Area";
                         LogOutput(logTextOutput);
-                        log.AppEventLog(logTextOutput);
+                        log.LogEvent(logTextOutput);
 
                         rtTipperTwoBn.Text = "";
                         break;
@@ -1268,7 +1340,7 @@ namespace Cane_Tracking
 
                         logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Dump Truck Area";
                         LogOutput(logTextOutput);
-                        log.AppEventLog(logTextOutput);
+                        log.LogEvent(logTextOutput);
 
                         rtDumpTruckBn.Text = "";
                         break;
@@ -1302,7 +1374,7 @@ namespace Cane_Tracking
 
                         logTextOutput = DateTime.Now.ToString() + " : Dumped Batch #" + batch + " to Stock Pile Area";
                         LogOutput(logTextOutput);
-                        log.AppEventLog(logTextOutput);
+                        log.LogEvent(logTextOutput);
 
                         rtStockPileBn.Text = "";
                         break;
@@ -1335,7 +1407,7 @@ namespace Cane_Tracking
             }
 
             LogOutput(t);
-            log.AppEventLog(t);
+            log.LogEvent(t);
         }
 
         private void btnUndoEntry_Click(object sender, EventArgs e)
@@ -1393,7 +1465,7 @@ namespace Cane_Tracking
                     string t = DateTime.Now.ToString() + " : " + "Removed Batch #" + bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item1.Text
                                                        + " at " + bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item3;
                     LogOutput(t);
-                    log.AppEventLog(t);
+                    log.LogEvent(t);
 
                     ctcc.ChangeText(bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item1, "");
                     ctcc.ChangeText(bnlist.dumpCanesHistory[bnlist.dumpCanesHistory.Count - 1].Item2, "");
@@ -1432,17 +1504,18 @@ namespace Cane_Tracking
             }
 
             LogOutput(t);
-            log.AppEventLog(t);
+            log.LogEvent(t);
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            DialogResult dialog = MessageBox.Show("Are you sure you want to restart the application?", "Confirmation", MessageBoxButtons.YesNo);
+            DialogResult dialog = MessageBox.Show("Are you sure you want to restart the application?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (dialog == DialogResult.Yes)
             {
                 string t = DateTime.Now + " : " + "Restarted Application";
-                log.AppEventLog(t);
+                log.LogEvent(t);
+                restarting = true;
                 Application.Restart();
             }
         }
@@ -1466,20 +1539,19 @@ namespace Cane_Tracking
                 if (Regex.IsMatch(rtForceScan.Text, @"^\d+$"))
                 {
                     rtForceScan.Text = rtForceScan.Text.PadLeft(3, pad);
-                    //rtForceScanCnt.Text = "0";
 
                     nirTimer.SetForceScanTimer(rtForceScan, btnForceScan);
 
                     IncrementSeriesNo();
 
-                    rtCurrentScannedSample.Text = rtForceScan.Text + rtSeriesNo.Text.PadLeft(3, pad);
+                    currentScannedSample = rtForceScan.Text + rtSeriesNo.Text.PadLeft(3, pad);
 
-                    nirUdp.SendMessage(rtCurrentScannedSample.Text);
+                    nirUdp.SendMessage(currentScannedSample);
 
-                    logTextOutput = DateTime.Now.ToString() + " : Force Scanning Sample #" + rtCurrentScannedSample.Text;
+                    logTextOutput = DateTime.Now.ToString() + " : Force Scanning Sample #" + currentScannedSample;
 
                     LogOutput(logTextOutput);
-                    log.AppEventLog(logTextOutput);
+                    log.LogEvent(logTextOutput);
 
                     rtForceScan.Enabled = false;
                     btnForceScan.Enabled = false;
@@ -1550,13 +1622,13 @@ namespace Cane_Tracking
 
                 string t = DateTime.Now.ToString() + " : " + "Ports Activated";
                 LogOutput(t);
-                log.AppEventLog(t);
+                log.LogEvent(t);
             }
             catch (IOException ex)
             {
                 string t = DateTime.Now.ToString() + " : " + ex.Message.ToString();
                 LogOutput(t);
-                log.AppEventLog(t);
+                log.LogEvent(t);
             }
         }
 
@@ -1576,16 +1648,22 @@ namespace Cane_Tracking
         //Database (WeighBridge, App's own Database)
         private void CheckDatabaseConnection()
         {
-            if (log.DbConnectionExist())
+            if (log.ConnectionExist())
             {
-                if (log.DbConnect())
+
+                while (!log.DbConnectionEstablished())
+                {
+                    log.CheckConnectionDatabase();
+                }
+
+                if (log.DbConnectionEstablished())
                 {
                     InitializeSerialConnections();
                     CheckUdpConnection();
 
                     logTextOutput = DateTime.Now + " : Successfully connected to Application's System Database";
                     LogOutput(logTextOutput);
-                    log.AppEventLog(logTextOutput);
+                    log.LogEvent(logTextOutput);
 
                     SaveStateStart();
                     CheckConfigStart();
@@ -1594,7 +1672,6 @@ namespace Cane_Tracking
             else
             {
                 MessageBox.Show("Please check manual for correct database connection string", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                noConnection = true;
                 Application.Exit();
             }
         }
@@ -1602,17 +1679,17 @@ namespace Cane_Tracking
         private void CheckWBConnection()
         {
 
-            if (log.WbDBConnected())
+            if (log.WeighBridgeConnectionExist())
             {
                 logTextOutput = DateTime.Now + " : Successfully connected to WeighBridge Database";
                 LogOutput(logTextOutput);
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
             }
             else
             {
                 logTextOutput = DateTime.Now + " : Connection to WeighBridge Database unsuccessful";
                 LogOutput(logTextOutput);
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
 
                 rtTrashBatchNum.Enabled = false;
             }
@@ -1625,13 +1702,13 @@ namespace Cane_Tracking
             {
                 logTextOutput = DateTime.Now + " : UDP Connection Established";
                 LogOutput(logTextOutput);
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
             }
             else
             {
                 logTextOutput = DateTime.Now + " : UDP Connection unsuccesful";
                 LogOutput(logTextOutput);
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
             }
         }
 
@@ -1644,7 +1721,10 @@ namespace Cane_Tracking
          */
         private void IncrementSeriesNo()
         {
+            seriesNo = cnf.ScanLimit;
             rtSeriesNo.Text = (seriesNo += 1).ToString().PadLeft(3, pad);
+
+            cnf.ScannedSample(seriesNo.ToString());
         }
 
 
@@ -1670,18 +1750,18 @@ namespace Cane_Tracking
                 savedCount = 0;
             }
 
-            if (log.StateSaved())
+            if (log.SavedState())
             {
                 logTextOutput = DateTime.Now.ToString() + " : State Saved";
                 LogOutput(logTextOutput);
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
                 savedCount++;
             }
             else
             {
                 logTextOutput = DateTime.Now.ToString() + " : Error saving";
                 LogOutput(logTextOutput);
-                log.AppEventLog(logTextOutput);
+                log.LogEvent(logTextOutput);
             }
         }
 
@@ -1703,6 +1783,7 @@ namespace Cane_Tracking
 
         private void CheckConfig_Tick(object sender, EventArgs e)
         {
+            DefaultValues();
             appLoading.LoadSavedValues(bnlist);
         }
 
@@ -1941,14 +2022,14 @@ namespace Cane_Tracking
         //Series default value
         private void DefaultValues()
         {
-            rtSeriesNo.Text = seriesNo.ToString().PadLeft(3, pad);
+            rtSeriesNo.Text = cnf.ScanLimit.ToString().PadLeft(3, pad);
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!noConnection)
+            if (connected || !restarting)
             {
-                DialogResult dialogResult = MessageBox.Show("Application is closing. Continue?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                DialogResult dialogResult = MessageBox.Show("Application is closing. Continue?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (dialogResult == DialogResult.No)
                 {
@@ -1956,15 +2037,15 @@ namespace Cane_Tracking
                 }
                 else
                 {
-                    log.AppEventLog(DateTime.Now + " : " + "Application was closed");
-                    appLoading.ResetLoadValues();
+                    log.LogEvent(DateTime.Now + " : " + "Application was closed");
+                    appLoading.ResetLoadStatus();
                 }
             }
         }
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            MessageBox.Show("Checking database connection, Click ok to continue", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Checking database connection, Click ok to continue", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //RichTextbox UI positions and values
             TextAlignment();
@@ -1975,5 +2056,6 @@ namespace Cane_Tracking
             CheckDatabaseConnection();
             CheckWBConnection();
         }
+
     }
 }

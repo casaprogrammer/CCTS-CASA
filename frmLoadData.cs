@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Cane_Tracking.Classes;
+using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Cane_Tracking.Classes;
 
 namespace Cane_Tracking
 {
@@ -77,12 +71,12 @@ namespace Cane_Tracking
                         cmd.ExecuteNonQuery();
 
                         string t = DateTime.Now + " : " + "Loaded saved state data";
-                        log.AppEventLog(t);
+                        log.LogEvent(t);
                     }
-                    catch(SqlException ex)
+                    catch (SqlException ex)
                     {
                         MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        log.AppEventLog(DateTime.Now + " : " + ex.Message.ToString());
+                        log.LogEvent(DateTime.Now + " : " + ex.Message.ToString());
                     }
                     finally
                     {

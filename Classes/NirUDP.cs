@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -13,7 +10,7 @@ namespace Cane_Tracking.Classes
 
         ConfigValues cnf = new ConfigValues();
 
-        private static bool Udp_connected { get; set; }
+        private static bool IsConnected { get; set; }
 
         public bool UdpConnected()
         {
@@ -22,21 +19,21 @@ namespace Cane_Tracking.Classes
                 string ipAddress = cnf.NirAddress;
                 int sendPort = cnf.NirPort;
 
-                using(var client = new UdpClient())
+                using (var client = new UdpClient())
                 {
                     IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ipAddress), sendPort);
                     client.Connect(ep);
 
-                    Udp_connected = true;
+                    IsConnected = true;
                 }
             }
             catch (SocketException ex)
             {
                 Console.WriteLine(ex.ToString());
-                Udp_connected = false;
+                IsConnected = false;
             }
 
-            return Udp_connected;
+            return IsConnected;
         }
 
         private void UdpSendMessage(byte[] data)
@@ -55,7 +52,7 @@ namespace Cane_Tracking.Classes
             }
             catch (SocketException)
             {
-                
+
             }
         }
 

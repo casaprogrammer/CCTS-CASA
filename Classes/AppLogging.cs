@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Cane_Tracking.Classes
@@ -14,17 +10,18 @@ namespace Cane_Tracking.Classes
         Queries query = new Queries();
         ConfigValues cnf = new ConfigValues();
 
+        private static bool StateSaved { get; set; }
+        private static bool HasConnection { get; set; }
+        private static bool AppDatabaseConnected { get; set; }
+        private static bool WeighBridgeDatabaseConnected { get; set; }
 
-        private static bool State_is_saved { get; set; }
-        private static bool Db_Exist { get; set; }
-        private static bool App_Db_Connected { get; set; }
-        private static bool Wb_Db_Connected { get; set; }
+        private static bool HasBeenCatch;
 
         SqlConnection con;
 
-        public void AppEventLog(string log)
+        public void LogEvent(string log)
         {
-            if (App_Db_Connected)
+            if (AppDatabaseConnected)
             {
                 con = new SqlConnection(cnf.DbAddress);
                 SqlCommand cmd = new SqlCommand(query.SaveLog(log), con);
@@ -47,7 +44,7 @@ namespace Cane_Tracking.Classes
 
         public void SavingState(TrackingList tl, string seriesNo)
         {
-            if (App_Db_Connected)
+            if (AppDatabaseConnected)
             {
                 con = new SqlConnection(cnf.DbAddress);
                 for (int i = 0; i < tl.lTbox.Count; i++)
@@ -64,11 +61,11 @@ namespace Cane_Tracking.Classes
                     {
                         con.Open();
                         cmd.ExecuteNonQuery();
-                        State_is_saved = true;
+                        StateSaved = true;
                     }
                     catch (SqlException ex)
                     {
-                        State_is_saved = false;
+                        StateSaved = false;
                         MessageBox.Show(ex.Message);
                     }
                     finally
@@ -79,20 +76,19 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        public bool StateSaved()
+        public bool SavedState()
         {
-            return State_is_saved;
+            return StateSaved;
         }
 
-        public bool DbConnectionExist()
+        public bool ConnectionExist()
         {
             SqlConnection appCon = new SqlConnection(cnf.DefaultConnection);
 
             try
             {
                 appCon.Open();
-                Db_Exist = true;
-                DbConnect();
+                HasConnection = true;
             }
             catch (SqlException ex)
             {
@@ -103,39 +99,74 @@ namespace Cane_Tracking.Classes
                 appCon.Close();
             }
 
-            return Db_Exist;
+            return HasConnection;
         }
 
-        public bool DbConnect()
+        public bool WeighBridgeConnectionExist()
+        {
+            SqlConnection appCon = new SqlConnection(cnf.WbAdress);
+            string query = "SELECT TOP 3 * FROM tblData"; //Just for testing
+            SqlCommand cmd = new SqlCommand(query, appCon);
+
+            try
+            {
+                appCon.Open();
+                cmd.ExecuteNonQuery();
+
+                WeighBridgeDatabaseConnected = true;
+            }
+            catch (SqlException)
+            {
+                MessageBox.Show("WeighBridge Database does not exist", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            finally
+            {
+                appCon.Close();
+            }
+
+            return WeighBridgeDatabaseConnected;
+        }
+
+        public void CheckConnectionDatabase()
         {
             SqlConnection appCon = new SqlConnection(cnf.DbAddress);
 
             try
             {
                 appCon.Open();
-                App_Db_Connected = true;
+                AppDatabaseConnected = true;
             }
             catch (SqlException)
             {
-                MessageBox.Show("canetracking table not found, App will create a table", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CreateDB();
+                if (!HasBeenCatch)
+                {
+                    MessageBox.Show("App Creating Database", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CreateDatabase();
+
+                    HasBeenCatch = true;
+                }
             }
             finally
             {
                 appCon.Close();
             }
-
-            return App_Db_Connected;
         }
 
-        public bool WbDBConnected()
+        public bool DbConnectionEstablished()
         {
-            SqlConnection appCon = new SqlConnection(cnf.WbAdress);
+            return AppDatabaseConnected;
+        }
+
+        private void CreateDatabase()
+        {
+            SqlConnection newCon = new SqlConnection(cnf.DefaultConnection);
+            SqlCommand cmd = new SqlCommand(query.CreateAppDB(), newCon);
 
             try
             {
-                appCon.Open();
-                Wb_Db_Connected = true;
+                newCon.Open();
+                cmd.ExecuteNonQuery();
+                CreateDatabaseTables();
             }
             catch (SqlException ex)
             {
@@ -143,10 +174,28 @@ namespace Cane_Tracking.Classes
             }
             finally
             {
-                appCon.Close();
+                newCon.Close();
             }
+        }
 
-            return Wb_Db_Connected;
+        private void CreateDatabaseTables()
+        {
+            SqlConnection newCon = new SqlConnection(cnf.DefaultConnection);
+            SqlCommand cmd = new SqlCommand(query.CreateTable(), newCon);
+
+            try
+            {
+                newCon.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (SqlException e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                newCon.Close();
+            }
         }
 
         public void TruncateSavedStateLogs()
@@ -166,54 +215,6 @@ namespace Cane_Tracking.Classes
             {
                 con.Close();
             }
-        }
-
-        private void CreateDB()
-        {
-            SqlConnection newCon = new SqlConnection(cnf.DefaultConnection);
-            SqlCommand cmd = new SqlCommand(query.CreateAppDB(), newCon);
-
-            try
-            {
-                newCon.Open();
-                cmd.ExecuteNonQuery();
-            }
-            catch (SqlException e)
-            {
-                MessageBox.Show(e.Message);
-            }
-            finally
-            {
-                CreateAppLogsTable();
-                newCon.Close();
-            }
-        }
-
-        private void CreateAppLogsTable()
-        {
-            SqlConnection newCon = new SqlConnection(cnf.DefaultConnection);
-            SqlCommand cmd = new SqlCommand(query.CreateTable(), newCon);
-
-            try
-            {
-                newCon.Open();
-                cmd.ExecuteNonQuery();
-
-            }
-            catch (SqlException e)
-            {
-                MessageBox.Show(e.Message);
-            }
-            finally
-            {
-                DbConnect();
-                newCon.Close();
-            }
-        }
-
-        public bool DbConnectionSuccess()
-        {
-            return App_Db_Connected;
         }
     }
 }

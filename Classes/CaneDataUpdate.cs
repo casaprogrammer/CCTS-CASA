@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Cane_Tracking.Classes
@@ -20,7 +17,7 @@ namespace Cane_Tracking.Classes
             con = new SqlConnection(cnf.WbAdress);
         }
 
-        public void GetCaneData(DataGridView dgv, DateTimePicker dtp, RichTextBox rt, RichTextBox rtLeaves, Button btnSave, Button btnCancel)
+        public void GetCaneData(DataGridView dgv, DateTimePicker dtp, RichTextBox rt, RichTextBox rtLeaves)
         {
             SqlCommand cmd = new SqlCommand(query.GetBatchNumberData(dtp.Value.ToString("yyyy-MM-dd"), rt.Text), con);
 
@@ -41,9 +38,6 @@ namespace Cane_Tracking.Classes
                     da.Fill(dt);
                     dgv.DataSource = dt;
                     dgv.Columns[0].Visible = false;
-
-                    btnSave.Enabled = true;
-                    btnCancel.Enabled = true;
 
                     rtLeaves.Focus();
                     rtLeaves.SelectAll();
@@ -85,19 +79,20 @@ namespace Cane_Tracking.Classes
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Trash Discount Saved", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                log.AppEventLog("");
-                log.AppEventLog("+===============TRASH UPDATE===============+");
-                log.AppEventLog(DateTime.Now.ToString());
-                log.AppEventLog("Batch No: " + batchNo.Text);
-                log.AppEventLog("Leaves: " + bitLeaves.Text);
-                log.AppEventLog("Cane Tops: " + bitCaneTops.Text);
-                log.AppEventLog("Roots: " + bitRoots.Text);
-                log.AppEventLog("Dead Stalks: " + bitDeadStalks.Text);
-                log.AppEventLog("Mixed Burned: " + bitMixedBurned.Text);
-                log.AppEventLog("Burned: " + bitBurned.Text);
-                log.AppEventLog("Mud: " + bitMud.Text);
-                log.AppEventLog("+=============END TRASH UDPATE=============+");
-                log.AppEventLog("");
+                log.LogEvent("");
+                log.LogEvent("+===============TRASH UPDATE===============+");
+                log.LogEvent(DateTime.Now.ToString());
+                log.LogEvent("Batch No: " + batchNo.Text);
+                log.LogEvent("Leaves: " + bitLeaves.Text);
+                log.LogEvent("Cane Tops: " + bitCaneTops.Text);
+                log.LogEvent("Roots: " + bitRoots.Text);
+                log.LogEvent("Dead Stalks: " + bitDeadStalks.Text);
+                log.LogEvent("Mixed Burned: " + bitMixedBurned.Text);
+                log.LogEvent("Burned: " + bitBurned.Text);
+                log.LogEvent("Mud: " + bitMud.Text);
+                log.LogEvent("Total Trash: " + trash.Text);
+                log.LogEvent("+=============END TRASH UDPATE=============+");
+                log.LogEvent("");
 
 
                 batchNo.Text = "";
@@ -122,7 +117,7 @@ namespace Cane_Tracking.Classes
                 bitMud.SelectionAlignment = HorizontalAlignment.Right;
 
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

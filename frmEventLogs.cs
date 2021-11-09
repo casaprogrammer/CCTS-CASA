@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Cane_Tracking.Classes;
+using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Cane_Tracking.Classes;
 
 namespace Cane_Tracking
 {
@@ -50,7 +45,7 @@ namespace Cane_Tracking
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                log.AppEventLog(DateTime.Now + " : " + ex.Message.ToString());
+                log.LogEvent(DateTime.Now + " : " + ex.Message.ToString());
             }
             finally
             {

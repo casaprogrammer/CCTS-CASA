@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Cane_Tracking.Classes
@@ -12,12 +8,11 @@ namespace Cane_Tracking.Classes
     class LoadingValues
     {
         Queries query = new Queries();
-        NirTimer timers = new NirTimer();
         ConfigValues cnf = new ConfigValues();
 
         SqlConnection con;
 
-        private static bool Data_is_loaded { get; set; }
+        private static bool DataIsLoaded { get; set; }
 
         private static string val { get; set; }
 
@@ -39,11 +34,11 @@ namespace Cane_Tracking.Classes
                 {
                     if (rdr["current_status"].ToString() == "1")
                     {
-                        Data_is_loaded = true;
+                        DataIsLoaded = true;
                     }
                     else
                     {
-                        Data_is_loaded = false;
+                        DataIsLoaded = false;
                     }
                 }
             }
@@ -56,7 +51,7 @@ namespace Cane_Tracking.Classes
                 con.Close();
             }
 
-            return Data_is_loaded;
+            return DataIsLoaded;
         }
 
         private void StatusValue()
@@ -70,7 +65,7 @@ namespace Cane_Tracking.Classes
 
                 while (rdr.Read())
                 {
-                    if (Data_is_loaded)
+                    if (DataIsLoaded)
                     {
                         val = rdr["status_val"].ToString();
                     }
@@ -116,8 +111,6 @@ namespace Cane_Tracking.Classes
                     bnlist.mainCane.Clear();
                     bnlist.caneKnives.Clear();
                     bnlist.shreddedCane.Clear();
-                    timers.washingTimerList.Clear();
-                    timers.nirTimerList.Clear();
                 }
 
                 while (rdr.Read())
@@ -279,14 +272,14 @@ namespace Cane_Tracking.Classes
             ValuesLoaded();
             StatusValue();
 
-            if (Data_is_loaded)
+            if (DataIsLoaded)
             {
                 LoadBatchNumber(bnlist);
             }
-            ResetLoadValues();
+            ResetLoadStatus();
         }
 
-        public void ResetLoadValues()
+        public void ResetLoadStatus()
         {
             con.Open();
             SqlCommand cmd = new SqlCommand(query.UpdateStatus(), con);

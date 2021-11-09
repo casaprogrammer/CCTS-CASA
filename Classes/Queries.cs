@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-
-namespace Cane_Tracking.Classes
+﻿namespace Cane_Tracking.Classes
 {
     class Queries
     {
@@ -60,7 +54,7 @@ namespace Cane_Tracking.Classes
 
         public string ListEventLog()
         {
-            this.query = "SELECT log_description as [Log Description] FROM app_logs";
+            this.query = "SELECT log_description as [List of Events] FROM app_logs";
 
             return this.query;
         }
@@ -113,10 +107,10 @@ namespace Cane_Tracking.Classes
             return this.query;
         }
 
-        public string UpdateCaneData(int id, double trash, 
-                                     double bitLeaves, double bitCaneTops, 
+        public string UpdateCaneData(int id, double trash,
+                                     double bitLeaves, double bitCaneTops,
                                      double bitRoots, double bitDeadStsalks,
-                                     double bitMixedBurned, double bitBurned, 
+                                     double bitMixedBurned, double bitBurned,
                                      double bitMud)
         {
             this.query = @"UPDATE tblData

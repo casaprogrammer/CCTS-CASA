@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using Cane_Tracking.Classes;
+using System;
 using System.Windows.Forms;
-using Cane_Tracking.Classes;
 
 namespace Cane_Tracking
 {
@@ -23,7 +16,7 @@ namespace Cane_Tracking
         AppLogging log = new AppLogging();
 
         private void DefaultValues()
-        { 
+        {
             rtTipperOne.Text = cnf.TipperOneMaxCount.ToString();
             rtTipperTwo.Text = cnf.TipperTwoMaxCount.ToString();
             rtDumpAndPile.Text = cnf.DumpAndPileMaxCount.ToString();
@@ -33,6 +26,7 @@ namespace Cane_Tracking
             rtNir.Text = cnf.NirTime.ToString();
             rtNirNCS.Text = cnf.NirAddress;
             rtNcsPort.Text = cnf.NirPort.ToString();
+            rtScanLimit.Text = cnf.ScanLimit.ToString();
         }
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
@@ -40,12 +34,13 @@ namespace Cane_Tracking
             if (
                 rtTipperOne.Text != "" && rtTipperOne.Text != "0" &&
                 rtTipperTwo.Text != "" && rtTipperTwo.Text != "0" &&
-                rtDumpAndPile.Text != "" && rtDumpAndPile.Text != "0" && 
+                rtDumpAndPile.Text != "" && rtDumpAndPile.Text != "0" &&
                 rtMainCane.Text != "" && rtMainCane.Text != "0" &&
                 rtKnivesAndShredder.Text != "" && rtKnivesAndShredder.Text != "0" &&
                 rtNir.Text != "" && rtNir.Text != "0" &&
                 rtWashingTime.Text != "" && rtWashingTime.Text != "0" &&
-                rtNirNCS.Text != "" && rtNcsPort.Text != ""
+                rtNirNCS.Text != "" && rtNcsPort.Text != "" &&
+                rtScanLimit.Text != ""
                )
             {
                 try
@@ -59,9 +54,10 @@ namespace Cane_Tracking
                     cnf.ChangeNirTime(rtNir.Text);
                     cnf.ChangeNirAddress(rtNirNCS.Text);
                     cnf.ChangeNirPort(rtNcsPort.Text);
+                    cnf.ScannedSample(rtScanLimit.Text);
 
-                    string t = DateTime.Now + " : " + "Changes to configuration file was made";
-                    log.AppEventLog(t);
+                    string t = DateTime.Now + " : " + "Changes to configuration files were made";
+                    log.LogEvent(t);
 
                     MessageBox.Show("Changes Saved", "Saved");
                 }
@@ -69,7 +65,7 @@ namespace Cane_Tracking
                 {
                     MessageBox.Show("Error", e.ToString());
                 }
-                
+
 
                 /*this.Close();*/
             }
@@ -135,6 +131,15 @@ namespace Cane_Tracking
             {
                 MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 rtNir.Text = cnf.NirTime.ToString();
+            }
+        }
+
+        private void rtScanLimit_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
+            {
+                MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                rtScanLimit.Text = cnf.ScanLimit.ToString();
             }
         }
     }
