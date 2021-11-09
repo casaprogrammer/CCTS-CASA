@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\CaneDataUpdate.cs" />
+    <Compile Include="Classes\ConnectionsCheck.cs" />
     <Compile Include="Classes\LoadingValues.cs" />
     <Compile Include="Classes\AppLogging.cs" />
     <Compile Include="Classes\NirUDP.cs" />

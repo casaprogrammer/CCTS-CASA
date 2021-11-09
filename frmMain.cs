@@ -14,6 +14,7 @@ namespace Cane_Tracking
         CrossThreadingCheck ctcc = new CrossThreadingCheck();
         ConfigValues cnf = new ConfigValues();
         CaneDataUpdate cdu = new CaneDataUpdate();
+        ConnectionsCheck cc = new ConnectionsCheck();
         TrackingList bnlist = new TrackingList();
         NirTimer nirTimer = new NirTimer();
         LoadingValues appLoading = new LoadingValues();
@@ -1648,15 +1649,15 @@ namespace Cane_Tracking
         //Database (WeighBridge, App's own Database)
         private void CheckDatabaseConnection()
         {
-            if (log.ConnectionExist())
+            if (cc.ConnectionExist())
             {
 
-                while (!log.DbConnectionEstablished())
+                while (!cc.DbConnectionEstablished())
                 {
-                    log.CheckConnectionDatabase();
+                    cc.CheckConnectionDatabase();
                 }
 
-                if (log.DbConnectionEstablished())
+                if (cc.DbConnectionEstablished())
                 {
                     InitializeSerialConnections();
                     CheckUdpConnection();
@@ -1679,7 +1680,7 @@ namespace Cane_Tracking
         private void CheckWBConnection()
         {
 
-            if (log.WeighBridgeConnectionExist())
+            if (cc.WeighBridgeConnectionExist())
             {
                 logTextOutput = DateTime.Now + " : Successfully connected to WeighBridge Database";
                 LogOutput(logTextOutput);
