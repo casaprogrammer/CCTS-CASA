@@ -22,16 +22,16 @@ namespace Cane_Tracking.Classes
             this.BatchNumberList = bnlist;
         }
 
-        public void SensorActions()
+        public void GetSensorsActivity()
         {
             SensorIndicator();
-            TipperOne();
-            TipperTwo();
-            DumpTruck();
-            StockPile();
-            MainCane();
-            CaneKnives();
-            ShreddedCane();
+            TipperOneSensor();
+            TipperTwoSensor();
+            DumpTruckSensor();
+            StockPileSensor();
+            MainCaneSensor();
+            CaneKnivesSensor();
+            ShreddedCaneSensor();
         }
 
         private void SensorIndicator()
@@ -76,7 +76,7 @@ namespace Cane_Tracking.Classes
 
         }
 
-        private void TipperOne()
+        private void TipperOneSensor()
         {
             int count;
             int tipperOneMaxCount = ci.TipperOneMaxCount;
@@ -123,7 +123,7 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        private void TipperTwo()
+        private void TipperTwoSensor()
         {
             int count;
             int tipperTwoMaxCount = ci.TipperTwoMaxCount;
@@ -169,7 +169,7 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        private void DumpTruck()
+        private void DumpTruckSensor()
         {
             int count;
             int dumpAndPileMaxCount = ci.DumpAndPileMaxCount;
@@ -215,7 +215,7 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        private void StockPile()
+        private void StockPileSensor()
         {
             int count;
             int dumpAndPileMaxCount = ci.DumpAndPileMaxCount;
@@ -261,7 +261,7 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        private void MainCane()
+        private void MainCaneSensor()
         {
             int count;
             int mainCaneMaxCount = ci.MainCaneMaxCount;
@@ -349,7 +349,7 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        private void CaneKnives()
+        private void CaneKnivesSensor()
         {
             int count;
             int knivesAndShredderMaxCount = ci.KnivesAndShredderMaxCount;
@@ -437,7 +437,7 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        private void ShreddedCane()
+        private void ShreddedCaneSensor()
         {
             int count;
             int knivesAndShredderMaxCount = ci.KnivesAndShredderMaxCount;

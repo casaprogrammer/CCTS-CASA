@@ -1642,7 +1642,7 @@ namespace Cane_Tracking
 
             Sensor sc = new Sensor(incomingData, pause, decrementing, bnlist);
 
-            sc.SensorActions();
+            sc.GetSensorsActivity();
 
         }
 
