@@ -1721,7 +1721,7 @@ namespace Cane_Tracking
          */
         private void IncrementSeriesNo()
         {
-            seriesNo = cnf.ScanLimit;
+            seriesNo = cnf.SampleCount;
             rtSeriesNo.Text = (seriesNo += 1).ToString().PadLeft(3, pad);
 
             cnf.ScannedSample(seriesNo.ToString());
@@ -2022,7 +2022,7 @@ namespace Cane_Tracking
         //Series default value
         private void DefaultValues()
         {
-            rtSeriesNo.Text = cnf.ScanLimit.ToString().PadLeft(3, pad);
+            rtSeriesNo.Text = cnf.SampleCount.ToString().PadLeft(3, pad);
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)

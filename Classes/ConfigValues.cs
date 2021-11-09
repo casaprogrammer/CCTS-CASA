@@ -104,7 +104,7 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        public int ScanLimit
+        public int SampleCount
         {
             get
             {

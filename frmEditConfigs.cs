@@ -26,7 +26,7 @@ namespace Cane_Tracking
             rtNir.Text = cnf.NirTime.ToString();
             rtNirNCS.Text = cnf.NirAddress;
             rtNcsPort.Text = cnf.NirPort.ToString();
-            rtScanLimit.Text = cnf.ScanLimit.ToString();
+            rtScanLimit.Text = cnf.SampleCount.ToString();
         }
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
@@ -139,7 +139,7 @@ namespace Cane_Tracking
             if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
             {
                 MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtScanLimit.Text = cnf.ScanLimit.ToString();
+                rtScanLimit.Text = cnf.SampleCount.ToString();
             }
         }
     }
