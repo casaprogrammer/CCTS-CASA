@@ -26,7 +26,7 @@ namespace Cane_Tracking
             rtNir.Text = cnf.NirTime.ToString();
             rtNirNCS.Text = cnf.NirAddress;
             rtNcsPort.Text = cnf.NirPort.ToString();
-            rtScanLimit.Text = cnf.SampleCount.ToString();
+            rtSampleCount.Text = cnf.SampleCount.ToString();
         }
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
@@ -40,11 +40,27 @@ namespace Cane_Tracking
                 rtNir.Text != "" && rtNir.Text != "0" &&
                 rtWashingTime.Text != "" && rtWashingTime.Text != "0" &&
                 rtNirNCS.Text != "" && rtNcsPort.Text != "" &&
-                rtScanLimit.Text != ""
+                rtSampleCount.Text != ""
                )
             {
                 try
                 {
+                    log.LogEvent("");
+                    log.LogEvent("+========================CONFIGURATION==========================+");
+                    log.LogEvent(DateTime.Now + " : " + "Changes to configuration files were made");
+                    log.LogEvent("Tipper One: From [" + cnf.TipperOneMaxCount.ToString() + "] to [" + rtTipperOne.Text + "]");
+                    log.LogEvent("Tipper Two: From [" + cnf.TipperTwoMaxCount.ToString() + "] to [" + rtTipperTwo.Text + "]");
+                    log.LogEvent("Dump and Pile: From [" + cnf.DumpAndPileMaxCount.ToString() + "] to [" + rtDumpAndPile.Text + "]");
+                    log.LogEvent("Main Cane: From [" + cnf.MainCaneMaxCount.ToString() + "] to [" + rtMainCane.Text + "]");
+                    log.LogEvent("Knives and Shredder: From [" + cnf.KnivesAndShredderMaxCount.ToString() + "] to [" + rtKnivesAndShredder.Text + "]");
+                    log.LogEvent("Washing Time: From [" + cnf.WashingTime.ToString() + "] to [" + rtWashingTime.Text + "]");
+                    log.LogEvent("NIR Scanning Time: From [" + cnf.NirTime.ToString() + "] to [" + rtNir.Text + "]");
+                    log.LogEvent("NCS IP Address: From [" + cnf.NirAddress.ToString() + "] to [" + rtNirNCS.Text + "]");
+                    log.LogEvent("NCS Port: From [" + cnf.NirPort.ToString() + "] to [" + rtNcsPort.Text + "]");
+                    log.LogEvent("Sample Count: From [" + cnf.SampleCount.ToString() + "] to [" + rtSampleCount.Text + "]");
+                    log.LogEvent("+======================END CONFIGURATION========================+");
+                    log.LogEvent("");
+
                     cnf.ChangeTipperOneCount(rtTipperOne.Text);
                     cnf.ChangeTipperTwoCount(rtTipperTwo.Text);
                     cnf.ChangeDumpAndPileCount(rtDumpAndPile.Text);
@@ -54,10 +70,7 @@ namespace Cane_Tracking
                     cnf.ChangeNirTime(rtNir.Text);
                     cnf.ChangeNirAddress(rtNirNCS.Text);
                     cnf.ChangeNirPort(rtNcsPort.Text);
-                    cnf.ScannedSample(rtScanLimit.Text);
-
-                    string t = DateTime.Now + " : " + "Changes to configuration files were made";
-                    log.LogEvent(t);
+                    cnf.ScannedSample(rtSampleCount.Text);
 
                     MessageBox.Show("Changes Saved", "Saved");
                 }
@@ -65,9 +78,6 @@ namespace Cane_Tracking
                 {
                     MessageBox.Show("Error", e.ToString());
                 }
-
-
-                /*this.Close();*/
             }
             else
             {
@@ -134,12 +144,12 @@ namespace Cane_Tracking
             }
         }
 
-        private void rtScanLimit_KeyDown(object sender, KeyEventArgs e)
+        private void rtSampleCount_KeyDown(object sender, KeyEventArgs e)
         {
             if (!char.IsDigit((char)e.KeyValue) && !char.IsControl((char)e.KeyValue))
             {
                 MessageBox.Show("Enter numeric values only", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                rtScanLimit.Text = cnf.SampleCount.ToString();
+                rtSampleCount.Text = cnf.SampleCount.ToString();
             }
         }
     }
