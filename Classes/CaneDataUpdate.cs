@@ -85,7 +85,7 @@ namespace Cane_Tracking.Classes
                 log.LogEvent("+===============TRASH UPDATE===============+");
                 log.LogEvent(DateTime.Now.ToString());
                 log.LogEvent("-------------------------------");
-                log.LogEvent("Batch No: " + batchNo.Text );
+                log.LogEvent("Batch No: " + batchNo.Text);
                 log.LogEvent("Trans Code: " + transCode);
                 log.LogEvent("Plate No: " + plateNo);
                 log.LogEvent("-------------------------------");
