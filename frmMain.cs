@@ -385,6 +385,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 1) Changed Batch #" + batch + " to " + this.rtTipOneBn1.Text + " @ count " + rtTipOneBx1.Text;
                     batch = this.rtTipOneBn1.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -398,6 +399,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 1) Changed Batch #" + batch + " to " + this.rtTipOneBn2.Text + " @ count " + rtTipOneBx2.Text;
                     batch = this.rtTipOneBn2.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -411,6 +413,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 1) Changed Batch #" + batch + " to " + this.rtTipOneBn3.Text + " @ count " + rtTipOneBx3.Text;
                     batch = this.rtTipOneBn3.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -424,6 +427,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 1) Changed Batch #" + batch + " to " + this.rtTipOneBn4.Text + " @ count " + rtTipOneBx4.Text;
                     batch = this.rtTipOneBn4.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -437,6 +441,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 1) Changed Batch #" + batch + " to " + this.rtTipOneBn5.Text + " @ count " + rtTipOneBx5.Text;
                     batch = this.rtTipOneBn5.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -450,6 +455,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 1) Changed Batch #" + batch + " to " + this.rtTipOneBn6.Text + " @ count " + rtTipOneBx6.Text;
                     batch = this.rtTipOneBn6.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -463,6 +469,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 1) Changed Batch #" + batch + " to " + this.rtTipOneBn7.Text + " @ count " + rtTipOneBx7.Text;
                     batch = this.rtTipOneBn7.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -476,6 +483,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 1) Changed Batch #" + batch + " to " + this.rtTipOneBn8.Text + " @ count " + rtTipOneBx8.Text;
                     batch = this.rtTipOneBn8.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -489,6 +497,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 2) Changed Batch #" + batch + " to " + this.rtTipTwoBn1.Text + " @ count " + rtTipTwoBx1.Text;
                     batch = this.rtTipTwoBn1.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -502,6 +511,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 2) Changed Batch #" + batch + " to " + this.rtTipTwoBn2.Text + " @ count " + rtTipTwoBx2.Text;
                     batch = this.rtTipTwoBn2.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -515,6 +525,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 2) Changed Batch #" + batch + " to " + this.rtTipTwoBn3.Text + " @ count " + rtTipTwoBx3.Text;
                     batch = this.rtTipTwoBn3.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -528,6 +539,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 2) Changed Batch #" + batch + " to " + this.rtTipTwoBn4.Text + " @ count " + rtTipTwoBx4.Text;
                     batch = this.rtTipTwoBn4.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -541,6 +553,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 2) Changed Batch #" + batch + " to " + this.rtTipTwoBn5.Text + " @ count " + rtTipTwoBx5.Text;
                     batch = this.rtTipTwoBn5.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -554,6 +567,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 2) Changed Batch #" + batch + " to " + this.rtTipTwoBn6.Text + " @ count " + rtTipTwoBx6.Text;
                     batch = this.rtTipTwoBn6.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -567,6 +581,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 2) Changed Batch #" + batch + " to " + this.rtTipTwoBn7.Text + " @ count " + rtTipTwoBx7.Text;
                     batch = this.rtTipTwoBn7.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -580,6 +595,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Tipper 2) Changed Batch #" + batch + " to " + this.rtTipTwoBn8.Text + " @ count " + rtTipTwoBx8.Text;
                     batch = this.rtTipTwoBn8.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -593,6 +609,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Dump Truck) Changed Batch #" + batch + " to " + this.rtDumpBn1.Text + " @ count " + rtDumpBx1.Text;
                     batch = this.rtDumpBn1.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -606,6 +623,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Dump Truck) Changed Batch #" + batch + " to " + this.rtDumpBn2.Text + " @ count " + rtDumpBx2.Text;
                     batch = this.rtDumpBn2.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -619,6 +637,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Dump Truck) Changed Batch #" + batch + " to " + this.rtDumpBn3.Text + " @ count " + rtDumpBx3.Text;
                     batch = this.rtDumpBn3.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -632,6 +651,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Dump Truck) Changed Batch #" + batch + " to " + this.rtDumpBn4.Text + " @ count " + rtDumpBx4.Text;
                     batch = this.rtDumpBn4.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -645,6 +665,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Dump Truck) Changed Batch #" + batch + " to " + this.rtDumpBn5.Text + " @ count " + rtDumpBx5.Text;
                     batch = this.rtDumpBn5.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -658,6 +679,35 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Dump Truck) Changed Batch #" + batch + " to " + this.rtDumpBn6.Text + " @ count " + rtDumpBx6.Text;
                     batch = this.rtDumpBn6.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
+                }
+            }
+        }
+
+        private void rtDumpBn7_TextChanged(object sender, EventArgs e)
+        {
+            if (this.rtDumpBn7.Text != "" && rtDumpBx7.Text != "")
+            {
+                if (rtDumpBn7.Text != batch)
+                {
+                    logTextOutput = DateTime.Now.ToString() + " : (Dump Truck) Changed Batch #" + batch + " to " + this.rtDumpBn7.Text + " @ count " + rtDumpBx7.Text;
+                    batch = this.rtDumpBn7.Text;
+                    LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
+                }
+            }
+        }
+
+        private void rtDumpBn8_TextChanged(object sender, EventArgs e)
+        {
+            if (this.rtDumpBn8.Text != "" && rtDumpBx8.Text != "")
+            {
+                if (rtDumpBn8.Text != batch)
+                {
+                    logTextOutput = DateTime.Now.ToString() + " : (Dump Truck) Changed Batch #" + batch + " to " + this.rtDumpBn8.Text + " @ count " + rtDumpBx8.Text;
+                    batch = this.rtDumpBn8.Text;
+                    LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -671,6 +721,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Stock Pile) Changed Batch #" + batch + " to " + this.rtStockBn1.Text + " @ count " + rtStockBx1.Text;
                     batch = this.rtStockBn1.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -684,6 +735,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Stock Pile) Changed Batch #" + batch + " to " + this.rtStockBn2.Text + " @ count " + rtStockBx2.Text;
                     batch = this.rtStockBn2.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -697,6 +749,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Stock Pile) Changed Batch #" + batch + " to " + this.rtStockBn3.Text + " @ count " + rtStockBx3.Text;
                     batch = this.rtStockBn3.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -710,6 +763,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Stock Pile) Changed Batch #" + batch + " to " + this.rtStockBn4.Text + " @ count " + rtStockBx4.Text;
                     batch = this.rtStockBn4.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -723,6 +777,7 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Stock Pile) Changed Batch #" + batch + " to " + this.rtStockBn5.Text + " @ count " + rtStockBx5.Text;
                     batch = this.rtStockBn5.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -736,6 +791,35 @@ namespace Cane_Tracking
                     logTextOutput = DateTime.Now.ToString() + " : (Stock Pile) Changed Batch #" + batch + " to " + this.rtStockBn6.Text + " @ count " + rtStockBx6.Text;
                     batch = this.rtStockBn6.Text;
                     LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
+                }
+            }
+        }
+
+        private void rtStockBn7_TextChanged(object sender, EventArgs e)
+        {
+            if (this.rtStockBn7.Text != "" && rtStockBx7.Text != "")
+            {
+                if (rtStockBn7.Text != batch)
+                {
+                    logTextOutput = DateTime.Now.ToString() + " : (Stock Pile) Changed Batch #" + batch + " to " + this.rtStockBn7.Text + " @ count " + rtStockBx7.Text;
+                    batch = this.rtStockBn7.Text;
+                    LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
+                }
+            }
+        }
+
+        private void rtStockBn8_TextChanged(object sender, EventArgs e)
+        {
+            if (this.rtStockBn8.Text != "" && rtStockBx8.Text != "")
+            {
+                if (rtStockBn8.Text != batch)
+                {
+                    logTextOutput = DateTime.Now.ToString() + " : (Stock Pile) Changed Batch #" + batch + " to " + this.rtStockBn8.Text + " @ count " + rtStockBx8.Text;
+                    batch = this.rtStockBn8.Text;
+                    LogOutput(logTextOutput);
+                    log.LogEvent(logTextOutput);
                 }
             }
         }
@@ -890,7 +974,7 @@ namespace Cane_Tracking
 
                 IncrementSeriesNo();
 
-                currentScannedSample = rtNirScanning.Text + rtSeriesNo.Text.PadLeft(3, pad);
+                currentScannedSample = rtNirScanning.Text.PadLeft(3, pad) + rtSeriesNo.Text.PadLeft(3, pad);
 
                 nirUdp.SendMessage(currentScannedSample);
 
@@ -939,7 +1023,6 @@ namespace Cane_Tracking
                     log.LogEvent(logTextOutput);
 
                     rtForceScan.Enabled = true;
-                    btnForceScan.Enabled = true;
                     forceScan = false;
                 }
 
@@ -1258,7 +1341,7 @@ namespace Cane_Tracking
             }
             else
             {
-                batch = rtTipperOneBn.Text.PadLeft(3, pad);
+                batch = rtTipperOneBn.Text;
 
                 for (int i = 0; i < bnlist.lTbox.Count; i++)
                 {
@@ -1292,7 +1375,8 @@ namespace Cane_Tracking
             }
             else
             {
-                batch = rtTipperTwoBn.Text.PadLeft(3, pad);
+                batch = rtTipperTwoBn.Text;
+
                 for (int i = 0; i < bnlist.lTbox.Count; i++)
                 {
                     if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "TipTwo")
@@ -1326,7 +1410,8 @@ namespace Cane_Tracking
             }
             else
             {
-                batch = rtDumpTruckBn.Text.PadLeft(3, pad);
+                batch = rtDumpTruckBn.Text;
+
                 for (int i = 0; i < bnlist.lTbox.Count; i++)
                 {
                     if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "DumpTruck")
@@ -1360,7 +1445,8 @@ namespace Cane_Tracking
             }
             else
             {
-                batch = rtStockPileBn.Text.PadLeft(3, pad);
+                batch = rtStockPileBn.Text;
+
                 for (int i = 0; i < bnlist.lTbox.Count; i++)
                 {
                     if (bnlist.lTbox[i].Item1.Text == "" && bnlist.lTbox[i].Item2.Text == "" && bnlist.lTbox[i].Item3 == "StockPile")
@@ -1539,13 +1625,11 @@ namespace Cane_Tracking
             {
                 if (Regex.IsMatch(rtForceScan.Text, @"^\d+$"))
                 {
-                    rtForceScan.Text = rtForceScan.Text.PadLeft(3, pad);
-
                     nirTimer.SetForceScanTimer(rtForceScan, btnForceScan);
 
                     IncrementSeriesNo();
 
-                    currentScannedSample = rtForceScan.Text + rtSeriesNo.Text.PadLeft(3, pad);
+                    currentScannedSample = rtForceScan.Text.PadLeft(3, pad) + rtSeriesNo.Text.PadLeft(3, pad);
 
                     nirUdp.SendMessage(currentScannedSample);
 
@@ -2057,6 +2141,5 @@ namespace Cane_Tracking
             CheckDatabaseConnection();
             CheckWBConnection();
         }
-
     }
 }
