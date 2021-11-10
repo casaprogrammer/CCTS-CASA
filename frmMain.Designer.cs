@@ -302,7 +302,6 @@ namespace Cane_Tracking
             // 
             this.rtTipOneBx8.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipOneBx8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipOneBx8.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipOneBx8, "rtTipOneBx8");
             this.rtTipOneBx8.Name = "rtTipOneBx8";
             this.rtTipOneBx8.ReadOnly = true;
@@ -321,7 +320,6 @@ namespace Cane_Tracking
             // 
             this.rtTipOneBx7.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipOneBx7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipOneBx7.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipOneBx7, "rtTipOneBx7");
             this.rtTipOneBx7.Name = "rtTipOneBx7";
             this.rtTipOneBx7.ReadOnly = true;
@@ -340,7 +338,6 @@ namespace Cane_Tracking
             // 
             this.rtTipOneBx6.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipOneBx6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipOneBx6.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipOneBx6, "rtTipOneBx6");
             this.rtTipOneBx6.Name = "rtTipOneBx6";
             this.rtTipOneBx6.ReadOnly = true;
@@ -359,7 +356,6 @@ namespace Cane_Tracking
             // 
             this.rtTipOneBx5.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipOneBx5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipOneBx5.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipOneBx5, "rtTipOneBx5");
             this.rtTipOneBx5.Name = "rtTipOneBx5";
             this.rtTipOneBx5.ReadOnly = true;
@@ -378,7 +374,6 @@ namespace Cane_Tracking
             // 
             this.rtTipOneBx4.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipOneBx4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipOneBx4.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipOneBx4, "rtTipOneBx4");
             this.rtTipOneBx4.Name = "rtTipOneBx4";
             this.rtTipOneBx4.ReadOnly = true;
@@ -397,7 +392,6 @@ namespace Cane_Tracking
             // 
             this.rtTipOneBx3.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipOneBx3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipOneBx3.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipOneBx3, "rtTipOneBx3");
             this.rtTipOneBx3.Name = "rtTipOneBx3";
             this.rtTipOneBx3.ReadOnly = true;
@@ -416,7 +410,6 @@ namespace Cane_Tracking
             // 
             this.rtTipOneBx2.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipOneBx2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipOneBx2.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipOneBx2, "rtTipOneBx2");
             this.rtTipOneBx2.Name = "rtTipOneBx2";
             this.rtTipOneBx2.ReadOnly = true;
@@ -435,7 +428,6 @@ namespace Cane_Tracking
             // 
             this.rtTipOneBx1.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipOneBx1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipOneBx1.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipOneBx1, "rtTipOneBx1");
             this.rtTipOneBx1.Name = "rtTipOneBx1";
             this.rtTipOneBx1.ReadOnly = true;
@@ -469,7 +461,6 @@ namespace Cane_Tracking
             // 
             this.rtMainBx4.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtMainBx4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtMainBx4.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtMainBx4, "rtMainBx4");
             this.rtMainBx4.Name = "rtMainBx4";
             this.rtMainBx4.ReadOnly = true;
@@ -479,7 +470,6 @@ namespace Cane_Tracking
             // 
             this.rtMainBn4.BackColor = System.Drawing.SystemColors.Window;
             this.rtMainBn4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtMainBn4.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtMainBn4, "rtMainBn4");
             this.rtMainBn4.Name = "rtMainBn4";
             this.rtMainBn4.ReadOnly = true;
@@ -490,7 +480,6 @@ namespace Cane_Tracking
             // 
             this.rtMainBx3.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtMainBx3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtMainBx3.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtMainBx3, "rtMainBx3");
             this.rtMainBx3.Name = "rtMainBx3";
             this.rtMainBx3.ReadOnly = true;
@@ -500,7 +489,6 @@ namespace Cane_Tracking
             // 
             this.rtMainBn3.BackColor = System.Drawing.SystemColors.Window;
             this.rtMainBn3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtMainBn3.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtMainBn3, "rtMainBn3");
             this.rtMainBn3.Name = "rtMainBn3";
             this.rtMainBn3.ReadOnly = true;
@@ -511,7 +499,6 @@ namespace Cane_Tracking
             // 
             this.rtMainBx2.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtMainBx2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtMainBx2.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtMainBx2, "rtMainBx2");
             this.rtMainBx2.Name = "rtMainBx2";
             this.rtMainBx2.ReadOnly = true;
@@ -521,7 +508,6 @@ namespace Cane_Tracking
             // 
             this.rtMainBn2.BackColor = System.Drawing.SystemColors.Window;
             this.rtMainBn2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtMainBn2.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtMainBn2, "rtMainBn2");
             this.rtMainBn2.Name = "rtMainBn2";
             this.rtMainBn2.ReadOnly = true;
@@ -532,7 +518,6 @@ namespace Cane_Tracking
             // 
             this.rtMainBx1.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtMainBx1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtMainBx1.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtMainBx1, "rtMainBx1");
             this.rtMainBx1.Name = "rtMainBx1";
             this.rtMainBx1.ReadOnly = true;
@@ -542,7 +527,6 @@ namespace Cane_Tracking
             // 
             this.rtMainBn1.BackColor = System.Drawing.SystemColors.Window;
             this.rtMainBn1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtMainBn1.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtMainBn1, "rtMainBn1");
             this.rtMainBn1.Name = "rtMainBn1";
             this.rtMainBn1.ReadOnly = true;
@@ -610,7 +594,6 @@ namespace Cane_Tracking
             // 
             this.rtKnivesBx2.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtKnivesBx2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtKnivesBx2.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtKnivesBx2, "rtKnivesBx2");
             this.rtKnivesBx2.Name = "rtKnivesBx2";
             this.rtKnivesBx2.ReadOnly = true;
@@ -620,7 +603,6 @@ namespace Cane_Tracking
             // 
             this.rtKnivesBn2.BackColor = System.Drawing.SystemColors.Window;
             this.rtKnivesBn2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtKnivesBn2.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtKnivesBn2, "rtKnivesBn2");
             this.rtKnivesBn2.Name = "rtKnivesBn2";
             this.rtKnivesBn2.ReadOnly = true;
@@ -631,7 +613,6 @@ namespace Cane_Tracking
             // 
             this.rtKnivesBx1.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtKnivesBx1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtKnivesBx1.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtKnivesBx1, "rtKnivesBx1");
             this.rtKnivesBx1.Name = "rtKnivesBx1";
             this.rtKnivesBx1.ReadOnly = true;
@@ -641,7 +622,6 @@ namespace Cane_Tracking
             // 
             this.rtKnivesBn1.BackColor = System.Drawing.SystemColors.Window;
             this.rtKnivesBn1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtKnivesBn1.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtKnivesBn1, "rtKnivesBn1");
             this.rtKnivesBn1.Name = "rtKnivesBn1";
             this.rtKnivesBn1.ReadOnly = true;
@@ -709,7 +689,6 @@ namespace Cane_Tracking
             // 
             this.rtNirCount.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtNirCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtNirCount.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtNirCount, "rtNirCount");
             this.rtNirCount.Name = "rtNirCount";
             this.rtNirCount.ReadOnly = true;
@@ -719,7 +698,6 @@ namespace Cane_Tracking
             // 
             this.rtNirScanning.BackColor = System.Drawing.SystemColors.Window;
             this.rtNirScanning.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtNirScanning.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtNirScanning, "rtNirScanning");
             this.rtNirScanning.Name = "rtNirScanning";
             this.rtNirScanning.ReadOnly = true;
@@ -730,7 +708,6 @@ namespace Cane_Tracking
             // 
             this.rtWashingCount.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtWashingCount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtWashingCount.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtWashingCount, "rtWashingCount");
             this.rtWashingCount.Name = "rtWashingCount";
             this.rtWashingCount.ReadOnly = true;
@@ -740,7 +717,6 @@ namespace Cane_Tracking
             // 
             this.rtNirWashing.BackColor = System.Drawing.SystemColors.Window;
             this.rtNirWashing.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtNirWashing.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtNirWashing, "rtNirWashing");
             this.rtNirWashing.Name = "rtNirWashing";
             this.rtNirWashing.ReadOnly = true;
@@ -790,7 +766,6 @@ namespace Cane_Tracking
             // 
             this.rtShredBx2.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtShredBx2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtShredBx2.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtShredBx2, "rtShredBx2");
             this.rtShredBx2.Name = "rtShredBx2";
             this.rtShredBx2.ReadOnly = true;
@@ -800,7 +775,6 @@ namespace Cane_Tracking
             // 
             this.rtShredBx1.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtShredBx1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtShredBx1.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtShredBx1, "rtShredBx1");
             this.rtShredBx1.Name = "rtShredBx1";
             this.rtShredBx1.ReadOnly = true;
@@ -828,7 +802,6 @@ namespace Cane_Tracking
             // 
             this.rtShredBn2.BackColor = System.Drawing.SystemColors.Window;
             this.rtShredBn2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtShredBn2.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtShredBn2, "rtShredBn2");
             this.rtShredBn2.Name = "rtShredBn2";
             this.rtShredBn2.ReadOnly = true;
@@ -839,7 +812,6 @@ namespace Cane_Tracking
             // 
             this.rtShredBn1.BackColor = System.Drawing.SystemColors.Window;
             this.rtShredBn1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtShredBn1.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtShredBn1, "rtShredBn1");
             this.rtShredBn1.Name = "rtShredBn1";
             this.rtShredBn1.ReadOnly = true;
@@ -888,7 +860,6 @@ namespace Cane_Tracking
             // 
             this.rtTipTwoBx8.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipTwoBx8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipTwoBx8.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipTwoBx8, "rtTipTwoBx8");
             this.rtTipTwoBx8.Name = "rtTipTwoBx8";
             this.rtTipTwoBx8.ReadOnly = true;
@@ -907,7 +878,6 @@ namespace Cane_Tracking
             // 
             this.rtTipTwoBx7.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipTwoBx7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipTwoBx7.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipTwoBx7, "rtTipTwoBx7");
             this.rtTipTwoBx7.Name = "rtTipTwoBx7";
             this.rtTipTwoBx7.ReadOnly = true;
@@ -926,7 +896,6 @@ namespace Cane_Tracking
             // 
             this.rtTipTwoBx6.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipTwoBx6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipTwoBx6.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipTwoBx6, "rtTipTwoBx6");
             this.rtTipTwoBx6.Name = "rtTipTwoBx6";
             this.rtTipTwoBx6.ReadOnly = true;
@@ -945,7 +914,6 @@ namespace Cane_Tracking
             // 
             this.rtTipTwoBx5.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipTwoBx5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipTwoBx5.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipTwoBx5, "rtTipTwoBx5");
             this.rtTipTwoBx5.Name = "rtTipTwoBx5";
             this.rtTipTwoBx5.ReadOnly = true;
@@ -964,7 +932,6 @@ namespace Cane_Tracking
             // 
             this.rtTipTwoBx4.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipTwoBx4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipTwoBx4.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipTwoBx4, "rtTipTwoBx4");
             this.rtTipTwoBx4.Name = "rtTipTwoBx4";
             this.rtTipTwoBx4.ReadOnly = true;
@@ -983,7 +950,6 @@ namespace Cane_Tracking
             // 
             this.rtTipTwoBx3.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipTwoBx3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipTwoBx3.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipTwoBx3, "rtTipTwoBx3");
             this.rtTipTwoBx3.Name = "rtTipTwoBx3";
             this.rtTipTwoBx3.ReadOnly = true;
@@ -1002,7 +968,6 @@ namespace Cane_Tracking
             // 
             this.rtTipTwoBx2.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipTwoBx2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipTwoBx2.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipTwoBx2, "rtTipTwoBx2");
             this.rtTipTwoBx2.Name = "rtTipTwoBx2";
             this.rtTipTwoBx2.ReadOnly = true;
@@ -1021,7 +986,6 @@ namespace Cane_Tracking
             // 
             this.rtTipTwoBx1.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtTipTwoBx1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtTipTwoBx1.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtTipTwoBx1, "rtTipTwoBx1");
             this.rtTipTwoBx1.Name = "rtTipTwoBx1";
             this.rtTipTwoBx1.ReadOnly = true;
@@ -1083,7 +1047,6 @@ namespace Cane_Tracking
             // 
             this.rtDumpBx8.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtDumpBx8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtDumpBx8.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtDumpBx8, "rtDumpBx8");
             this.rtDumpBx8.Name = "rtDumpBx8";
             this.rtDumpBx8.ReadOnly = true;
@@ -1097,14 +1060,12 @@ namespace Cane_Tracking
             this.rtDumpBn8.Name = "rtDumpBn8";
             this.rtDumpBn8.ReadOnly = true;
             this.rtDumpBn8.TabStop = false;
-            this.rtDumpBn8.TextChanged += new System.EventHandler(this.rtDumpBn8_TextChanged);
             this.rtDumpBn8.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtDumpBn8_KeyDown);
             // 
             // rtDumpBx7
             // 
             this.rtDumpBx7.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtDumpBx7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtDumpBx7.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtDumpBx7, "rtDumpBx7");
             this.rtDumpBx7.Name = "rtDumpBx7";
             this.rtDumpBx7.ReadOnly = true;
@@ -1118,14 +1079,12 @@ namespace Cane_Tracking
             this.rtDumpBn7.Name = "rtDumpBn7";
             this.rtDumpBn7.ReadOnly = true;
             this.rtDumpBn7.TabStop = false;
-            this.rtDumpBn7.TextChanged += new System.EventHandler(this.rtDumpBn7_TextChanged);
             this.rtDumpBn7.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtDumpBn7_KeyDown);
             // 
             // rtDumpBx6
             // 
             this.rtDumpBx6.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtDumpBx6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtDumpBx6.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtDumpBx6, "rtDumpBx6");
             this.rtDumpBx6.Name = "rtDumpBx6";
             this.rtDumpBx6.ReadOnly = true;
@@ -1144,7 +1103,6 @@ namespace Cane_Tracking
             // 
             this.rtDumpBx5.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtDumpBx5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtDumpBx5.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtDumpBx5, "rtDumpBx5");
             this.rtDumpBx5.Name = "rtDumpBx5";
             this.rtDumpBx5.ReadOnly = true;
@@ -1163,7 +1121,6 @@ namespace Cane_Tracking
             // 
             this.rtDumpBx4.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtDumpBx4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtDumpBx4.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtDumpBx4, "rtDumpBx4");
             this.rtDumpBx4.Name = "rtDumpBx4";
             this.rtDumpBx4.ReadOnly = true;
@@ -1182,7 +1139,6 @@ namespace Cane_Tracking
             // 
             this.rtDumpBx3.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtDumpBx3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtDumpBx3.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtDumpBx3, "rtDumpBx3");
             this.rtDumpBx3.Name = "rtDumpBx3";
             this.rtDumpBx3.ReadOnly = true;
@@ -1201,7 +1157,6 @@ namespace Cane_Tracking
             // 
             this.rtDumpBx2.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtDumpBx2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtDumpBx2.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtDumpBx2, "rtDumpBx2");
             this.rtDumpBx2.Name = "rtDumpBx2";
             this.rtDumpBx2.ReadOnly = true;
@@ -1220,7 +1175,6 @@ namespace Cane_Tracking
             // 
             this.rtDumpBx1.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtDumpBx1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtDumpBx1.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtDumpBx1, "rtDumpBx1");
             this.rtDumpBx1.Name = "rtDumpBx1";
             this.rtDumpBx1.ReadOnly = true;
@@ -1282,7 +1236,6 @@ namespace Cane_Tracking
             // 
             this.rtStockBx8.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtStockBx8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtStockBx8.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtStockBx8, "rtStockBx8");
             this.rtStockBx8.Name = "rtStockBx8";
             this.rtStockBx8.ReadOnly = true;
@@ -1296,14 +1249,12 @@ namespace Cane_Tracking
             this.rtStockBn8.Name = "rtStockBn8";
             this.rtStockBn8.ReadOnly = true;
             this.rtStockBn8.TabStop = false;
-            this.rtStockBn8.TextChanged += new System.EventHandler(this.rtStockBn8_TextChanged);
             this.rtStockBn8.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtStockBn8_KeyDown);
             // 
             // rtStockBx7
             // 
             this.rtStockBx7.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtStockBx7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtStockBx7.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtStockBx7, "rtStockBx7");
             this.rtStockBx7.Name = "rtStockBx7";
             this.rtStockBx7.ReadOnly = true;
@@ -1317,14 +1268,12 @@ namespace Cane_Tracking
             this.rtStockBn7.Name = "rtStockBn7";
             this.rtStockBn7.ReadOnly = true;
             this.rtStockBn7.TabStop = false;
-            this.rtStockBn7.TextChanged += new System.EventHandler(this.rtStockBn7_TextChanged);
             this.rtStockBn7.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtStockBn7_KeyDown);
             // 
             // rtStockBx6
             // 
             this.rtStockBx6.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtStockBx6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtStockBx6.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtStockBx6, "rtStockBx6");
             this.rtStockBx6.Name = "rtStockBx6";
             this.rtStockBx6.ReadOnly = true;
@@ -1343,7 +1292,6 @@ namespace Cane_Tracking
             // 
             this.rtStockBx5.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtStockBx5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtStockBx5.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtStockBx5, "rtStockBx5");
             this.rtStockBx5.Name = "rtStockBx5";
             this.rtStockBx5.ReadOnly = true;
@@ -1362,7 +1310,6 @@ namespace Cane_Tracking
             // 
             this.rtStockBx4.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtStockBx4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtStockBx4.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtStockBx4, "rtStockBx4");
             this.rtStockBx4.Name = "rtStockBx4";
             this.rtStockBx4.ReadOnly = true;
@@ -1381,7 +1328,6 @@ namespace Cane_Tracking
             // 
             this.rtStockBx3.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtStockBx3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtStockBx3.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtStockBx3, "rtStockBx3");
             this.rtStockBx3.Name = "rtStockBx3";
             this.rtStockBx3.ReadOnly = true;
@@ -1400,7 +1346,6 @@ namespace Cane_Tracking
             // 
             this.rtStockBx2.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtStockBx2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtStockBx2.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtStockBx2, "rtStockBx2");
             this.rtStockBx2.Name = "rtStockBx2";
             this.rtStockBx2.ReadOnly = true;
@@ -1419,7 +1364,6 @@ namespace Cane_Tracking
             // 
             this.rtStockBx1.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtStockBx1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtStockBx1.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtStockBx1, "rtStockBx1");
             this.rtStockBx1.Name = "rtStockBx1";
             this.rtStockBx1.ReadOnly = true;
@@ -1517,7 +1461,6 @@ namespace Cane_Tracking
             // 
             this.rtShredderCheck.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtShredderCheck.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtShredderCheck.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtShredderCheck, "rtShredderCheck");
             this.rtShredderCheck.Name = "rtShredderCheck";
             this.rtShredderCheck.ReadOnly = true;
@@ -1527,7 +1470,6 @@ namespace Cane_Tracking
             // 
             this.rtCaneKnivesCheck.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtCaneKnivesCheck.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtCaneKnivesCheck.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtCaneKnivesCheck, "rtCaneKnivesCheck");
             this.rtCaneKnivesCheck.Name = "rtCaneKnivesCheck";
             this.rtCaneKnivesCheck.ReadOnly = true;
@@ -1537,7 +1479,6 @@ namespace Cane_Tracking
             // 
             this.rtMainCaneCheck.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtMainCaneCheck.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtMainCaneCheck.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtMainCaneCheck, "rtMainCaneCheck");
             this.rtMainCaneCheck.Name = "rtMainCaneCheck";
             this.rtMainCaneCheck.ReadOnly = true;
@@ -1547,7 +1488,6 @@ namespace Cane_Tracking
             // 
             this.rtSideCaneCheck.BackColor = System.Drawing.Color.CornflowerBlue;
             this.rtSideCaneCheck.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtSideCaneCheck.Cursor = System.Windows.Forms.Cursors.No;
             resources.ApplyResources(this.rtSideCaneCheck, "rtSideCaneCheck");
             this.rtSideCaneCheck.Name = "rtSideCaneCheck";
             this.rtSideCaneCheck.ReadOnly = true;
@@ -1892,7 +1832,6 @@ namespace Cane_Tracking
             // label11
             // 
             resources.ApplyResources(this.label11, "label11");
-            this.label11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.label11.ForeColor = System.Drawing.Color.Yellow;
             this.label11.Name = "label11";
             // 
