@@ -59,6 +59,8 @@ namespace Cane_Tracking.Classes
         {
 
             int id = int.Parse(dgv.Rows[dgv.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString());
+            string transCode = dgv.Rows[dgv.SelectedCells[0].RowIndex].Cells["Trans Code"].Value.ToString();
+            string plateNo = dgv.Rows[dgv.SelectedCells[0].RowIndex].Cells["Plate No"].Value.ToString();
             double trashVal = double.Parse(trash.Text);
             double leaves = double.Parse(bitLeaves.Text);
             double caneTops = double.Parse(bitCaneTops.Text);
@@ -82,7 +84,11 @@ namespace Cane_Tracking.Classes
                 log.LogEvent("");
                 log.LogEvent("+===============TRASH UPDATE===============+");
                 log.LogEvent(DateTime.Now.ToString());
-                log.LogEvent("Batch No: " + batchNo.Text);
+                log.LogEvent("-------------------------------");
+                log.LogEvent("Batch No: " + batchNo.Text );
+                log.LogEvent("Trans Code: " + transCode);
+                log.LogEvent("Plate No: " + plateNo);
+                log.LogEvent("-------------------------------");
                 log.LogEvent("Leaves: " + bitLeaves.Text);
                 log.LogEvent("Cane Tops: " + bitCaneTops.Text);
                 log.LogEvent("Roots: " + bitRoots.Text);
