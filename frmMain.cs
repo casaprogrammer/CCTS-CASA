@@ -36,6 +36,7 @@ namespace Cane_Tracking
         private static bool forceScan = false;
         private static bool connected = false;
         private static bool restarting = false;
+        private static bool udpReceiveMessageOpen = false;
 
         private static string currentScannedSample;
         private static string logTextOutput;
@@ -1619,6 +1620,17 @@ namespace Cane_Tracking
             frm.Show();
         }
 
+        private void btnConnections_Click(object sender, EventArgs e)
+        {
+            frmAppLinks frm = new frmAppLinks(udpReceiveMessageOpen);
+            frm.Show();
+
+            if (!udpReceiveMessageOpen)
+            {
+                udpReceiveMessageOpen = true;
+            }
+        }
+
         private void btnForceScan_Click(object sender, EventArgs e)
         {
             if (rtForceScan.Text != "")
@@ -1705,13 +1717,13 @@ namespace Cane_Tracking
 
                 serialPort.DataReceived += new SerialDataReceivedEventHandler(CaneSensorDataReceivedHandler);
 
-                string t = DateTime.Now.ToString() + " : " + "Ports Activated";
+                string t = DateTime.Now.ToString() + " : " + "Ports Connected Successfully";
                 LogOutput(t);
                 log.LogEvent(t);
             }
             catch (IOException ex)
             {
-                string t = DateTime.Now.ToString() + " : " + ex.Message.ToString();
+                string t = DateTime.Now.ToString() + " : " + ex.Message.ToString() + " Or is disconnected";
                 LogOutput(t);
                 log.LogEvent(t);
             }
@@ -1783,7 +1795,9 @@ namespace Cane_Tracking
         //NIR UDP Connection
         private void CheckUdpConnection()
         {
-            if (nirUdp.UdpConnected())
+            nirUdp.PingPC();
+
+            if (nirUdp.PingResult())
             {
                 logTextOutput = DateTime.Now + " : UDP Connection Established";
                 LogOutput(logTextOutput);
@@ -1791,7 +1805,7 @@ namespace Cane_Tracking
             }
             else
             {
-                logTextOutput = DateTime.Now + " : UDP Connection unsuccesful";
+                logTextOutput = DateTime.Now + " : NCS Connection unsuccesful";
                 LogOutput(logTextOutput);
                 log.LogEvent(logTextOutput);
             }
@@ -1871,7 +1885,6 @@ namespace Cane_Tracking
             DefaultValues();
             appLoading.LoadSavedValues(bnlist);
         }
-
 
 
 

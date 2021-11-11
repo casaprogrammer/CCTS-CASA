@@ -2008,6 +2008,7 @@ namespace Cane_Tracking
             this.btnConnections.Name = "btnConnections";
             this.btnConnections.TabStop = false;
             this.btnConnections.UseVisualStyleBackColor = false;
+            this.btnConnections.Click += new System.EventHandler(this.btnConnections_Click);
             this.btnConnections.MouseHover += new System.EventHandler(this.btnConnections_MouseHover);
             // 
             // panel36
