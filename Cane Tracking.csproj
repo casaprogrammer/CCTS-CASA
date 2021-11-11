@@ -58,6 +58,12 @@
     <Compile Include="Classes\CrossThreadingCheck.cs" />
     <Compile Include="Classes\NirTimer.cs" />
     <Compile Include="Classes\Sensor.cs" />
+    <Compile Include="frmAppLinks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAppLinks.Designer.cs">
+      <DependentUpon>frmAppLinks.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmEditConfigs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +90,9 @@
     <Compile Include="frmLoadData.Designer.cs">
       <DependentUpon>frmLoadData.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="frmAppLinks.resx">
+      <DependentUpon>frmAppLinks.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmEditConfigs.resx">
       <DependentUpon>frmEditConfigs.cs</DependentUpon>
     </EmbeddedResource>
