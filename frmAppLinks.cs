@@ -114,7 +114,7 @@ namespace Cane_Tracking
             try
             {
                 con.Open();
-                if(cmd.ExecuteScalar() != null)
+                if (cmd.ExecuteScalar() != null)
                 {
                     lblQueryMessage.Visible = true;
                     lblQueryMessage.Text = "Query Successful";
@@ -125,7 +125,7 @@ namespace Cane_Tracking
                     lblQueryMessage.Text = "Check Database Connection";
                 }
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 lblQueryMessage.Text = ex.ToString();
             }
