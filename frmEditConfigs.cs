@@ -27,6 +27,7 @@ namespace Cane_Tracking
             rtNirNCS.Text = cnf.NirAddress;
             rtNcsPort.Text = cnf.NirPort.ToString();
             rtSampleCount.Text = cnf.SampleCount.ToString();
+            rtLocalPort.Text = cnf.PcPort.ToString();
         }
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
@@ -40,7 +41,7 @@ namespace Cane_Tracking
                 rtNir.Text != "" && rtNir.Text != "0" &&
                 rtWashingTime.Text != "" && rtWashingTime.Text != "0" &&
                 rtNirNCS.Text != "" && rtNcsPort.Text != "" &&
-                rtSampleCount.Text != ""
+                rtSampleCount.Text != "" && rtLocalPort.Text != ""
                )
             {
                 try
@@ -57,6 +58,7 @@ namespace Cane_Tracking
                     log.LogEvent("NIR Scanning Time: From [" + cnf.NirTime.ToString() + "] to [" + rtNir.Text + "]");
                     log.LogEvent("NCS IP Address: From [" + cnf.NirAddress.ToString() + "] to [" + rtNirNCS.Text + "]");
                     log.LogEvent("NCS Port: From [" + cnf.NirPort.ToString() + "] to [" + rtNcsPort.Text + "]");
+                    log.LogEvent("PC Local Port: From [" + cnf.PcPort.ToString() + "] to [" + rtLocalPort.Text + "]");
                     log.LogEvent("Sample Count: From [" + cnf.SampleCount.ToString() + "] to [" + rtSampleCount.Text + "]");
                     log.LogEvent("+======================END CONFIGURATION========================+");
                     log.LogEvent("");
@@ -70,6 +72,7 @@ namespace Cane_Tracking
                     cnf.ChangeNirTime(rtNir.Text);
                     cnf.ChangeNirAddress(rtNirNCS.Text);
                     cnf.ChangeNirPort(rtNcsPort.Text);
+                    cnf.ChangeLocalPort(rtLocalPort.Text);
                     cnf.ScannedSample(rtSampleCount.Text);
 
                     MessageBox.Show("Changes Saved", "Saved");

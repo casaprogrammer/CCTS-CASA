@@ -52,6 +52,8 @@ namespace Cane_Tracking
             this.label9 = new System.Windows.Forms.Label();
             this.rtNcsPort = new System.Windows.Forms.RichTextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.rtLocalPort = new System.Windows.Forms.RichTextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -191,7 +193,7 @@ namespace Cane_Tracking
             this.btnSaveChanges.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.btnSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSaveChanges.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSaveChanges.Location = new System.Drawing.Point(179, 887);
+            this.btnSaveChanges.Location = new System.Drawing.Point(179, 975);
             this.btnSaveChanges.Name = "btnSaveChanges";
             this.btnSaveChanges.Size = new System.Drawing.Size(170, 69);
             this.btnSaveChanges.TabIndex = 12;
@@ -204,7 +206,7 @@ namespace Cane_Tracking
             this.btnCancel.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(18, 887);
+            this.btnCancel.Location = new System.Drawing.Point(18, 975);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(155, 69);
             this.btnCancel.TabIndex = 13;
@@ -230,9 +232,9 @@ namespace Cane_Tracking
             this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.Location = new System.Drawing.Point(17, 620);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(265, 32);
+            this.label7.Size = new System.Drawing.Size(411, 48);
             this.label7.TabIndex = 14;
-            this.label7.Text = "NIR Sample Count";
+            this.label7.Text = "NIR Sample Count:";
             // 
             // rtNirNCS
             // 
@@ -251,9 +253,9 @@ namespace Cane_Tracking
             this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.Location = new System.Drawing.Point(18, 705);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(144, 32);
+            this.label8.Size = new System.Drawing.Size(122, 32);
             this.label8.TabIndex = 16;
-            this.label8.Text = "NIR NCS:";
+            this.label8.Text = "NCS IP:";
             // 
             // rtWashingTime
             // 
@@ -293,16 +295,39 @@ namespace Cane_Tracking
             this.label10.ForeColor = System.Drawing.Color.White;
             this.label10.Location = new System.Drawing.Point(18, 790);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(312, 48);
+            this.label10.Size = new System.Drawing.Size(150, 32);
             this.label10.TabIndex = 20;
-            this.label10.Text = "NIR NCS Port:";
+            this.label10.Text = "NCS Port:";
+            // 
+            // rtLocalPort
+            // 
+            this.rtLocalPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtLocalPort.Location = new System.Drawing.Point(18, 912);
+            this.rtLocalPort.Multiline = false;
+            this.rtLocalPort.Name = "rtLocalPort";
+            this.rtLocalPort.Size = new System.Drawing.Size(331, 47);
+            this.rtLocalPort.TabIndex = 23;
+            this.rtLocalPort.Text = "";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.White;
+            this.label11.Location = new System.Drawing.Point(18, 877);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(211, 32);
+            this.label11.TabIndex = 22;
+            this.label11.Text = "PC Local Port:";
             // 
             // frmEditConfigs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.ClientSize = new System.Drawing.Size(367, 972);
+            this.ClientSize = new System.Drawing.Size(367, 1065);
+            this.Controls.Add(this.rtLocalPort);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.rtNcsPort);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.rtWashingTime);
@@ -361,5 +386,7 @@ namespace Cane_Tracking
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.RichTextBox rtNcsPort;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.RichTextBox rtLocalPort;
+        private System.Windows.Forms.Label label11;
     }
 }
