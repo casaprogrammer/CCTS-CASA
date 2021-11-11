@@ -17,6 +17,7 @@ namespace Cane_Tracking.Classes
 
         private static string nirAddress = File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirAddress.txt"));
         private static int nirPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirPort.txt")));
+        private static int pcLocalPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/pcLocalPort.txt")));
 
         private static string sendMessageFormat = File.ReadAllText(Path.GetFullPath("Configurations/NIR/sendMessageFormat.txt"));
         private static string endMessageFormat = File.ReadAllText(Path.GetFullPath("Configurations/NIR/endMessageFormat.txt"));
@@ -101,6 +102,14 @@ namespace Cane_Tracking.Classes
             get
             {
                 return nirPort;
+            }
+        }
+
+        public int PcPort
+        {
+            get
+            {
+                return pcLocalPort;
             }
         }
 
@@ -256,6 +265,19 @@ namespace Cane_Tracking.Classes
             {
                 File.WriteAllText(Path.GetFullPath("Configurations/NIR/nirPort.txt"), port);
                 nirPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirPort.txt")));
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        public void ChangeLocalPort(string port)
+        {
+            try
+            {
+                File.WriteAllText(Path.GetFullPath("Configurations/NIR/pcLocalPort.txt"), port);
+                pcLocalPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/pcLocalPort.txt")));
             }
             catch (Exception)
             {
