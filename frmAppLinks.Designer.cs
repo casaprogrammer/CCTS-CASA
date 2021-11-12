@@ -60,8 +60,8 @@ namespace Cane_Tracking
             this.txtIpAddress = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnRunQuery = new System.Windows.Forms.Button();
             this.lblQueryMessage = new System.Windows.Forms.Label();
+            this.btnRunQuery = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -389,16 +389,6 @@ namespace Cane_Tracking
             this.panel2.Size = new System.Drawing.Size(513, 854);
             this.panel2.TabIndex = 0;
             // 
-            // btnRunQuery
-            // 
-            this.btnRunQuery.Location = new System.Drawing.Point(136, 313);
-            this.btnRunQuery.Name = "btnRunQuery";
-            this.btnRunQuery.Size = new System.Drawing.Size(240, 72);
-            this.btnRunQuery.TabIndex = 0;
-            this.btnRunQuery.Text = "Run Query";
-            this.btnRunQuery.UseVisualStyleBackColor = true;
-            this.btnRunQuery.Click += new System.EventHandler(this.btnRunQuery_Click);
-            // 
             // lblQueryMessage
             // 
             this.lblQueryMessage.AutoSize = true;
@@ -408,6 +398,16 @@ namespace Cane_Tracking
             this.lblQueryMessage.TabIndex = 1;
             this.lblQueryMessage.Text = "Query Successful";
             this.lblQueryMessage.Visible = false;
+            // 
+            // btnRunQuery
+            // 
+            this.btnRunQuery.Location = new System.Drawing.Point(136, 313);
+            this.btnRunQuery.Name = "btnRunQuery";
+            this.btnRunQuery.Size = new System.Drawing.Size(240, 72);
+            this.btnRunQuery.TabIndex = 0;
+            this.btnRunQuery.Text = "Run Query";
+            this.btnRunQuery.UseVisualStyleBackColor = true;
+            this.btnRunQuery.Click += new System.EventHandler(this.btnRunQuery_Click);
             // 
             // frmAppLinks
             // 
@@ -419,6 +419,7 @@ namespace Cane_Tracking
             this.Name = "frmAppLinks";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Check Connections";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmAppLinks_FormClosed);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

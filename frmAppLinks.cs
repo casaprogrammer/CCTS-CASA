@@ -12,16 +12,11 @@ namespace Cane_Tracking
     {
 
         ConfigValues cnf = new ConfigValues();
+        PingPC pingPC = new PingPC();
         NirUDP ncs = new NirUDP();
 
-        private static string pingStatus;
-        private bool AlreadyConnected;
-
-
-        public frmAppLinks(bool alreadyConnected)
+        public frmAppLinks()
         {
-            this.AlreadyConnected = alreadyConnected;
-
             InitializeComponent();
             DefaultValues();
             ConnectUDP();
@@ -41,49 +36,22 @@ namespace Cane_Tracking
 
         private void ConnectUDP()
         {
-            if (!AlreadyConnected)
-            {
-                ncs.StartReceivedMessages();
-            }
+            ncs.StartListening();
         }
 
         private void btnPing_Click(object sender, EventArgs e)
         {
-            Ping pingSender = new Ping();
-            PingOptions options = new PingOptions();
+            pingPC.PingNir();
 
-            options.DontFragment = true;
-
-            //Sending a 32b bytes of data.
-            string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            byte[] buffer = Encoding.ASCII.GetBytes(data);
-            int timeout = 120;
-            PingReply reply = pingSender.Send(IPAddress.Parse(txtIpAddress.Text), timeout, buffer, options);
-
-
-            try
+            if (pingPC.GetPingStatus())
             {
-                if (reply.Status == IPStatus.Success)
-                {
-                    pingStatus = "Address: " + reply.Address.ToString() + "\n" +
-                                          "RoundTrip Time: " + reply.RoundtripTime + "\n" +
-                                          "Time to live: " + reply.Options.Ttl + "\n" +
-                                          "Don't fragment: " + reply.Options.DontFragment + "\n" +
-                                          "Buffer size: " + reply.Buffer.Length + "\n\n" +
-                                          "Ping Success";
-
-                }
-                else
-                {
-                    pingStatus = "Ping Failed";
-                }
+                MessageBox.Show(pingPC.GetPingResult(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (PingException ex)
+            else
             {
-                pingStatus = ex.ToString();
+                MessageBox.Show("Ping Failed", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            MessageBox.Show(pingStatus, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnStartSample_Click(object sender, EventArgs e)
@@ -135,5 +103,9 @@ namespace Cane_Tracking
             }
         }
 
+        private void frmAppLinks_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ncs.StopListening();
+        }
     }
 }
