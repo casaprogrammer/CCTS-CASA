@@ -8,57 +8,23 @@ using System.Windows.Forms;
 
 namespace Cane_Tracking.Classes
 {
-    public struct UdpState
-    {
-        public UdpClient u;
-        public IPEndPoint e;
-    }
-
     class NirUDP
     {
 
         ConfigValues cnf = new ConfigValues();
 
-        private static bool PingSuccess { get; set; }
         private static string Message { get; set; }
 
-        public static bool messageReceived = false;
+        private bool listening;
 
 
-        ThreadStart threadStart;
         Thread newThread;
+        UdpClient udpClient;
+
 
         public NirUDP()
         {
-            threadStart = new ThreadStart(ReceiveMessages);
-            newThread = new Thread(threadStart);
-        }
-
-        public void PingPC()
-        {
-            Ping pingSender = new Ping();
-            PingOptions options = new PingOptions();
-
-            options.DontFragment = true;
-
-            //Sending a 32b bytes of data.
-            string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            byte[] buffer = Encoding.ASCII.GetBytes(data);
-            int timeout = 120;
-            PingReply reply = pingSender.Send(IPAddress.Parse(cnf.NirAddress), timeout, buffer, options);
-
-            try
-            {
-                if (reply.Status == IPStatus.Success)
-                {
-                    PingSuccess = true;
-                }
-            }
-            catch (PingException ex)
-            {
-                MessageBox.Show(ex.Message);
-                PingSuccess = false;
-            }
+            this.listening = false;
         }
 
         private void UdpSendMessage(byte[] data)
@@ -101,55 +67,56 @@ namespace Cane_Tracking.Classes
             UdpSendMessage(data);
         }
 
-        public void ReceiveCallback(IAsyncResult ar)
+        private void ListenToUDPMessage()
         {
-            UdpClient u = ((UdpState)(ar.AsyncState)).u;
-            IPEndPoint e = ((UdpState)(ar.AsyncState)).e;
+            udpClient = null;
+            int port = cnf.NirPort;
 
-            byte[] receiveBytes = u.EndReceive(ar, ref e);
-            string receiveString = Encoding.ASCII.GetString(receiveBytes);
-
-            Message = receiveString;
-            messageReceived = true;
-        }
-
-        public void ReceiveMessages()
-        {
-            int listenPort = cnf.NirPort;
 
             try
             {
-                IPEndPoint e = new IPEndPoint(IPAddress.Any, listenPort);
-                UdpClient u = new UdpClient(e);
-
-                UdpState s = new UdpState();
-                s.e = e;
-                s.u = u;
-
-                Message = "Waiting for result";
-                u.BeginReceive(new AsyncCallback(ReceiveCallback), s);
-
-                // Do some work while we wait for a message. For this example, we'll just sleep
-                while (!messageReceived)
-                {
-                    Thread.Sleep(100);
-                }
-
+                udpClient = new UdpClient(port);
             }
-            catch (SocketException ex)
+            catch (SocketException)
             {
-                MessageBox.Show(ex.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+
+            if(udpClient != null)
+            {
+                IPEndPoint ipEndpoint = new IPEndPoint(IPAddress.Any, port);
+
+                try
+                {
+                    while (this.listening)
+                    {
+                        byte[] receivedMessage = udpClient.Receive(ref ipEndpoint);
+                        Message = Encoding.ASCII.GetString(receivedMessage);
+                    }
+                }
+                catch (SocketException e)
+                {
+                    MessageBox.Show(e.Message, "Message #1", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
         }
 
-        public void StartReceivedMessages()
+        public void StartListening()
         {
-            newThread.Start();
+            if (!this.listening)
+            {
+                newThread = new Thread(new ThreadStart(ListenToUDPMessage));
+                newThread.IsBackground = true;
+                this.listening = true;
+                newThread.Start();
+            }
         }
 
-        public void StopReceivingThread()
+        public void StopListening()
         {
-
+            this.listening = false;
+            newThread.Abort();
+            udpClient.Close();
         }
 
         public string GetMessage()
@@ -157,9 +124,5 @@ namespace Cane_Tracking.Classes
             return Message;
         }
 
-        public bool PingResult()
-        {
-            return PingSuccess;
-        }
     }
 }
