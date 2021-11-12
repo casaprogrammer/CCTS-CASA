@@ -52,6 +52,7 @@
     <Compile Include="Classes\LoadingValues.cs" />
     <Compile Include="Classes\AppLogging.cs" />
     <Compile Include="Classes\NirUDP.cs" />
+    <Compile Include="Classes\PingPC.cs" />
     <Compile Include="Classes\Queries.cs" />
     <Compile Include="Classes\TrackingList.cs" />
     <Compile Include="Classes\ConfigValues.cs" />

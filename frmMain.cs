@@ -21,6 +21,7 @@ namespace Cane_Tracking
         AppLogging log = new AppLogging();
         ToolTip toolTip = new ToolTip();
         NirUDP nirUdp = new NirUDP();
+        PingPC pingPC = new PingPC();
 
         private static SerialPort serialPort;
 
@@ -1622,7 +1623,7 @@ namespace Cane_Tracking
 
         private void btnConnections_Click(object sender, EventArgs e)
         {
-            frmAppLinks frm = new frmAppLinks(udpReceiveMessageOpen);
+            frmAppLinks frm = new frmAppLinks();
             frm.Show();
 
             if (!udpReceiveMessageOpen)
@@ -1795,9 +1796,9 @@ namespace Cane_Tracking
         //NIR UDP Connection
         private void CheckUdpConnection()
         {
-            nirUdp.PingPC();
+            pingPC.PingNir();
 
-            if (nirUdp.PingResult())
+            if (pingPC.GetPingStatus())
             {
                 logTextOutput = DateTime.Now + " : UDP Connection Established";
                 LogOutput(logTextOutput);
