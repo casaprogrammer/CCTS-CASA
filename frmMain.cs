@@ -23,6 +23,8 @@ namespace Cane_Tracking
         NirUDP nirUdp = new NirUDP();
         PingPC pingPC = new PingPC();
 
+        System.Threading.Thread thread;
+
         private static SerialPort serialPort;
 
         private Timer checkConfigsTimer;
@@ -1067,6 +1069,11 @@ namespace Cane_Tracking
 
             dgvTrash.DataSource = null;
 
+            if (thread != null)
+            {
+                if(thread.IsAlive)
+                    thread.Abort();
+            }
         }
 
         private void rtTrashBatchNum_KeyPress(object sender, KeyPressEventArgs e)
@@ -1075,7 +1082,9 @@ namespace Cane_Tracking
             {
                 if (Regex.IsMatch(rtTrashBatchNum.Text, @"^\d+$"))
                 {
-                    cdu.GetCaneData(dgvTrash, dtpCurrentDate, rtTrashBatchNum, rtLeaves);
+                    thread = new System.Threading.Thread(GetData);
+                    thread.IsBackground = true;
+                    thread.Start();
                 }
                 else
                 {
@@ -1083,6 +1092,11 @@ namespace Cane_Tracking
                     rtTrashBatchNum.Text = "";
                 }
             }
+        }
+
+        private void GetData()
+        {
+            cdu.GetCaneData(dgvTrash, dtpCurrentDate, rtTrashBatchNum, rtLeaves);
         }
 
         private void rtLeaves_KeyPress(object sender, KeyPressEventArgs e)
@@ -1674,6 +1688,8 @@ namespace Cane_Tracking
             {
                 cdu.UpdateCaneData(dgvTrash, rtTotalTrash, rtLeaves, rtCaneTops,
                                    rtRoots, rtDeadStalks, rtMixedBurned, rtBurned, rtMud, rtTrashBatchNum);
+                if (thread.IsAlive)
+                    thread.Abort();
             }
         }
 
@@ -1699,6 +1715,12 @@ namespace Cane_Tracking
             rtMixedBurned.SelectionAlignment = HorizontalAlignment.Right;
             rtBurned.SelectionAlignment = HorizontalAlignment.Right;
             rtMud.SelectionAlignment = HorizontalAlignment.Right;
+
+            if(thread != null)
+            {
+                if (thread.IsAlive)
+                    thread.Abort();
+            }
         }
 
 
@@ -2128,7 +2150,7 @@ namespace Cane_Tracking
         {
             if (connected || !restarting)
             {
-                DialogResult dialogResult = MessageBox.Show("Application is closing. Continue?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to close the application?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (dialogResult == DialogResult.No)
                 {
@@ -2139,6 +2161,12 @@ namespace Cane_Tracking
                     log.LogEvent(DateTime.Now + " : " + "Application was closed");
                     appLoading.ResetLoadStatus();
                 }
+            }
+
+            if (thread != null)
+            {
+                if (thread.IsAlive)
+                    thread.Abort();
             }
         }
 

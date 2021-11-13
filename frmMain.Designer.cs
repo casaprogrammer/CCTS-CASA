@@ -216,6 +216,7 @@ namespace Cane_Tracking
             this.panel33 = new System.Windows.Forms.Panel();
             this.btnConnections = new System.Windows.Forms.Button();
             this.panel36 = new System.Windows.Forms.Panel();
+            this.panel37 = new System.Windows.Forms.Panel();
             this.panel6.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -1391,7 +1392,7 @@ namespace Cane_Tracking
             // 
             // panel9
             // 
-            this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.panel9.BackColor = System.Drawing.Color.Transparent;
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel9.Controls.Add(this.label6);
             this.panel9.Controls.Add(this.panel6);
@@ -1409,7 +1410,7 @@ namespace Cane_Tracking
             // 
             // panel10
             // 
-            this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.panel10.BackColor = System.Drawing.Color.Transparent;
             this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel10.Controls.Add(this.panel11);
             this.panel10.Controls.Add(this.rtShredderCheck);
@@ -1439,7 +1440,7 @@ namespace Cane_Tracking
             // rtForceScan
             // 
             this.rtForceScan.BackColor = System.Drawing.SystemColors.Window;
-            this.rtForceScan.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtForceScan.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.rtForceScan, "rtForceScan");
             this.rtForceScan.Name = "rtForceScan";
             this.rtForceScan.TabStop = false;
@@ -1519,7 +1520,7 @@ namespace Cane_Tracking
             // 
             // panel14
             // 
-            this.panel14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.panel14.BackColor = System.Drawing.Color.Transparent;
             this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel14.Controls.Add(this.panel27);
             this.panel14.Controls.Add(this.panel16);
@@ -2014,16 +2015,22 @@ namespace Cane_Tracking
             // panel36
             // 
             this.panel36.BackColor = System.Drawing.Color.White;
-            this.panel36.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel36.Controls.Add(this.rtEvents);
             resources.ApplyResources(this.panel36, "panel36");
             this.panel36.Name = "panel36";
+            // 
+            // panel37
+            // 
+            this.panel37.BackColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.panel37, "panel37");
+            this.panel37.Name = "panel37";
             // 
             // frmMain
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Controls.Add(this.panel37);
             this.Controls.Add(this.panel36);
             this.Controls.Add(this.panel33);
             this.Controls.Add(this.panel28);
@@ -2035,8 +2042,8 @@ namespace Cane_Tracking
             this.Controls.Add(this.panel31);
             this.Controls.Add(this.panel30);
             this.Controls.Add(this.panel29);
-            this.Controls.Add(this.panel13);
             this.Controls.Add(this.panel12);
+            this.Controls.Add(this.panel13);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -2286,6 +2293,7 @@ namespace Cane_Tracking
         private System.Windows.Forms.Panel panel33;
         private System.Windows.Forms.Button btnConnections;
         private System.Windows.Forms.Panel panel36;
+        private System.Windows.Forms.Panel panel37;
     }
 }
 
