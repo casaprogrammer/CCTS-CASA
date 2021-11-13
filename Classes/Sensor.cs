@@ -85,7 +85,7 @@ namespace Cane_Tracking.Classes
             {
                 if (IncomingData.ToLower() == "side cane object")
                 {
-                    count = int.Parse(ctcc.GetTextboxValue(BatchNumberList.tipperOne[i].Item2));
+                    count = int.Parse(ctcc.GetControlValue(BatchNumberList.tipperOne[i].Item2));
 
                     if (!Pause)
                     {
@@ -104,7 +104,7 @@ namespace Cane_Tracking.Classes
                     if (count > tipperOneMaxCount)
                     {
                         BatchNumberList.dumpCanesHistory.Remove(new Tuple<RichTextBox, RichTextBox, string>(BatchNumberList.tipperOne[i].Item1, BatchNumberList.tipperOne[i].Item2, "Tipper One"));
-                        BatchNumberList.mainCaneBatchNumbers.Add(ctcc.GetTextboxValue(BatchNumberList.tipperOne[i].Item1));
+                        BatchNumberList.mainCaneBatchNumbers.Add(ctcc.GetControlValue(BatchNumberList.tipperOne[i].Item1));
 
                         ctcc.ChangeText(BatchNumberList.tipperOne[i].Item1, "");
                         ctcc.ChangeText(BatchNumberList.tipperOne[i].Item2, "");
@@ -116,7 +116,7 @@ namespace Cane_Tracking.Classes
 
             for (int i = BatchNumberList.tipperOne.Count - 1; i >= 0; i--)
             {
-                if (ctcc.GetTextboxValue(BatchNumberList.tipperOne[i].Item1) == "")
+                if (ctcc.GetControlValue(BatchNumberList.tipperOne[i].Item1) == "")
                 {
                     BatchNumberList.tipperOne.RemoveAt(i);
                 }
@@ -132,7 +132,7 @@ namespace Cane_Tracking.Classes
             {
                 if (IncomingData.ToLower() == "side cane object")
                 {
-                    count = int.Parse(ctcc.GetTextboxValue(BatchNumberList.tipperTwo[i].Item2));
+                    count = int.Parse(ctcc.GetControlValue(BatchNumberList.tipperTwo[i].Item2));
 
                     if (!Pause)
                     {
@@ -151,7 +151,7 @@ namespace Cane_Tracking.Classes
                     if (count > tipperTwoMaxCount)
                     {
                         BatchNumberList.dumpCanesHistory.Remove(new Tuple<RichTextBox, RichTextBox, string>(BatchNumberList.tipperTwo[i].Item1, BatchNumberList.tipperTwo[i].Item2, "Tipper Two"));
-                        BatchNumberList.mainCaneBatchNumbers.Add(ctcc.GetTextboxValue(BatchNumberList.tipperTwo[i].Item1));
+                        BatchNumberList.mainCaneBatchNumbers.Add(ctcc.GetControlValue(BatchNumberList.tipperTwo[i].Item1));
 
                         ctcc.ChangeText(BatchNumberList.tipperTwo[i].Item1, "");
                         ctcc.ChangeText(BatchNumberList.tipperTwo[i].Item2, "");
@@ -162,7 +162,7 @@ namespace Cane_Tracking.Classes
 
             for (int i = BatchNumberList.tipperTwo.Count - 1; i >= 0; i--)
             {
-                if (ctcc.GetTextboxValue(BatchNumberList.tipperTwo[i].Item1) == "")
+                if (ctcc.GetControlValue(BatchNumberList.tipperTwo[i].Item1) == "")
                 {
                     BatchNumberList.tipperTwo.RemoveAt(i);
                 }
@@ -178,7 +178,7 @@ namespace Cane_Tracking.Classes
             {
                 if (IncomingData.ToLower() == "side cane object")
                 {
-                    count = int.Parse(ctcc.GetTextboxValue(BatchNumberList.dumpTruck[i].Item2));
+                    count = int.Parse(ctcc.GetControlValue(BatchNumberList.dumpTruck[i].Item2));
 
                     if (!Pause)
                     {
@@ -197,7 +197,7 @@ namespace Cane_Tracking.Classes
                     if (count > dumpAndPileMaxCount)
                     {
                         BatchNumberList.dumpCanesHistory.Remove(new Tuple<RichTextBox, RichTextBox, string>(BatchNumberList.dumpTruck[i].Item1, BatchNumberList.dumpTruck[i].Item2, "Dump Truck"));
-                        BatchNumberList.mainCaneBatchNumbers.Add(ctcc.GetTextboxValue(BatchNumberList.dumpTruck[i].Item1));
+                        BatchNumberList.mainCaneBatchNumbers.Add(ctcc.GetControlValue(BatchNumberList.dumpTruck[i].Item1));
 
                         ctcc.ChangeText(BatchNumberList.dumpTruck[i].Item1, "");
                         ctcc.ChangeText(BatchNumberList.dumpTruck[i].Item2, "");
@@ -208,7 +208,7 @@ namespace Cane_Tracking.Classes
 
             for (int i = BatchNumberList.dumpTruck.Count - 1; i >= 0; i--)
             {
-                if (ctcc.GetTextboxValue(BatchNumberList.dumpTruck[i].Item1) == "")
+                if (ctcc.GetControlValue(BatchNumberList.dumpTruck[i].Item1) == "")
                 {
                     BatchNumberList.dumpTruck.RemoveAt(i);
                 }
@@ -224,7 +224,7 @@ namespace Cane_Tracking.Classes
             {
                 if (IncomingData.ToLower() == "side cane object")
                 {
-                    count = int.Parse(ctcc.GetTextboxValue(BatchNumberList.stockPile[i].Item2));
+                    count = int.Parse(ctcc.GetControlValue(BatchNumberList.stockPile[i].Item2));
 
                     if (!Pause)
                     {
@@ -243,7 +243,7 @@ namespace Cane_Tracking.Classes
                     if (count > dumpAndPileMaxCount)
                     {
                         BatchNumberList.dumpCanesHistory.Remove(new Tuple<RichTextBox, RichTextBox, string>(BatchNumberList.stockPile[i].Item1, BatchNumberList.stockPile[i].Item2, "Stock Pile"));
-                        BatchNumberList.mainCaneBatchNumbers.Add(ctcc.GetTextboxValue(BatchNumberList.stockPile[i].Item1));
+                        BatchNumberList.mainCaneBatchNumbers.Add(ctcc.GetControlValue(BatchNumberList.stockPile[i].Item1));
 
                         ctcc.ChangeText(BatchNumberList.stockPile[i].Item1, "");
                         ctcc.ChangeText(BatchNumberList.stockPile[i].Item2, "");
@@ -254,7 +254,7 @@ namespace Cane_Tracking.Classes
 
             for (int i = BatchNumberList.stockPile.Count - 1; i >= 0; i--)
             {
-                if (ctcc.GetTextboxValue(BatchNumberList.stockPile[i].Item1) == "")
+                if (ctcc.GetControlValue(BatchNumberList.stockPile[i].Item1) == "")
                 {
                     BatchNumberList.stockPile.RemoveAt(i);
                 }
@@ -280,7 +280,7 @@ namespace Cane_Tracking.Classes
             {
                 for (int y = 0; y < BatchNumberList.lTbox.Count; y++)
                 {
-                    if (ctcc.GetTextboxValue(BatchNumberList.lTbox[y].Item1) == "" && BatchNumberList.lTbox[y].Item3 == "MainCane")
+                    if (ctcc.GetControlValue(BatchNumberList.lTbox[y].Item1) == "" && BatchNumberList.lTbox[y].Item3 == "MainCane")
                     {
                         ctcc.ChangeText(BatchNumberList.lTbox[y].Item1, BatchNumberList.mainCaneBatchNumbers[i]);
                         ctcc.ChangeText(BatchNumberList.lTbox[y].Item2, "0");
@@ -316,7 +316,7 @@ namespace Cane_Tracking.Classes
             {
                 if (IncomingData.ToLower() == "main cane object")
                 {
-                    count = int.Parse(ctcc.GetTextboxValue(BatchNumberList.mainCane[i].Item2));
+                    count = int.Parse(ctcc.GetControlValue(BatchNumberList.mainCane[i].Item2));
 
                     if (!Pause)
                     {
@@ -327,7 +327,7 @@ namespace Cane_Tracking.Classes
 
                     if (count > mainCaneMaxCount)
                     {
-                        BatchNumberList.caneKnivesBatchNumbers.Add(ctcc.GetTextboxValue(BatchNumberList.mainCane[i].Item1));
+                        BatchNumberList.caneKnivesBatchNumbers.Add(ctcc.GetControlValue(BatchNumberList.mainCane[i].Item1));
 
                         ctcc.ChangeText(BatchNumberList.mainCane[i].Item1, "");
                         ctcc.ChangeText(BatchNumberList.mainCane[i].Item2, "");
@@ -342,7 +342,7 @@ namespace Cane_Tracking.Classes
 
             for (int i = BatchNumberList.mainCane.Count - 1; i >= 0; i--)
             {
-                if (ctcc.GetTextboxValue(BatchNumberList.mainCane[i].Item1) == "")
+                if (ctcc.GetControlValue(BatchNumberList.mainCane[i].Item1) == "")
                 {
                     BatchNumberList.mainCane.RemoveAt(i);
                 }
@@ -368,7 +368,7 @@ namespace Cane_Tracking.Classes
             {
                 for (int y = 0; y < BatchNumberList.lTbox.Count; y++)
                 {
-                    if (ctcc.GetTextboxValue(BatchNumberList.lTbox[y].Item1) == "" && BatchNumberList.lTbox[y].Item3 == "CaneKnives")
+                    if (ctcc.GetControlValue(BatchNumberList.lTbox[y].Item1) == "" && BatchNumberList.lTbox[y].Item3 == "CaneKnives")
                     {
                         ctcc.ChangeText(BatchNumberList.lTbox[y].Item1, BatchNumberList.caneKnivesBatchNumbers[i]);
                         ctcc.ChangeText(BatchNumberList.lTbox[y].Item2, "0");
@@ -404,7 +404,7 @@ namespace Cane_Tracking.Classes
             {
                 if (IncomingData.ToLower() == "cane knives object")
                 {
-                    count = int.Parse(ctcc.GetTextboxValue(BatchNumberList.caneKnives[i].Item2));
+                    count = int.Parse(ctcc.GetControlValue(BatchNumberList.caneKnives[i].Item2));
 
                     if (!Pause)
                     {
@@ -415,7 +415,7 @@ namespace Cane_Tracking.Classes
 
                     if (count > knivesAndShredderMaxCount)
                     {
-                        BatchNumberList.shredderBatchNumbers.Add(ctcc.GetTextboxValue(BatchNumberList.caneKnives[i].Item1));
+                        BatchNumberList.shredderBatchNumbers.Add(ctcc.GetControlValue(BatchNumberList.caneKnives[i].Item1));
 
                         ctcc.ChangeText(BatchNumberList.caneKnives[i].Item1, "");
                         ctcc.ChangeText(BatchNumberList.caneKnives[i].Item2, "");
@@ -430,7 +430,7 @@ namespace Cane_Tracking.Classes
 
             for (int i = BatchNumberList.caneKnives.Count - 1; i >= 0; i--)
             {
-                if (ctcc.GetTextboxValue(BatchNumberList.caneKnives[i].Item1) == "")
+                if (ctcc.GetControlValue(BatchNumberList.caneKnives[i].Item1) == "")
                 {
                     BatchNumberList.caneKnives.RemoveAt(i);
                 }
@@ -457,7 +457,7 @@ namespace Cane_Tracking.Classes
             {
                 for (int y = 0; y < BatchNumberList.lTbox.Count; y++)
                 {
-                    if (ctcc.GetTextboxValue(BatchNumberList.lTbox[y].Item1) == "" && BatchNumberList.lTbox[y].Item3 == "Shredder")
+                    if (ctcc.GetControlValue(BatchNumberList.lTbox[y].Item1) == "" && BatchNumberList.lTbox[y].Item3 == "Shredder")
                     {
                         ctcc.ChangeText(BatchNumberList.lTbox[y].Item1, BatchNumberList.shredderBatchNumbers[i]);
                         ctcc.ChangeText(BatchNumberList.lTbox[y].Item2, "0");
@@ -493,7 +493,7 @@ namespace Cane_Tracking.Classes
             {
                 if (IncomingData.ToLower() == "shredded cane object")
                 {
-                    count = int.Parse(ctcc.GetTextboxValue(BatchNumberList.shreddedCane[i].Item2));
+                    count = int.Parse(ctcc.GetControlValue(BatchNumberList.shreddedCane[i].Item2));
 
                     if (!Pause)
                     {
@@ -504,7 +504,7 @@ namespace Cane_Tracking.Classes
 
                     if (count > knivesAndShredderMaxCount)
                     {
-                        bnShred = ctcc.GetTextboxValue(BatchNumberList.shreddedCane[i].Item1);
+                        bnShred = ctcc.GetControlValue(BatchNumberList.shreddedCane[i].Item1);
                         ctcc.ChangeText(BatchNumberList.shreddedCane[i].Item1, "");
                         ctcc.ChangeText(BatchNumberList.shreddedCane[i].Item2, "");
                         ctcc.ChangeColorTextBox(BatchNumberList.shreddedCane[i].Item2, Color.CornflowerBlue);
@@ -522,7 +522,7 @@ namespace Cane_Tracking.Classes
 
             for (int i = BatchNumberList.shreddedCane.Count - 1; i >= 0; i--)
             {
-                if (ctcc.GetTextboxValue(BatchNumberList.shreddedCane[i].Item1) == "")
+                if (ctcc.GetControlValue(BatchNumberList.shreddedCane[i].Item1) == "")
                 {
                     for (int y = 0; y < BatchNumberList.lTbox.Count; y++)
                     {
