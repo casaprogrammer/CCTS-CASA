@@ -10,7 +10,9 @@ namespace Cane_Tracking.Classes
         Queries query = new Queries();
         AppLogging log = new AppLogging();
         ConfigValues cnf = new ConfigValues();
+        CrossThreadingCheck cc = new CrossThreadingCheck();
         SqlConnection con;
+
 
         public CaneDataUpdate()
         {
@@ -19,37 +21,40 @@ namespace Cane_Tracking.Classes
 
         public void GetCaneData(DataGridView dgv, DateTimePicker dtp, RichTextBox rt, RichTextBox rtLeaves)
         {
-            SqlCommand cmd = new SqlCommand(query.GetBatchNumberData(dtp.Value.ToString("yyyy-MM-dd"), rt.Text), con);
+            SqlCommand cmd = new SqlCommand(query.GetBatchNumberData(cc.DateTimePickerVal(dtp), cc.GetControlValue(rt)), con);
 
-            try
+            if (con.State != ConnectionState.Open)
             {
-                con.Open();
-
-                if (cmd.ExecuteScalar() == null)
+                try
                 {
-                    MessageBox.Show("Batch #" + rt.Text + " data not found", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    rt.Text = "";
-                    dgv.DataSource = null;
-                }
-                else
-                {
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    dgv.DataSource = dt;
-                    dgv.Columns[0].Visible = false;
+                    con.Open();
 
-                    rtLeaves.Focus();
-                    rtLeaves.SelectAll();
+                    if (cmd.ExecuteScalar() == null)
+                    {
+                        MessageBox.Show("Batch #" + cc.GetControlValue(rt) + " data not found", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        cc.ChangeText(rt, "");
+                        cc.DataGrid(dgv, null);
+                    }
+                    else
+                    {
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        cc.DataGrid(dgv, dt);
+
+                        cc.SetRichTextboxFocus(rtLeaves);
+                        cc.SelectAllTextbox(rtLeaves);
+                    }
+
                 }
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                con.Close();
+                catch (SqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
             }
         }
 
@@ -58,17 +63,17 @@ namespace Cane_Tracking.Classes
                                    RichTextBox bitBurned, RichTextBox bitMud, RichTextBox batchNo)
         {
 
-            int id = int.Parse(dgv.Rows[dgv.SelectedCells[0].RowIndex].Cells["ID"].Value.ToString());
-            string transCode = dgv.Rows[dgv.SelectedCells[0].RowIndex].Cells["Trans Code"].Value.ToString();
-            string plateNo = dgv.Rows[dgv.SelectedCells[0].RowIndex].Cells["Plate No"].Value.ToString();
-            double trashVal = double.Parse(trash.Text);
-            double leaves = double.Parse(bitLeaves.Text);
-            double caneTops = double.Parse(bitCaneTops.Text);
-            double roots = double.Parse(bitRoots.Text);
-            double deadStalks = double.Parse(bitDeadStalks.Text);
-            double mixedBurned = double.Parse(bitMixedBurned.Text);
-            double burned = double.Parse(bitBurned.Text);
-            double mud = double.Parse(bitMud.Text);
+            int id = int.Parse(cc.DataGridValues(dgv, 0, "ID"));
+            string transCode = cc.DataGridValues(dgv, 0, "Trans Code");
+            string plateNo = cc.DataGridValues(dgv, 0, "Plate No");
+            double trashVal = double.Parse(cc.GetControlValue(trash));
+            double leaves = double.Parse(cc.GetControlValue(bitLeaves));
+            double caneTops = double.Parse(cc.GetControlValue(bitCaneTops));
+            double roots = double.Parse(cc.GetControlValue(bitRoots));
+            double deadStalks = double.Parse(cc.GetControlValue(bitDeadStalks));
+            double mixedBurned = double.Parse(cc.GetControlValue(bitMixedBurned));
+            double burned = double.Parse(cc.GetControlValue(bitBurned));
+            double mud = double.Parse(cc.GetControlValue(bitMud));
 
             SqlCommand cmd = new SqlCommand(query.UpdateCaneData(id, trashVal, leaves, caneTops, roots, deadStalks,
                                                                  mixedBurned, burned, mud
@@ -85,42 +90,43 @@ namespace Cane_Tracking.Classes
                 log.LogEvent("+===============TRASH UPDATE===============+");
                 log.LogEvent(DateTime.Now.ToString());
                 log.LogEvent("-------------------------------");
-                log.LogEvent("Batch No: " + batchNo.Text);
+                log.LogEvent("Batch No: " + cc.GetControlValue(batchNo));
                 log.LogEvent("Trans Code: " + transCode);
                 log.LogEvent("Plate No: " + plateNo);
                 log.LogEvent("-------------------------------");
-                log.LogEvent("Leaves: " + bitLeaves.Text);
-                log.LogEvent("Cane Tops: " + bitCaneTops.Text);
-                log.LogEvent("Roots: " + bitRoots.Text);
-                log.LogEvent("Dead Stalks: " + bitDeadStalks.Text);
-                log.LogEvent("Mixed Burned: " + bitMixedBurned.Text);
-                log.LogEvent("Burned: " + bitBurned.Text);
-                log.LogEvent("Mud: " + bitMud.Text);
-                log.LogEvent("Total Trash: " + trash.Text);
+                log.LogEvent("Leaves: " + cc.GetControlValue(bitLeaves));
+                log.LogEvent("Cane Tops: " + cc.GetControlValue(bitCaneTops));
+                log.LogEvent("Roots: " + cc.GetControlValue(bitRoots));
+                log.LogEvent("Dead Stalks: " + cc.GetControlValue(bitDeadStalks));
+                log.LogEvent("Mixed Burned: " + cc.GetControlValue(bitMixedBurned));
+                log.LogEvent("Burned: " + cc.GetControlValue(bitBurned));
+                log.LogEvent("Mud: " + cc.GetControlValue(bitMud));
+                log.LogEvent("Total Trash: " + cc.GetControlValue(trash));
                 log.LogEvent("+=============END TRASH UDPATE=============+");
                 log.LogEvent("");
 
 
                 batchNo.Text = "";
-                dgv.DataSource = null;
+                cc.ChangeText(batchNo, "");
+                cc.DataGrid(dgv, null);
 
-                trash.Text = "0";
-                bitLeaves.Text = "0";
-                bitCaneTops.Text = "0";
-                bitRoots.Text = "0";
-                bitDeadStalks.Text = "0";
-                bitMixedBurned.Text = "0";
-                bitBurned.Text = "0";
-                bitMud.Text = "0";
+                cc.ChangeText(trash, "0");
+                cc.ChangeText(bitLeaves, "0");
+                cc.ChangeText(bitCaneTops, "0");
+                cc.ChangeText(bitRoots, "0");
+                cc.ChangeText(bitDeadStalks, "0");
+                cc.ChangeText(bitMixedBurned, "0");
+                cc.ChangeText(bitBurned, "0");
+                cc.ChangeText(bitMud, "0");
 
-                trash.SelectionAlignment = HorizontalAlignment.Right;
-                bitLeaves.SelectionAlignment = HorizontalAlignment.Right;
-                bitCaneTops.SelectionAlignment = HorizontalAlignment.Right;
-                bitRoots.SelectionAlignment = HorizontalAlignment.Right;
-                bitDeadStalks.SelectionAlignment = HorizontalAlignment.Right;
-                bitMixedBurned.SelectionAlignment = HorizontalAlignment.Right;
-                bitBurned.SelectionAlignment = HorizontalAlignment.Right;
-                bitMud.SelectionAlignment = HorizontalAlignment.Right;
+                cc.SelectionAlignmentRichTextbox(trash);
+                cc.SelectionAlignmentRichTextbox(bitLeaves);
+                cc.SelectionAlignmentRichTextbox(bitCaneTops);
+                cc.SelectionAlignmentRichTextbox(bitRoots);
+                cc.SelectionAlignmentRichTextbox(bitDeadStalks);
+                cc.SelectionAlignmentRichTextbox(bitMixedBurned);
+                cc.SelectionAlignmentRichTextbox(bitBurned);
+                cc.SelectionAlignmentRichTextbox(bitMud);
 
             }
             catch (SqlException ex)
