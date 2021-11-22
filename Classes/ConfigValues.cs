@@ -246,45 +246,6 @@ namespace Cane_Tracking.Classes
             }
         }
 
-        public void ChangeNirAddress(string address)
-        {
-            try
-            {
-                File.WriteAllText(Path.GetFullPath("Configurations/NIR/nirAddress.txt"), address);
-                nirAddress = File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirAddress.txt"));
-            }
-            catch (Exception)
-            {
-
-            }
-        }
-
-        public void ChangeNirPort(string port)
-        {
-            try
-            {
-                File.WriteAllText(Path.GetFullPath("Configurations/NIR/nirPort.txt"), port);
-                nirPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirPort.txt")));
-            }
-            catch (Exception)
-            {
-
-            }
-        }
-
-        public void ChangeLocalPort(string port)
-        {
-            try
-            {
-                File.WriteAllText(Path.GetFullPath("Configurations/NIR/pcLocalPort.txt"), port);
-                pcLocalPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/pcLocalPort.txt")));
-            }
-            catch (Exception)
-            {
-
-            }
-        }
-
         public void ScannedSample(string count)
         {
             try
