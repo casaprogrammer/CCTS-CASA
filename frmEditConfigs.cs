@@ -24,6 +24,7 @@ namespace Cane_Tracking
             rtKnivesAndShredder.Text = cnf.KnivesAndShredderMaxCount.ToString();
             rtWashingTime.Text = cnf.WashingTime.ToString();
             rtNir.Text = cnf.NirTime.ToString();
+            rtSampleCount.Text = cnf.SampleCount.ToString();
         }
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
