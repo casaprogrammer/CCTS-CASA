@@ -1731,7 +1731,7 @@ namespace Cane_Tracking
         {
             try
             {
-                serialPort = new SerialPort("COM3", 9600);
+                serialPort = new SerialPort(cnf.SerialConnection, 9600);
 
                 if (!serialPort.IsOpen)
                 {

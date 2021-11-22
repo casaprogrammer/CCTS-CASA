@@ -15,6 +15,7 @@ namespace Cane_Tracking.Classes
         private static int forceScanTime = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/forceScanTime.txt")));
         private static int sampleCount = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/sampleCount.txt")));
 
+        private static string serialConnection = File.ReadAllText(Path.GetFullPath("Configurations/Cane Prep/serialConnection.txt"));
         private static string nirAddress = File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirAddress.txt"));
         private static int nirPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/nirPort.txt")));
         private static int pcLocalPort = int.Parse(File.ReadAllText(Path.GetFullPath("Configurations/NIR/pcLocalPort.txt")));
@@ -94,6 +95,14 @@ namespace Cane_Tracking.Classes
             get
             {
                 return nirAddress;
+            }
+        }
+
+        public string SerialConnection
+        {
+            get
+            {
+                return serialConnection;
             }
         }
 
