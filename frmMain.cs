@@ -1770,12 +1770,6 @@ namespace Cane_Tracking
         {
             if (cc.ConnectionExist())
             {
-
-                while (!cc.DbConnectionEstablished())
-                {
-                    cc.CheckConnectionDatabase();
-                }
-
                 if (cc.DbConnectionEstablished())
                 {
                     InitializeSerialConnections();
@@ -1787,6 +1781,11 @@ namespace Cane_Tracking
 
                     SaveStateStart();
                     CheckConfigStart();
+                }
+                else
+                {
+                    MessageBox.Show("Please check manual for correct database connection string", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Application.Exit();
                 }
             }
             else
