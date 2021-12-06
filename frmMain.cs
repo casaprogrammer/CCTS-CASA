@@ -1071,7 +1071,7 @@ namespace Cane_Tracking
 
             if (thread != null)
             {
-                if(thread.IsAlive)
+                if (thread.IsAlive)
                     thread.Abort();
             }
         }
@@ -1716,7 +1716,7 @@ namespace Cane_Tracking
             rtBurned.SelectionAlignment = HorizontalAlignment.Right;
             rtMud.SelectionAlignment = HorizontalAlignment.Right;
 
-            if(thread != null)
+            if (thread != null)
             {
                 if (thread.IsAlive)
                     thread.Abort();
@@ -1768,8 +1768,18 @@ namespace Cane_Tracking
         //Database (WeighBridge, App's own Database)
         private void CheckDatabaseConnection()
         {
-            if (cc.ConnectionExist())
+            if (!cc.ConnectionExist())
             {
+                MessageBox.Show("Please check manual for correct database connection string", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Application.Exit();
+            }
+            else
+            {
+                while (!cc.DbConnectionEstablished())
+                {
+                    cc.CheckConnectionDatabase();
+                }
+
                 if (cc.DbConnectionEstablished())
                 {
                     InitializeSerialConnections();
@@ -1782,16 +1792,6 @@ namespace Cane_Tracking
                     SaveStateStart();
                     CheckConfigStart();
                 }
-                else
-                {
-                    MessageBox.Show("Please check manual for correct database connection string", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Application.Exit();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please check manual for correct database connection string", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Application.Exit();
             }
         }
 
@@ -2147,7 +2147,7 @@ namespace Cane_Tracking
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (connected || !restarting)
+            if (connected || !restarting || !cc.ConnectionExist())
             {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to close the application?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 

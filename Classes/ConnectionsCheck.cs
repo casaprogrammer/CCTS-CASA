@@ -26,8 +26,7 @@ namespace Cane_Tracking.Classes
             {
                 MessageBox.Show(ex.Message);
             }
-            finally
-            {
+            finally{
                 appCon.Close();
             }
 
